@@ -2,14 +2,12 @@
 
 @section('content')
 
-<!-- Уведомления об успешной регистрации -->
 @if(session('success'))
     <div class="alert alert-info">
         {{ session('success') }}
     </div>
 @endif
 
-<!-- Ошибки валидации -->
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
@@ -25,11 +23,25 @@
 <form method="POST" action="/register">
     @csrf
 
-    <label for="name" class="form-label">Login</label><br>
-    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"><br>
+    <div class="mb-3">
+        <label for="vards" class="form-label">Vārds</label>
+        <input type="text" class="form-control" id="vards" name="vards" value="{{ old('vards') }}" required>
+    </div>
 
-    <label for="password" class="form-label">Parole:</label><br>
-    <input type="password" class="form-control" id="password" name="password"><br>
+    <div class="mb-3">
+        <label for="uzvards" class="form-label">Uzvārds</label>
+        <input type="text" class="form-control" id="uzvards" name="uzvards" value="{{ old('uzvards') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="epasts" class="form-label">E-pasts</label>
+        <input type="email" class="form-control" id="epasts" name="epasts" value="{{ old('epasts') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Parole</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
 
     <button type="submit" class="btn btn-outline-dark">Reģistrēties</button>
     <a href="/login" class="btn btn-info">Ienākt</a>

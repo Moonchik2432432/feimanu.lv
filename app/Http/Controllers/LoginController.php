@@ -2,53 +2,47 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
+use App\Models\Lietotajs;
 
 class LoginController extends Controller
 {
-    public function login(Request $request){
-        //validacija
-
-        $credentials = $request->validate( [
-            'name' => 'required',
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'epasts' => 'required|email',
             'password' => 'required|min:6'
         ]);
 
-        $username = $request->input('name');
-        $password = $request->input('password');
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['epasts' => $credentials['epasts'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->intended('/data');
         }
 
         return back()->withErrors([
-            'name' => 'Nekorekts lietotājvārds vai parole.',
-        ])->onlyInput('name');
+            'epasts' => 'Nekorekts epasts vai parole.',
+        ])->onlyInput('epasts');
     }
 
-
-
-    public function register(Request $request){
-        //validacija
-        $credentials = $request->validate( [
-            'name' => 'required',
-            //'email' => 'required|email',
-            'password' => 'required|min:6'
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'vards' => 'required|string|max:100',
+            'uzvards' => 'required|string|max:100',
+            'epasts' => 'required|email|max:150|unique:lietotajs,epasts',
+            'password' => 'required|min:6',
         ]);
 
-        $user = User::create([
-            'name' => $credentials['name'],
-            'password' => Hash::make($credentials['password']),
-            'email' => 'a'. uniqid() . '@gmail.com', // Dummy email
+        Lietotajs::create([
+            'vards' => $data['vards'],
+            'uzvards' => $data['uzvards'],
+            'epasts' => $data['epasts'],
+            'parole' => Hash::make($data['password']),
+            'loma' => 'user',
         ]);
 
         return back()->with('success', 'Reģistrācija veiksmīga! Tagad varat pieteikties.');
     }
-
 }
