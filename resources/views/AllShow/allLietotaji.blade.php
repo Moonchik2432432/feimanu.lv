@@ -3,17 +3,18 @@
 @section('content')
 
 <div class="container mt-4">
-    <h1 class="mb-4">Klients tabula</h1>
+    <h1 class="mb-4">Lietotāji tabula</h1>
 
-    <a href="/data/createKlients">
-        <button class="btn btn-success btn-sm">Pievinot</button>
-    </a> <br> <br>
+    <a href="/data/createLietotajs">
+        <button class="btn btn-success btn-sm">Pievienot</button>
+    </a>
+    <br><br>
 
-    @if($klients->isEmpty())
-        <p>Datus nav.</p>
+    @if($lietotaji->isEmpty())
+        <p>Datu nav.</p>
     @else
         @php
-            $headers = array_keys($klients->first()->toArray());
+            $headers = array_keys($lietotaji->first()->toArray());
         @endphp
 
         <table class="table table-striped table-bordered table-hover">
@@ -22,23 +23,23 @@
                     @foreach($headers as $header)
                         <th>{{ ucfirst($header) }}</th>
                     @endforeach
-                    <th>Klients</th>
+                    <th>Darbības</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($klients as $item)
+                @foreach($lietotaji as $item)
                     <tr>
                         @foreach($headers as $field)
                             <td>{{ $item->$field }}</td>
                         @endforeach
                         <td>
-                            <a href="/data/all/{{$item->id}}/deleteKlients">
+                            <a href="/data/all/{{$item->lietotajs_id}}/deleteLietotajs">
                                 <button class="btn btn-danger btn-sm">Dzēst</button>
                             </a>
-                            <a href="/data/all/{{$item->id}}/showKlientsDetails">
-                                <button class="btn btn-success btn-sm">Informacija</button>
+                            <a href="/data/all/{{$item->lietotajs_id}}/showLietotajsDetails">
+                                <button class="btn btn-success btn-sm">Informācija</button>
                             </a>
-                            <a href="/data/editKlients/{{$item->id}}">
+                            <a href="/data/editLietotajs/{{$item->lietotajs_id}}">
                                 <button class="btn btn-warning btn-sm">Rediģēt</button>
                             </a>
                         </td>

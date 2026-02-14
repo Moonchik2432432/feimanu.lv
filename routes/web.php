@@ -2,28 +2,41 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\LoginController;
 
-// Главная и контакты
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+// Главная
 Route::get('/', function () {
     return view('home');
 });
 
+// Контакты
 Route::get('/contacts', function () {
     return view('contacts');
 });
 
-// Публичные маршруты логина/регистрации
+// =====================
+// AUTH
+// =====================
+
+// Login page
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
+// Register page
 Route::get('/register', function () {
     return view('register');
 })->name('register');
 
-// POST маршруты логина/регистрации
+// Login / Register POST
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
 
@@ -36,56 +49,50 @@ Route::post('/logout', function () {
 })->name('logout');
 
 
-// ЗАЩИЩЕННЫЕ маршруты для авторизованных пользователей
+/*
+|--------------------------------------------------------------------------
+| Protected Admin Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware(['auth'])->group(function () {
 
+    // Admin dashboard page
     Route::get('/data', function () {
         return view('data');
     });
 
-    // Отображение всех
-    Route::get('/data/allKlients', [DataController::class, 'showAllKlients']);
-    Route::get('/data/allTvertne', [DataController::class, 'showAllTvertne']);
-    Route::get('/data/allAmats', [DataController::class, 'showAllAmats']);
-    Route::get('/data/allDarbinieks', [DataController::class, 'showAllDarbinieks']);
+    // =====================
+    // LIST
+    // =====================
 
-    // Удаление
-    Route::get('/data/all/{id}/deleteTvertne', [DataController::class, 'deleteTvertne']);
-    Route::get('/data/all/{id}/deleteKlients', [DataController::class, 'deleteKlients']);
-    Route::get('/data/all/{id}/deleteDarbinieks', [DataController::class, 'deleteDarbinieks']);
-    Route::get('/data/all/{id}/deleteAmats', [DataController::class, 'deleteAmats']);
+    Route::get('/data/allIeraksti', [DataController::class, 'showAllIeraksti']);
+    Route::get('/data/allKategorijas', [DataController::class, 'showAllKategorijas']);
+    Route::get('/data/allKomentari', [DataController::class, 'showAllKomentari']);
+    Route::get('/data/allLietotaji', [DataController::class, 'showAllLietotaji']);
 
-    // Детали
-    Route::get('/data/all/{id}/showAmatsDetails', [DataController::class, 'showAmatsDetails']);
-    Route::get('/data/all/{id}/showDarbinieksDetails', [DataController::class, 'showDarbinieksDetails']);
-    Route::get('/data/all/{id}/showKlientsDetails', [DataController::class, 'showKlientsDetails']);
-    Route::get('/data/all/{id}/showTvertneDetails', [DataController::class, 'showTvertneDetails']);
+    // =====================
+    // DELETE
+    // =====================
 
-    // Создание
-    Route::post('/data/newSubmit', [DataController::class, 'newSubmit']);
+    Route::get('/data/all/{id}/deleteIeraksts', [DataController::class, 'deleteIeraksts']);
+    Route::get('/data/all/{id}/deleteKategorija', [DataController::class, 'deleteKategorija']);
+    Route::get('/data/all/{id}/deleteKomentars', [DataController::class, 'deleteKomentars']);
+    Route::get('/data/all/{id}/deleteLietotajs', [DataController::class, 'deleteLietotajs']);
 
-    Route::get('/data/createAmats', [DataController::class, 'createAmats']);
-    Route::post('/data/newSubmitAmats', [DataController::class, 'newSubmitAmats']);
+    // =====================
+    // CREATE
+    // =====================
 
-    Route::get('/data/createDarbinieks', [DataController::class, 'createDarbinieks']);
-    Route::post('/data/newSubmitDarbinieks', [DataController::class, 'storeDarbinieks']);
+    Route::get('/data/createIeraksts', [DataController::class, 'createIeraksts']);
+    Route::post('/data/newSubmitIeraksts', [DataController::class, 'newSubmitIeraksts']);
 
-    Route::get('/data/createKlients', [DataController::class, 'createKlients']);
-    Route::post('/data/newSubmitKlients', [DataController::class, 'newSubmitKlients']);
+    Route::get('/data/createKategorija', [DataController::class, 'createKategorija']);
+    Route::post('/data/newSubmitKategorija', [DataController::class, 'newSubmitKategorija']);
 
-    Route::get('/data/createTvertne', [DataController::class, 'createTvertne']);
-    Route::post('/data/newSubmitTvertne', [DataController::class, 'newSubmitTvertne']);
+    Route::get('/data/createKomentars', [DataController::class, 'createKomentars']);
+    Route::post('/data/newSubmitKomentars', [DataController::class, 'newSubmitKomentars']);
 
-    // Редактирование
-    Route::get('/data/editAmats/{id}', [DataController::class, 'editAmats']);
-    Route::put('/data/updateAmats/{id}', [DataController::class, 'updateAmats']);
-
-    Route::get('/data/editDarbinieks/{id}', [DataController::class, 'editDarbinieks']);
-    Route::put('/data/updateDarbinieks/{id}', [DataController::class, 'updateDarbinieks']);
-
-    Route::get('/data/editKlients/{id}', [DataController::class, 'editKlients']);
-    Route::put('/data/updateKlients/{id}', [DataController::class, 'updateKlients']);
-
-    Route::get('/data/editTvertne/{id}', [DataController::class, 'editTvertne']);
-    Route::put('/data/updateTvertne/{id}', [DataController::class, 'updateTvertne']);
+    Route::get('/data/createLietotajs', [DataController::class, 'createLietotajs']);
+    Route::post('/data/newSubmitLietotajs', [DataController::class, 'newSubmitLietotajs']);
 });

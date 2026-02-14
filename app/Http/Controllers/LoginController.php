@@ -45,7 +45,7 @@ class LoginController extends Controller
         $user = User::create([
             'name' => $credentials['name'],
             'password' => Hash::make($credentials['password']),
-            'email' => 'a'. uniqid() . '@gamil.com', // Dummy email
+            'email' => 'a'. uniqid() . '@gmail.com', // Dummy email
         ]);
 
         return back()->with('success', 'Reģistrācija veiksmīga! Tagad varat pieteikties.');

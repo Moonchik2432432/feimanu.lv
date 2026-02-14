@@ -3,24 +3,18 @@
 @section('content')
 
 <div class="container mt-4">
-    <h1 class="mb-4">Amats tabula</h1>
+    <h1 class="mb-4">Komentāri tabula</h1>
 
-    <a href="/data/createAmats">
-        <button class="btn btn-success btn-sm">Pievinot</button>
-    </a> <br>
+    <a href="/data/createKomentars">
+        <button class="btn btn-success btn-sm">Pievienot</button>
+    </a>
+    <br><br>
 
-    @if($errors->any())
-    @foreach ($errors->all() as $kluda)
-        {{ $kluda }} <br><br>
-    @endforeach
-@endif
-
-
-    @if($amats->isEmpty())
-        <p>Datus nav.</p>
+    @if($komentari->isEmpty())
+        <p>Datu nav.</p>
     @else
         @php
-            $headers = array_keys($amats->first()->toArray());
+            $headers = array_keys($komentari->first()->toArray());
         @endphp
 
         <table class="table table-striped table-bordered table-hover">
@@ -33,22 +27,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($amats as $item)
+                @foreach($komentari as $item)
                     <tr>
                         @foreach($headers as $field)
                             <td>{{ $item->$field }}</td>
                         @endforeach
                         <td>
-                            <a href="/data/all/{{$item->id}}/deleteAmats">
+                            <a href="/data/all/{{$item->komentars_id}}/deleteKomentars">
                                 <button class="btn btn-danger btn-sm">Dzēst</button>
                             </a>
-                            <a href="/data/all/{{$item->id}}/showAmatsDetails">
-                                <button class="btn btn-success btn-sm">Informacija</button>
-                            </a>
-                            <a href="/data/editAmats/{{$item->id}}">
-                                <button class="btn btn-warning btn-sm">Rediģēt</button>
+
+                            <a href="/data/all/{{$item->komentars_id}}/showKomentarsDetails">
+                                <button class="btn btn-success btn-sm">Informācija</button>
                             </a>
 
+                            <a href="/data/editKomentars/{{$item->komentars_id}}">
+                                <button class="btn btn-warning btn-sm">Rediģēt</button>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
