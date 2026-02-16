@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AktualitatesController;
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('aktualitates.index');
 });
 
 Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
