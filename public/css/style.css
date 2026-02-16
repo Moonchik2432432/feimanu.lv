@@ -1,13 +1,13 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #cf6666;
+    background: #ffffff;
 }
 
 /* HEADER */
 
 .site-header {
-    background: #147a00;
+    background: #093600;
     color: white;
     padding: 15px 0;
 }
@@ -47,7 +47,7 @@ body {
 /* FOOTER */
 
 .site-footer {
-    background: #147a00;
+    background: #093600;
     color: white;
     text-align: center;
     padding: 20px 0;
