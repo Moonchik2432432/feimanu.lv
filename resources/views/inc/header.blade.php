@@ -25,7 +25,15 @@
                 </div>
             </div>
 
-            <a href="#">Ziņas</a>
+            <div class="menu">
+                <a href="{{ route('pagasts.index') }}">Pagasts</a>
+
+                <div class="submenu">
+                    <a href="{{ route('pagasts.history') }}">
+                        Pagasts vesture
+                    </a>
+                </div>
+            </div>
             <a href="#">Par mums</a>
             <a href="#">Kontakti</a>
 

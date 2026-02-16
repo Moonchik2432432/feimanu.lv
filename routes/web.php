@@ -10,3 +10,6 @@ Route::get('/', function () {
 Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
 Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
+
+Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
+Route::view('/history', 'pagasts.history')->name('pagasts.history');
