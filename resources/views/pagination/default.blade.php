@@ -1,13 +1,13 @@
 @if ($paginator->hasPages())
     <nav class="my-pagination">
-        {{-- Previous --}}
+        {{-- Назад --}}
         @if ($paginator->onFirstPage())
             <span class="page disabled">‹</span>
         @else
-            <a class="page" href="{{ $paginator->previousPageUrl() }}" rel="prev">‹</a>
+            <a class="page" href="{{ $paginator->previousPageUrl() }}">‹</a>
         @endif
 
-        {{-- Pages --}}
+        {{-- Цифры --}}
         @foreach ($elements as $element)
             @if (is_string($element))
                 <span class="page dots">{{ $element }}</span>
@@ -24,9 +24,9 @@
             @endif
         @endforeach
 
-        {{-- Next --}}
+        {{-- Вперёд --}}
         @if ($paginator->hasMorePages())
-            <a class="page" href="{{ $paginator->nextPageUrl() }}" rel="next">›</a>
+            <a class="page" href="{{ $paginator->nextPageUrl() }}">›</a>
         @else
             <span class="page disabled">›</span>
         @endif

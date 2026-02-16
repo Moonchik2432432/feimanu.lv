@@ -54,7 +54,7 @@
         @endforeach
 
         <div class="pagination-wrapper">
-            {{ $news->links() }}
+            {{ $news->links('pagination.default') }}
         </div>
 
     </main>
