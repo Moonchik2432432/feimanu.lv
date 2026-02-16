@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         View::share('headerCategories', Kategorija::orderBy('nosaukums')->get());
 
-        Paginator::defaultView('pagination.default');
+        Paginator::useBootstrap();
     }
 }
