@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Feimanu')</title>
 
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="public/css/style.css" rel="stylesheet">
 
 </head>
 <body>
