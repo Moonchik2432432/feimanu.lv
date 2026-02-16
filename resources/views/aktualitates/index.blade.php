@@ -39,7 +39,7 @@
                 </small>
 
                 <p>
-                    {{ \Illuminate\Support\Str::limit($item->saturs, 200) }}
+                    {{ \Illuminate\Support\Str::limit($item->saturs, 75) }}
                 </p>
 
                 @if($item->bilde)
