@@ -34,9 +34,12 @@
                     </a>
                 </div>
             </div>
-            <a href="#">Par mums</a>
-            <a href="#">Kontakti</a>
-
+            
+            <a href="{{ url('/') }}">Pagasta pārvalde</a>
+            <a href="{{ url('/') }}">Iestādes</a>
+            <a href="{{ url('/') }}">Tūrisms</a>
+            <a href="{{ url('/') }}">Galerijas</a>
+            <a href="{{ url('/') }}">Kontakti</a>
         </nav>
     </div>
 </header>
