@@ -1,8 +1,11 @@
 <header class="site-header">
     <div class="container">
-        <div class="logo">
-            <a href="/">Feimanu</a>
-        </div>
+
+    <div class="logo">
+        <a href="{{ url('/') }}">
+            <img src="img/logo.png" alt="Feimanu Logo">
+        </a>
+    </div>
 
         <nav class="nav">
             <a href="/">Sākums</a>
