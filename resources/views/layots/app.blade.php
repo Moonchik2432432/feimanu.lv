@@ -5,6 +5,7 @@
     <title>@yield('title', 'Feimanu')</title>
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 </head>
 <body>
 
