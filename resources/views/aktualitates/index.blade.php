@@ -53,7 +53,7 @@
             </div>
         @endforeach
 
-        <div style="pagination-wrapper">
+        <div class="pagination-wrapper">
             {{ $news->links() }}
         </div>
 
