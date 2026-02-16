@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'Feimanu')</title>
 
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
 <body>

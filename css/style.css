@@ -4,7 +4,7 @@ body {
     background: #ffffff;
 }
 
-/* HEADER */
+/*  HEADER  */
 
 .site-header {
     background: #093600;
@@ -12,10 +12,15 @@ body {
     padding: 15px 0;
 }
 
+/* Default container */
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Flex header */
+.site-header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,6 +31,7 @@ body {
     height: 150px;
 }
 
+/* NAV */
 .nav {
     display: flex;
     align-items: center;
@@ -45,7 +51,7 @@ body {
     color: #00bcd4;
 }
 
-/* Dropdown */
+/*  DROPDOWN  */
 
 .menu {
     position: relative;
@@ -76,12 +82,18 @@ body {
     background: #f2f2f2;
 }
 
-/* Show menu */
+/* Показ меню */
 .menu:hover .submenu {
     display: block;
 }
 
-/* FOOTER */
+/*  MAIN CONTENT */
+
+.main-content {
+    padding: 40px 0;
+}
+
+/*  FOOTER  */
 
 .site-footer {
     background: #093600;
@@ -89,8 +101,4 @@ body {
     text-align: center;
     padding: 20px 0;
     margin-top: 50px;
-}
-
-.main-content {
-    padding: 40px 0;
 }

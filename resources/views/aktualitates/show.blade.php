@@ -11,7 +11,6 @@
     @if($post->kategorija) • {{ $post->kategorija->nosaukums }} @endif
   </div>
 
-  {{-- Картинка --}}
   @if($post->bilde)
       <img 
           src="{{ asset($post->bilde) }}"
