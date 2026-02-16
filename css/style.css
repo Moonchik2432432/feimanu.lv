@@ -148,3 +148,35 @@ body {
     background: rgba(0,0,0,0.7);
 }
 
+
+/* PAGINATION */
+.pagination-wrapper {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li a,
+.pagination li span {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    color: #093600;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination li.active span {
+    background: #093600;
+    color: white;
+    border-color: #093600;
+}
+
+.pagination li a:hover {
+    background: #f2f2f2;
+}
