@@ -3,7 +3,7 @@
 
     <div class="logo">
         <a href="{{ url('/') }}">
-            <img src="img/logo.png" alt="Feimanu Logo">
+            <img src="public/img/logo.png" alt="Feimanu Logo">
         </a>
     </div>
 
