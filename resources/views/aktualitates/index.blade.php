@@ -42,6 +42,14 @@
                     {{ \Illuminate\Support\Str::limit($item->saturs, 200) }}
                 </p>
 
+                @if($item->bilde)
+                    <img
+                        src="{{ asset($item->bilde) }}"
+                        alt="{{ $item->nosaukums }}"
+                        style="max-width:260px; border-radius:10px; margin:10px 0; display:block;"
+                    >
+                @endif
+
             </div>
         @endforeach
 
