@@ -8,7 +8,7 @@
     </div>
 
         <nav class="nav">
-            <a href="/">Sākums</a>
+            <a href="{{ route('aktualitates.index') }}">Aktualitātes</a>
             <a href="#">Ziņas</a>
             <a href="#">Par mums</a>
             <a href="#">Kontakti</a>
