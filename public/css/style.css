@@ -21,6 +21,11 @@ body {
     align-items: center;
 }
 
+.logo {
+    width: 100px;
+    height: 150px;
+}
+
 .logo a {
     color: white;
     text-decoration: none;
