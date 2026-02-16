@@ -14,8 +14,8 @@
     <div class="slider">
         <div class="slides">
             <img src="{{ asset('img/slides/feimanuSlide1.jpg') }}" class="slide active">
-            <img src="{{ asset('img/slides/feimanuSlide1.jpg') }}" class="slide">
-            <img src="{{ asset('img/slides/feimanuSlide1.jpg') }}" class="slide">
+            <img src="{{ asset('img/slides/feimanuSlide2.jpg') }}" class="slide">
+            <img src="{{ asset('img/slides/feimanuSlide3.jpg') }}" class="slide">
         </div>
 
         <button class="prev">&#10094;</button>
