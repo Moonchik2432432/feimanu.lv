@@ -41,5 +41,14 @@
             <a href="{{ url('/') }}">Galerijas</a>
             <a href="{{ url('/') }}">Kontakti</a>
         </nav>
+
+         @auth
+            <form method="POST" action="{{ route('logout') }}">
+        @csrf
+            <button type="submit">Iziet</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}">Login</a>
+        @endauth
     </div>
 </header>

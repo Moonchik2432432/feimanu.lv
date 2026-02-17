@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AktualitatesController;
 use App\Http\Controllers\KomentariController;
+use App\Http\Controllers\AuthController;
 
 
 Route::get('/', function () {
@@ -19,3 +20,7 @@ Route::view('/history', 'pagasts.history')->name('pagasts.history');
 Route::post('/aktualitates/{id}/komentari', [KomentariController::class, 'store'])
     ->middleware('auth')
     ->name('komentari.store');
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
