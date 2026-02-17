@@ -8,31 +8,47 @@ use Illuminate\Http\Request;
 
 class AktualitatesController extends Controller
 {
-    // Главная страница новостей
-    public function index(Request $request)
-    {
-        // Получаем все категории (для меню)
-        $categories = Kategorija::orderBy('nosaukums')->get();
+// Главная страница новостей
+public function index(Request $request)
+{
+    // Получаем все категории (для меню)
+    $categories = Kategorija::orderBy('nosaukums')->get();
 
-        // Получаем текст поиска из URL
-        $q = trim($request->query('q', ''));
+    // Поиск
+    $q = trim($request->query('q', ''));
 
-        // Запрос к таблице ieraksts
-        $news = Ieraksts::with('kategorija') 
-            ->where('status', 'published')  
-            ->when($q !== '', function ($query) use ($q) {
-                // Если есть поиск — фильтруем
-                $query->where(function ($qq) use ($q) {
-                    $qq->where('nosaukums', 'like', "%{$q}%") 
-                       ->orWhere('saturs', 'like', "%{$q}%");
-                });
-            })
-            ->orderByDesc('publicets_datums') // сортировка по дате 
-            ->paginate(5)               
-            ->withQueryString();              // сохраняем ?q= при переключении страниц
+    // Даты фильтра
+    $from = $request->query('from'); // от даты
+    $to   = $request->query('to');   // до даты
 
-        return view('aktualitates.index', compact('categories', 'news', 'q'));
-    }
+    $news = Ieraksts::with('kategorija')
+        ->where('status', 'published')
+
+        // Поиск по тексту
+        ->when($q !== '', function ($query) use ($q) {
+            $query->where(function ($qq) use ($q) {
+                $qq->where('nosaukums', 'like', "%{$q}%")
+                   ->orWhere('saturs', 'like', "%{$q}%");
+            });
+        })
+
+        // Фильтр ОТ даты
+        ->when($from, function ($query) use ($from) {
+            $query->whereDate('publicets_datums', '>=', $from);
+        })
+
+        // Фильтр ДО даты
+        ->when($to, function ($query) use ($to) {
+            $query->whereDate('publicets_datums', '<=', $to);
+        })
+
+        ->orderByDesc('publicets_datums')
+        ->paginate(5)
+        ->withQueryString();
+
+    return view('aktualitates.index', compact('categories', 'news', 'q', 'from', 'to'));
+}
+
 
 
     // Страница новостей конкретной категории
@@ -49,14 +65,14 @@ class AktualitatesController extends Controller
             ->where('status', 'published')   
             ->where('kategorija_id', $id)  
             ->when($q !== '', function ($query) use ($q) {
-                // Если есть поиск — фильтр
+                // Если есть поиск — фильтр 
                 $query->where(function ($qq) use ($q) {
                     $qq->where('nosaukums', 'like', "%{$q}%")
                        ->orWhere('saturs', 'like', "%{$q}%");
                 });
             })
             ->orderByDesc('publicets_datums')
-            ->paginate(2)                 
+            ->paginate(5)                 
             ->withQueryString();
 
         return view('aktualitates.index', compact('categories', 'news', 'q'));

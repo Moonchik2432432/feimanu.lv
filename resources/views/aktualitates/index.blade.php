@@ -18,6 +18,22 @@
         </form>
     </div>
 
+    {{--Фильтрация по дате--}}
+    <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; flex-wrap:wrap;">
+
+        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt...">
+
+        <label>No:</label>
+        <input type="date" name="from" value="{{ $from ?? '' }}">
+
+        <label>Līdz:</label>
+        <input type="date" name="to" value="{{ $to ?? '' }}">
+
+        <button type="submit">Filtrēt</button>
+
+        <a href="{{ url()->current() }}">Notīrīt</a>
+    </form>
+
     {{-- категории + новости в ряд --}}
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
