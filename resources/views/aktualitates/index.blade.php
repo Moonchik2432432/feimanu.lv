@@ -20,6 +20,16 @@
         @endforeach
     </aside>
 
+    <form method="GET" action="{{ url()->current() }}">
+        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās...">
+        <button type="submit">Meklēt</button>
+
+        @if(!empty($q))
+            <a href="{{ url()->current() }}">Notīrīt</a>
+        @endif
+    </form>
+
+
     {{-- News --}}
     <main style="flex:1;">
         @foreach($news as $item)
