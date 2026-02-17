@@ -28,7 +28,7 @@ class AktualitatesController extends Controller
                 });
             })
             ->orderByDesc('publicets_datums') // сортировка по дате 
-            ->paginate(2)               
+            ->paginate(5)               
             ->withQueryString();              // сохраняем ?q= при переключении страниц
 
         return view('aktualitates.index', compact('categories', 'news', 'q'));
@@ -56,7 +56,7 @@ class AktualitatesController extends Controller
                 });
             })
             ->orderByDesc('publicets_datums')
-            ->paginate(5)                 
+            ->paginate(2)                 
             ->withQueryString();
 
         return view('aktualitates.index', compact('categories', 'news', 'q'));
