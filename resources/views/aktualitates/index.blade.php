@@ -6,18 +6,6 @@
 
 <div class="container">
 
-    <!-- {{-- Поиск сверху --}}
-    <div style="margin-bottom:20px;">
-        <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās..." style="flex:1; min-width:240px;">
-            <button type="submit">Meklēt</button>
-
-            @if(!empty($q))
-                <a href="{{ url()->current() }}">Notīrīt</a>
-            @endif
-        </form>
-    </div> -->
-
     {{--поиск по названию , фильтрация по дате--}}
     <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; flex-wrap:wrap;">
 
