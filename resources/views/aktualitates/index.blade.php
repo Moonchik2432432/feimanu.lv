@@ -5,14 +5,16 @@
 @section('content')
 <div class="container" style="display:flex; gap:30px;">
     {{-- Search --}}
-    <form method="GET" action="{{ url()->current() }}">
-        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās...">
-        <button type="submit">Meklēt</button>
+    <div style="margin-bottom:20px;">
+        <form method="GET" action="{{ url()->current() }}">
+            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās...">
+            <button type="submit">Meklēt</button>
 
-        @if(!empty($q))
-            <a href="{{ url()->current() }}">Notīrīt</a>
-        @endif
-    </form>
+            @if(!empty($q))
+                <a href="{{ url()->current() }}">Notīrīt</a>
+            @endif
+        </form>
+    </div>
 
     {{-- Sidebar --}}
     <aside style="width:250px;">
