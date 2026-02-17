@@ -22,7 +22,7 @@
         <a href="{{ url()->current() }}">Notīrīt</a>
     </form>
 
-    {{-- категории + новости в ряд --}}
+    {{-- категории и новости --}}
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
         <aside style="width:250px; flex:0 0 250px;">
@@ -55,7 +55,7 @@
                         @endif
                     </small>
 
-                    <p>{{ \Illuminate\Support\Str::limit($item->saturs, 75) }}</p>
+                    <p>{{ \Illuminate\Support\Str::limit($item->saturs, 100) }}</p>
 
                     @if($item->bilde)
                         <img src="{{ asset($item->bilde) }}" alt="{{ $item->nosaukums }}"
