@@ -22,7 +22,7 @@ class AktualitatesController extends Controller
                 });
             })
             ->orderByDesc('publicets_datums')
-            ->paginate(5)
+            ->paginate(2)
             ->withQueryString(); 
 
         return view('aktualitates.index', compact('categories', 'news', 'q'));
