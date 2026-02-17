@@ -3,11 +3,13 @@
 @section('title', 'Aktualitātes')
 
 @section('content')
-<div class="container" style="display:flex; gap:30px;">
-    {{-- Search --}}
+
+<div class="container">
+
+    {{-- Поиск сверху --}}
     <div style="margin-bottom:20px;">
-        <form method="GET" action="{{ url()->current() }}">
-            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās...">
+        <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt ziņās..." style="flex:1; min-width:240px;">
             <button type="submit">Meklēt</button>
 
             @if(!empty($q))
@@ -16,59 +18,54 @@
         </form>
     </div>
 
-    {{-- Sidebar --}}
-    <aside style="width:250px;">
-        <h3>Kategorijas</h3>
+    {{-- категории + новости в ряд --}}
+    <div style="display:flex; gap:30px; align-items:flex-start;">
 
-        <a href="{{ route('aktualitates.index') }}">Visas aktualitātes</a>
+        <aside style="width:250px; flex:0 0 250px;">
+            <h3>Kategorijas</h3>
 
-        @foreach($categories as $cat)
-            <div>
-                <a href="{{ route('aktualitates.category', $cat->kategorija_id) }}">
-                    {{ $cat->nosaukums }}
-                </a>
-            </div>
-        @endforeach
-    </aside>
+            <a href="{{ route('aktualitates.index') }}">Visas aktualitātes</a>
 
-    {{-- News --}}
-    <main style="flex:1;">
-        @foreach($news as $item)
-            <div style="border-bottom:1px solid #ddd; padding:15px 0;">
-
-                <h2>
-                    <a href="{{ route('aktualitates.show', $item->ieraksts_id) }}">
-                        {{ $item->nosaukums }}
+            @foreach($categories as $cat)
+                <div>
+                    <a href="{{ route('aktualitates.category', $cat->kategorija_id) }}">
+                        {{ $cat->nosaukums }}
                     </a>
-                </h2>
+                </div>
+            @endforeach
+        </aside>
 
-                <small style="color:gray;">
-                    {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
-                    @if($item->kategorija)
-                        • {{ $item->kategorija->nosaukums }}
+        <main style="flex:1; min-width:0;">
+            @foreach($news as $item)
+                <div style="border-bottom:1px solid #ddd; padding:15px 0;">
+                    <h2>
+                        <a href="{{ route('aktualitates.show', $item->ieraksts_id) }}">
+                            {{ $item->nosaukums }}
+                        </a>
+                    </h2>
+
+                    <small style="color:gray;">
+                        {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
+                        @if($item->kategorija)
+                            • {{ $item->kategorija->nosaukums }}
+                        @endif
+                    </small>
+
+                    <p>{{ \Illuminate\Support\Str::limit($item->saturs, 75) }}</p>
+
+                    @if($item->bilde)
+                        <img src="{{ asset($item->bilde) }}" alt="{{ $item->nosaukums }}"
+                             style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
                     @endif
-                </small>
+                </div>
+            @endforeach
 
-                <p>
-                    {{ \Illuminate\Support\Str::limit($item->saturs, 75) }}
-                </p>
-
-                @if($item->bilde)
-                    <img
-                        src="{{ asset($item->bilde) }}"
-                        alt="{{ $item->nosaukums }}"
-                        style="max-width:260px; border-radius:10px; margin:10px 0; display:block;"
-                    >
-                @endif
-
+            <div class="pagination-wrapper">
+                {{ $news->links('pagination.default') }}
             </div>
-        @endforeach
+        </main>
 
-        <div class="pagination-wrapper">
-            {{ $news->links('pagination.default') }}
-        </div>
-
-    </main>
-
+    </div>
 </div>
+
 @endsection
