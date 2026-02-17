@@ -14,7 +14,7 @@ class AktualitatesController extends Controller
         $news = Ieraksts::with('kategorija')
             ->where('status', 'published')
             ->orderByDesc('publicets_datums')
-            ->paginate(2);
+            ->paginate(5);
 
         return view('aktualitates.index', compact('categories', 'news'));
     }
@@ -27,7 +27,7 @@ class AktualitatesController extends Controller
             ->where('status', 'published')
             ->where('kategorija_id', $id)
             ->orderByDesc('publicets_datums')
-            ->paginate(6);
+            ->paginate(5);
 
         return view('aktualitates.index', compact('categories', 'news'));
     }
