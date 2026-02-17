@@ -81,10 +81,10 @@ public function index(Request $request)
     // Страница одной новости
     public function show($id)
     {
-        // Ищем новость по ID, только если она опубликована
-        $post = Ieraksts::with('kategorija')
+        // Ищем новость и коментарии по ID, только если она опубликована
+        $post = Ieraksts::with(['kategorija', 'komentari.user'])
             ->where('status', 'published')
-            ->findOrFail($id); // если не найдена — ошибка 404
+            ->findOrFail($id);
 
         return view('aktualitates.show', compact('post'));
     }

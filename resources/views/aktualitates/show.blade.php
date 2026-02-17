@@ -22,5 +22,41 @@
   <div>
       {!! nl2br(e($post->saturs)) !!}
   </div>
+
+  <hr style="margin:30px 0;">
+
+  <h2>Komentāri</h2>
+
+  {{-- Список комментариев видят все --}}
+  @forelse($post->komentari as $c)
+      <div style="border-bottom:1px solid #ddd; padding:12px 0;">
+          <div style="display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;">
+              <b>{{ $c->user->name ?? 'Lietotājs' }}</b>
+              <small style="color:#777;">
+                  {{ \Carbon\Carbon::parse($c->izveidots_datums)->format('d.m.Y H:i') }}
+              </small>
+          </div>
+          <div style="margin-top:6px;">
+              {{ $c->text }}
+          </div>
+      </div>
+  @empty
+      <p style="color:#777;">Šeit vēl nav komentāru.</p>
+  @endforelse
+
+  {{-- Писать могут только авторизованные --}}
+  @auth
+      <form method="POST" action="{{ route('komentari.store', $post->ieraksts_id) }}" style="margin-top:15px;">
+          @csrf
+          <label for="text"><b>Pievienot komentāru</b></label>
+          <textarea id="text" name="text" required rows="4" style="width:100%; margin-top:8px;"></textarea>
+          <button type="submit" style="margin-top:10px;">Sūtīt</button>
+      </form>
+  @else
+      <p style="margin-top:15px;">
+          Lai pievienotu komentāru, lūdzu <a href="{{ route('login') }}">ienāc</a>.
+      </p>
+  @endauth
+
 </div>
 @endsection
