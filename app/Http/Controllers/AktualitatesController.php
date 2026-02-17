@@ -17,7 +17,7 @@ class AktualitatesController extends Controller
             ->where('status', 'published')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
-                    $qq->where('virsraksts', 'like', "%{$q}%")
+                    $qq->where('nosaukums', 'like', "%{$q}%")
                        ->orWhere('saturs', 'like', "%{$q}%");
                 });
             })
@@ -38,7 +38,7 @@ class AktualitatesController extends Controller
             ->where('kategorija_id', $id)
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
-                    $qq->where('virsraksts', 'like', "%{$q}%")
+                    $qq->where('nosaukums', 'like', "%{$q}%")
                        ->orWhere('saturs', 'like', "%{$q}%");
                 });
             })
