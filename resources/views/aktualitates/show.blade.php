@@ -54,7 +54,7 @@
       </form>
   @else
       <p style="margin-top:15px;">
-          Lai pievienotu komentāru, lūdzu <a href="{{ route('login') }}">ienāc</a>.
+          Lai pievienotu komentāru, lūdzu autorizējies.
       </p>
   @endauth
 
