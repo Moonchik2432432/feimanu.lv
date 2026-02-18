@@ -22,4 +22,19 @@ class KomentariController extends Controller
 
         return back();
     }
+
+    public function destroy($id)
+    {
+    $comment = Komentars::findOrFail($id);
+
+    // Можно удалить только свой комментарий
+    if ($comment->user_id !== auth()->id()) {
+        abort(403);
+    }
+
+    $comment->delete();
+
+    return back();
+    }
+
 }

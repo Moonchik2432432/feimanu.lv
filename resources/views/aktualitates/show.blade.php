@@ -61,6 +61,21 @@
                 <div style="margin-top:6px;">
                     {{ $c->text }}
                 </div>
+
+            @auth
+                @if($c->user_id === auth()->id())
+                    <form method="POST" action="{{ route('komentari.destroy', $c->komentars_id) }}" style="margin-top:6px;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                onclick="return confirm('Vai tiešām dzēst komentāru?')"
+                                style="background:none;border:none;color:red;cursor:pointer;padding:0;">
+                            Dzēst
+                        </button>
+                    </form>
+                @endif
+            @endauth
+
             </div>
 
         </div>
