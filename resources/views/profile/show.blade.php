@@ -52,15 +52,17 @@
             @enderror
         </div>
 
+        <div style="margin-bottom:15px;">
+            <label>Jauns avatars</label>
+            <input type="file" name="avatar" accept="image/*">
+            @error('avatar')
+                <div style="color:red;">{{ $message }}</div>
+            @enderror
+        </div>
+
         <button type="submit">Saglabāt</button>
     </form>
 
-    <div style="margin-bottom:15px;">
-        <label>Jauns avatars</label>
-        <input type="file" name="avatar" accept="image/*">
-        @error('avatar')
-            <div style="color:red;">{{ $message }}</div>
-        @enderror
-    </div>
+
 </div>
 @endsection
