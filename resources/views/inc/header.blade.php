@@ -42,13 +42,28 @@
             <a href="{{ url('/') }}">Kontakti</a>
         </nav>
 
-         @auth
-            <form method="POST" action="{{ route('logout') }}">
-        @csrf
-            <button type="submit">Iziet</button>
-            </form>
+        @auth
+        <div class="user-menu">
+            <div class="user-trigger">
+                @if(auth()->user()->avatar)
+                    <img src="{{ asset('img/avatars/' . auth()->user()->avatar) }}" class="avatar">
+                @else
+                    <img src="{{ asset('img/default-avatar.png') }}" class="avatar">
+                @endif
+
+                <span>{{ auth()->user()->name }}</span>
+            </div>
+
+            <div class="user-dropdown">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit">Iziet</button>
+                </form>
+            </div>
+        </div>
         @else
             <a href="{{ route('login') }}">Login</a>
         @endauth
+
     </div>
 </header>

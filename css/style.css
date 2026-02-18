@@ -196,3 +196,50 @@ body {
     background: transparent;
     min-width: auto;
 }
+
+/* USER MENU*/
+
+.user-menu {
+    position: relative;
+    margin-left: 20px;
+}
+
+.user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    background: white;
+    min-width: 120px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.user-dropdown button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #093600;
+}
+
+.user-menu:hover .user-dropdown {
+    display: block;
+}
