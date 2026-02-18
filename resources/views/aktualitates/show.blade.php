@@ -30,8 +30,39 @@
   {{-- Список комментариев видят все --}}
   @forelse($post->komentari as $c)
       <div style="border-bottom:1px solid #ddd; padding:12px 0;">
-          <div style="display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;">
-              <b>{{ $c->user->name ?? 'Lietotājs' }}</b>
+          @forelse($post->komentari as $c)
+    <div style="display:flex; gap:15px; border-bottom:1px solid #ddd; padding:15px 0;">
+
+            {{-- Аватар --}}
+            <div>
+                @if($c->user && $c->user->avatar)
+                    <img src="{{ asset('img/usersAvatars/' . $c->user->avatar) }}"
+                        style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                @else
+                    <img src="{{ asset('img/usersAvatars/default_avatar.png') }}"
+                        style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                @endif
+            </div>
+
+            {{-- Текст комментария --}}
+            <div style="flex:1;">
+                <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                    <b>{{ $c->user->name ?? 'Lietotājs' }}</b>
+                    <small style="color:#777;">
+                        {{ \Carbon\Carbon::parse($c->izveidots_datums)->format('d.m.Y H:i') }}
+                    </small>
+                </div>
+
+                <div style="margin-top:6px;">
+                    {{ $c->text }}
+                </div>
+            </div>
+
+        </div>
+    @empty
+        <p style="color:#777;">Šeit vēl nav komentāru.</p>
+    @endforelse
+
               <small style="color:#777;">
                   {{ \Carbon\Carbon::parse($c->izveidots_datums)->format('d.m.Y H:i') }}
               </small>
