@@ -46,7 +46,7 @@
         <div class="user-menu">
             <div class="user-trigger">
                 @if(auth()->user()->avatar)
-                    <img src="{{ asset('img/usersAvatars/avatars/' . auth()->user()->avatar) }}" class="avatar">
+                    <img src="{{ asset('img/usersAvatars/' . auth()->user()->avatar) }}" class="avatar">
                 @else
                     <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}" class="avatar">
                 @endif
