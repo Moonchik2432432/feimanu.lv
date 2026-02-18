@@ -41,7 +41,7 @@
     <hr style="margin:25px 0;">
 
     <h3>Mainīt vārdu</h3>
-    <form method="POST" action="{{ route('profile.update') }}" style="max-width:400px;">
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
         @csrf
 
         <div style="margin-bottom:10px;">
@@ -55,5 +55,12 @@
         <button type="submit">Saglabāt</button>
     </form>
 
+    <div style="margin-bottom:15px;">
+        <label>Jauns avatars</label>
+        <input type="file" name="avatar" accept="image/*">
+        @error('avatar')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+    </div>
 </div>
 @endsection
