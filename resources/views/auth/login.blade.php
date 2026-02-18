@@ -27,6 +27,7 @@
         </div>
 
         <button type="submit">Pieslēgties</button>
+        <a href="{{ route('register') }}">Register</a>
     </form>
 
 </div>
