@@ -11,7 +11,6 @@ class ProfileController extends Controller
     public function show()
     {
         $user = auth()->user();
-
         $commentsCount = method_exists($user, 'komentari') ? $user->komentari()->count() : null;
 
         return view('profile.show', compact('user', 'commentsCount'));
@@ -26,24 +25,30 @@ class ProfileController extends Controller
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        // Обновление имени
+        // имя
         $user->name = $data['name'];
 
-        // Если загружен новый аватар
+        // аватар
         if ($request->hasFile('avatar')) {
+            $dir = public_path('img/usersAvatars');
 
-            // Удаляем старый аватар (если есть и не дефолт)
-            if ($user->avatar && File::exists(public_path('img/usersAvatars/' . $user->avatar))) {
-                File::delete(public_path('img/usersAvatars/' . $user->avatar));
+            // если папки нет — создаём
+            if (!File::exists($dir)) {
+                File::makeDirectory($dir, 0755, true);
             }
 
-            // Генерируем уникальное имя
-            $filename = Str::uuid() . '.' . $request->avatar->extension();
+            // удалить старый (если есть)
+            if ($user->avatar) {
+                $old = $dir . DIRECTORY_SEPARATOR . $user->avatar;
+                if (File::exists($old)) {
+                    File::delete($old);
+                }
+            }
 
-            // Сохраняем файл
-            $request->avatar->move(public_path('img/usersAvatars'), $filename);
+            // сохранить новый
+            $filename = Str::uuid() . '.' . $request->file('avatar')->extension();
+            $request->file('avatar')->move($dir, $filename);
 
-            // Сохраняем имя в БД
             $user->avatar = $filename;
         }
 
