@@ -26,6 +26,13 @@
             <input type="password" name="password" required style="width:100%;">
         </div>
 
+        <div style="margin-bottom:10px;">
+            <label>
+                <input type="checkbox" name="remember">
+                Atcerēties mani
+            </label>
+        </div>
+
         <a href="{{ route('register') }}">Registracija</a>
 
         <button type="submit">Pieslēgties</button>
