@@ -202,6 +202,8 @@ body {
 .user-menu {
     position: relative;
     margin-left: 20px;
+    display: inline-block;
+    padding-bottom: 12px; 
 }
 
 .user-trigger {
@@ -224,12 +226,22 @@ body {
     display: none;
     position: absolute;
     right: 0;
-    top: 45px;
+    top: calc(100% + 8px); /* небольшой отступ */
     background: white;
-    min-width: 120px;
+    min-width: 140px;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    z-index: 9999;
+}
+
+.user-dropdown::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -16px;
+    height: 16px;
 }
 
 .user-dropdown button {
