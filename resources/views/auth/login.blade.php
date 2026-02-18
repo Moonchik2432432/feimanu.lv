@@ -26,8 +26,9 @@
             <input type="password" name="password" required style="width:100%;">
         </div>
 
+        <a href="{{ route('register') }}">Registracija</a>
+
         <button type="submit">Pieslēgties</button>
-        <a href="{{ route('register') }}">Register</a>
     </form>
 
 </div>
