@@ -51,7 +51,10 @@
                     <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}" class="avatar">
                 @endif
 
-                <span>{{ auth()->user()->name }}</span>
+                <a href="{{ route('profile.show') }}" 
+                    style="color:white; text-decoration:none;">
+                        {{ auth()->user()->name }}
+                </a>
             </div>
 
             <div class="user-dropdown">
