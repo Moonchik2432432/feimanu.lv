@@ -10,7 +10,6 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        // если у User есть связь komentari(), можно посчитать так:
         $commentsCount = method_exists($user, 'komentari') ? $user->komentari()->count() : null;
 
         return view('profile.show', compact('user', 'commentsCount'));
@@ -22,7 +21,6 @@ class ProfileController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            // аватар необязателен, можно позже добавить upload
         ]);
 
         $user->update([
