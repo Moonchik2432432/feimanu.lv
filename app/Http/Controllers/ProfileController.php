@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         // аватар
         if ($request->hasFile('avatar')) {
-            $dir = public_path('img/usersAvatars');
+            $dir = base_path('htdocs/img/usersAvatars');
 
             // если папки нет — создаём
             if (!File::exists($dir)) {
