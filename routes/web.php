@@ -16,7 +16,6 @@ Route::view('/history', 'pagasts.history')->name('pagasts.history');
 //news
 Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
 Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
-Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/aktualitates/create', [AktualitatesController::class, 'create'])->name('aktualitates.create');
@@ -27,6 +26,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
 });
+
+Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
 
 //Kommentari
 Route::post('/aktualitates/{id}/komentari', [KomentariController::class, 'store'])
