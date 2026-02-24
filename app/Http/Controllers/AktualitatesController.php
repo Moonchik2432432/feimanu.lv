@@ -113,7 +113,7 @@ public function index(Request $request)
 
         // загрузка картинки
         if ($request->hasFile('bilde')) {
-            $dir = public_path('uploads/news');
+            $dir = base_path('img/aktualitates');
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
@@ -122,7 +122,7 @@ public function index(Request $request)
             $request->file('bilde')->move($dir, $filename);
 
             // В БД сохраняем относительный путь, чтобы asset() работал
-            $data['bilde'] = 'uploads/news/' . $filename;
+            $data['bilde'] = 'img/aktualitates/' . $filename;
         }
 
         Ieraksts::create($data);
@@ -160,13 +160,13 @@ public function index(Request $request)
         if ($request->hasFile('bilde')) {
             // удалить старую картинку
             if (!empty($post->bilde)) {
-                $old = public_path($post->bilde);
+                $old = base_path($post->bilde);
                 if (File::exists($old)) {
                     File::delete($old);
                 }
             }
 
-            $dir = public_path('img/aktualitates');
+            $dir = base_path('img/aktualitates');
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
