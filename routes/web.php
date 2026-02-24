@@ -19,8 +19,16 @@ Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'cat
 Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])->name('aktualitates.edit');
-    Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
+    // CREATE
+    Route::get('/aktualitates/create', [AktualitatesController::class, 'create'])
+        ->name('aktualitates.create');
+    Route::post('/aktualitates', [AktualitatesController::class, 'store'])
+        ->name('aktualitates.store');
+    // EDIT
+    Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])
+        ->name('aktualitates.edit');
+    Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])
+        ->name('aktualitates.destroy');
 });
 
 //Kommentari
