@@ -64,9 +64,6 @@
         <button type="submit">Saglabāt</button>
     </form>
 
-</div>
-@endsection
-
 <hr style="margin:25px 0;">
 
 <h3>Mainīt paroli</h3>
@@ -97,3 +94,8 @@
 
     <button type="submit">Mainīt paroli</button>
 </form>
+
+</div>
+@endsection
+
+
