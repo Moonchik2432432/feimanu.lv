@@ -185,11 +185,14 @@ public function index(Request $request)
     // Удаление новости
     public function destroy($id)
     {
-        $post = Ieraksts::findOrFail($id);
+        $post = Ieraksts::with('komentari')->findOrFail($id);
 
-        // удалить файл картинки
+        // удалить комментарии
+        $post->komentari()->delete();
+
+        // удалить картинку
         if (!empty($post->bilde)) {
-            $path = public_path($post->bilde);
+            $path = public_path(ltrim($post->bilde, '/'));
             if (File::exists($path)) {
                 File::delete($path);
             }
@@ -197,6 +200,7 @@ public function index(Request $request)
 
         $post->delete();
 
-        return redirect()->route('aktualitates.index')->with('success', 'Aktualitāte dzēsta!');
+        return redirect()->route('aktualitates.index')
+            ->with('success', 'Aktualitāte dzēsta!');
     }
 }
