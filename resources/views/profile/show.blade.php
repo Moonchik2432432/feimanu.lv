@@ -66,3 +66,34 @@
 
 </div>
 @endsection
+
+<hr style="margin:25px 0;">
+
+<h3>Mainīt paroli</h3>
+
+<form method="POST" action="{{ route('profile.password') }}" style="max-width:400px;">
+    @csrf
+
+    <div style="margin-bottom:10px;">
+        <label>Pašreizējā parole</label>
+        <input type="password" name="current_password" style="width:100%;" required>
+        @error('current_password')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div style="margin-bottom:10px;">
+        <label>Jaunā parole</label>
+        <input type="password" name="new_password" style="width:100%;" required>
+        @error('new_password')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label>Atkārtot jauno paroli</label>
+        <input type="password" name="new_password_confirmation" style="width:100%;" required>
+    </div>
+
+    <button type="submit">Mainīt paroli</button>
+</form>

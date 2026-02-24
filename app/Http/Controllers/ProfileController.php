@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -55,5 +56,28 @@ class ProfileController extends Controller
         $user->save();
 
         return back()->with('success', 'Profils atjaunināts!');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required'],
+            'new_password' => ['required', 'min:6', 'confirmed'],
+        ]);
+
+        $user = auth()->user();
+
+        // проверка старого пароля
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'Nepareiza pašreizējā parole.',
+            ]);
+        }
+
+        // обновление пароля
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Parole veiksmīgi nomainīta!');
     }
 }
