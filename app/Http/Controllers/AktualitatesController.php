@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ieraksts;    
 use App\Models\Kategorija;   
 use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\File;
 
 class AktualitatesController extends Controller
 {
@@ -87,5 +88,115 @@ public function index(Request $request)
             ->findOrFail($id);
 
         return view('aktualitates.show', compact('post'));
+    }
+
+    // Форма создания новости
+    public function create()
+    {
+        $categories = Kategorija::orderBy('nosaukums')->get();
+        return view('aktualitates.create', compact('categories'));
+    }
+
+    // Сохранение новой новости
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'nosaukums' => ['required', 'string', 'max:255'],
+            'saturs' => ['required', 'string'],
+            'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
+            'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'status' => ['required', 'in:draft,published'],
+        ]);
+
+        // publicets_datums ставим только если published
+        $data['publicets_datums'] = $data['status'] === 'published' ? now() : null;
+
+        // загрузка картинки
+        if ($request->hasFile('bilde')) {
+            $dir = public_path('uploads/news');
+            if (!File::exists($dir)) {
+                File::makeDirectory($dir, 0755, true);
+            }
+
+            $filename = uniqid('news_') . '.' . $request->file('bilde')->extension();
+            $request->file('bilde')->move($dir, $filename);
+
+            // В БД сохраняем относительный путь, чтобы asset() работал
+            $data['bilde'] = 'uploads/news/' . $filename;
+        }
+
+        Ieraksts::create($data);
+
+        return redirect()->route('aktualitates.index')->with('success', 'Aktualitāte izveidota!');
+    }
+
+    // Форма редактирования
+    public function edit($id)
+    {
+        $post = Ieraksts::findOrFail($id);
+        $categories = Kategorija::orderBy('nosaukums')->get();
+
+        return view('aktualitates.edit', compact('post', 'categories'));
+    }
+
+    // Обновление новости
+    public function update(Request $request, $id)
+    {
+        $post = Ieraksts::findOrFail($id);
+
+        $data = $request->validate([
+            'nosaukums' => ['required', 'string', 'max:255'],
+            'saturs' => ['required', 'string'],
+            'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
+            'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'status' => ['required', 'in:draft,published'],
+        ]);
+
+        // publicets_datums: если переводим в published и даты ещё нет — поставить now()
+        if ($data['status'] === 'published' && empty($post->publicets_datums)) {
+            $data['publicets_datums'] = now();
+        }
+
+        if ($request->hasFile('bilde')) {
+            // удалить старую картинку
+            if (!empty($post->bilde)) {
+                $old = public_path($post->bilde);
+                if (File::exists($old)) {
+                    File::delete($old);
+                }
+            }
+
+            $dir = public_path('uploads/news');
+            if (!File::exists($dir)) {
+                File::makeDirectory($dir, 0755, true);
+            }
+
+            $filename = uniqid('news_') . '.' . $request->file('bilde')->extension();
+            $request->file('bilde')->move($dir, $filename);
+
+            $data['bilde'] = 'uploads/news/' . $filename;
+        }
+
+        $post->update($data);
+
+        return redirect()->route('aktualitates.index')->with('success', 'Aktualitāte atjaunināta!');
+    }
+
+    // Удаление новости
+    public function destroy($id)
+    {
+        $post = Ieraksts::findOrFail($id);
+
+        // удалить файл картинки
+        if (!empty($post->bilde)) {
+            $path = public_path($post->bilde);
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+
+        $post->delete();
+
+        return redirect()->route('aktualitates.index')->with('success', 'Aktualitāte dzēsta!');
     }
 }
