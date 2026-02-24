@@ -18,6 +18,11 @@ Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('akt
 Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])->name('aktualitates.edit');
+    Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
+});
+
 //Kommentari
 Route::post('/aktualitates/{id}/komentari', [KomentariController::class, 'store'])
     ->middleware('auth')

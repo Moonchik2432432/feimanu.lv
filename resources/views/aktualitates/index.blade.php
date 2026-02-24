@@ -22,6 +22,12 @@
         <a href="{{ url()->current() }}">Notīrīt</a>
     </form>
 
+    @if(auth()->check() && auth()->user()->isAdmin())
+        <div style="margin-bottom:15px;">
+            <a href="{{ route('aktualitates.create') }}">➕ Pievienot aktualitāti</a>
+        </div>
+    @endif
+
     {{-- категории и новости --}}
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
@@ -62,6 +68,27 @@
                              style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
                     @endif
                 </div>
+
+                @if(auth()->check() && auth()->user()->isAdmin())
+                <div style="margin-top:10px; display:flex; gap:10px;">
+                    
+                    <a href="{{ route('aktualitates.edit', $item->ieraksts_id) }}"
+                    style="color:blue;">
+                        ✏ Rediģēt
+                    </a>
+
+                    <form action="{{ route('aktualitates.destroy', $item->ieraksts_id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Vai tiešām dzēst šo aktualitāti?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="color:red; background:none; border:none; cursor:pointer;">
+                            🗑 Dzēst
+                        </button>
+                    </form>
+
+                </div>
+            @endif
             @endforeach
 
             <div class="pagination-wrapper">
