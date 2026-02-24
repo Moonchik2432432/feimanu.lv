@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container" style="max-width:700px;">
-
+<!-- VIEW PROFILE-->
     <h1>Mans profils</h1>
 
     @if(session('success'))
@@ -38,8 +38,8 @@
         </div>
     </div>
 
+<!-- CHANGE PROFILE NAME AND AVATAR-->
     <hr style="margin:25px 0;">
-
     <h3>Mainīt profilu</h3>
 
     <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" style="max-width:400px;">
@@ -60,40 +60,65 @@
                 <div style="color:red;">{{ $message }}</div>
             @enderror
         </div>
-
         <button type="submit">Saglabāt</button>
     </form>
 
-<hr style="margin:25px 0;">
+<!-- CHANGE PAROLE-->
+    <hr style="margin:25px 0;">
+    <h3>Mainīt paroli</h3>
 
-<h3>Mainīt paroli</h3>
+    <form method="POST" action="{{ route('profile.password') }}" style="max-width:400px;">
+        @csrf
 
-<form method="POST" action="{{ route('profile.password') }}" style="max-width:400px;">
-    @csrf
+        <div style="margin-bottom:10px;">
+            <label>Pašreizējā parole</label>
+            <input type="password" name="current_password" style="width:100%;" required>
+            @error('current_password')
+                <div style="color:red;">{{ $message }}</div>
+            @enderror
+        </div>
 
-    <div style="margin-bottom:10px;">
-        <label>Pašreizējā parole</label>
-        <input type="password" name="current_password" style="width:100%;" required>
-        @error('current_password')
-            <div style="color:red;">{{ $message }}</div>
-        @enderror
-    </div>
+        <div style="margin-bottom:10px;">
+            <label>Jaunā parole</label>
+            <input type="password" name="new_password" style="width:100%;" required>
+            @error('new_password')
+                <div style="color:red;">{{ $message }}</div>
+            @enderror
+        </div>
 
-    <div style="margin-bottom:10px;">
-        <label>Jaunā parole</label>
-        <input type="password" name="new_password" style="width:100%;" required>
-        @error('new_password')
-            <div style="color:red;">{{ $message }}</div>
-        @enderror
-    </div>
+        <div style="margin-bottom:15px;">
+            <label>Atkārtot jauno paroli</label>
+            <input type="password" name="new_password_confirmation" style="width:100%;" required>
+        </div>
 
-    <div style="margin-bottom:15px;">
-        <label>Atkārtot jauno paroli</label>
-        <input type="password" name="new_password_confirmation" style="width:100%;" required>
-    </div>
+        <button type="submit">Mainīt paroli</button>
+    </form>
 
-    <button type="submit">Mainīt paroli</button>
-</form>
+<!-- CHANGE E-PASTS-->
+    <hr style="margin:25px 0;">
+    <h3>Mainīt e-pastu</h3>
+
+    <form method="POST" action="{{ route('profile.email') }}" style="max-width:400px;">
+        @csrf
+
+        <div style="margin-bottom:10px;">
+            <label>Jaunais e-pasts</label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" style="width:100%;" required>
+            @error('email')
+                <div style="color:red;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label>Apstipriniet ar paroli</label>
+            <input type="password" name="password" style="width:100%;" required>
+            @error('password')
+                <div style="color:red;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit">Mainīt e-pastu</button>
+    </form>
 
 </div>
 @endsection

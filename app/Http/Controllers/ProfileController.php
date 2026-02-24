@@ -80,4 +80,27 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Parole veiksmīgi nomainīta!');
     }
+
+    public function updateEmail(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['required'],
+        ]);
+
+        // проверка пароля
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors([
+                'password' => 'Nepareiza parole.',
+            ]);
+        }
+
+        $user->email = $request->email;
+        $user->email_verified_at = null; // сбрасываем подтверждение
+        $user->save();
+
+        return back()->with('success', 'E-pasts veiksmīgi nomainīts!');
+    }
 }
