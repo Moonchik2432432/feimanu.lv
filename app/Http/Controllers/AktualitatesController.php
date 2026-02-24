@@ -166,7 +166,7 @@ public function index(Request $request)
                 }
             }
 
-            $dir = public_path('uploads/news');
+            $dir = public_path('img/aktualitates');
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
@@ -174,7 +174,7 @@ public function index(Request $request)
             $filename = uniqid('news_') . '.' . $request->file('bilde')->extension();
             $request->file('bilde')->move($dir, $filename);
 
-            $data['bilde'] = 'uploads/news/' . $filename;
+            $data['bilde'] = 'img/aktualitates/' . $filename;
         }
 
         $post->update($data);
