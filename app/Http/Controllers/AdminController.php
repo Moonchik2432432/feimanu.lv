@@ -100,7 +100,7 @@ class AdminController extends Controller
         $from = $request->get('from');
         $to = $request->get('to');
 
-        $query = Ieraksts::query();
+        $query = \App\Models\Ieraksts::query()->with('kategorija');
 
         if ($q !== '') {
             $query->where('nosaukums', 'like', "%{$q}%");
@@ -114,8 +114,7 @@ class AdminController extends Controller
             $query->whereDate('publicets_datums', '<=', $to);
         }
 
-        $ieraksti = $query
-            ->orderByDesc('publicets_datums')
+        $ieraksti = $query->orderByDesc('publicets_datums')
             ->paginate(10)
             ->appends($request->query());
 

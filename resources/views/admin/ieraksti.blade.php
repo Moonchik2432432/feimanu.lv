@@ -35,6 +35,7 @@
             <tr style="background:#f5f5f5;">
                 <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
+                <th style="padding:10px; border:1px solid #ddd;">Kategorija</th>
                 <th style="padding:10px; border:1px solid #ddd;">Status</th>
                 <th style="padding:10px; border:1px solid #ddd;">Publicēts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
@@ -46,12 +47,15 @@
             <tr>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->ieraksts_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->nosaukums }}</td>
+                <td style="padding:10px; border:1px solid #ddd;">
+                    {{ $i->kategorija?->nosaukums ?? '-' }}
+                </td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->status }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $i->publicets_datums }}
                 </td>
 
-                <td style="padding:10px; border:1px solid #ddd;">
+                <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
                     <a href="{{ route('aktualitates.show', $i->ieraksts_id) }}">View</a>
                     <a href="{{ route('aktualitates.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Edit</a>
 
