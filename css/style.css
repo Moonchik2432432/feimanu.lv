@@ -258,12 +258,14 @@ body {
 
 /* ADMIN HEADER*/
 .admin-bar {
-    background: #2c2c2c;
+    background: #101a00;
     padding: 10px 0;
 }
 
 .admin-bar .container {
     display: flex;
+    justify-content: center;  
+    align-items: center;       
     gap: 20px;
 }
 
