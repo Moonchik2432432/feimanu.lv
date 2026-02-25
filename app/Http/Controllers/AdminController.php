@@ -90,4 +90,33 @@ class AdminController extends Controller
 
         return view('admin.users_show', compact('user', 'comments'));
     }
+
+    // Aktualitates
+    public function ieraksti(Request $request)
+    {
+        $q = trim((string) $request->get('q', ''));
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $query = Ieraksts::query();
+
+        if ($q !== '') {
+            $query->where('nosaukums', 'like', "%{$q}%");
+        }
+
+        if ($from) {
+            $query->whereDate('publicets_datums', '>=', $from);
+        }
+
+        if ($to) {
+            $query->whereDate('publicets_datums', '<=', $to);
+        }
+
+        $ieraksti = $query
+            ->orderByDesc('publicets_datums')
+            ->paginate(10)
+            ->appends($request->query());
+
+        return view('admin.ieraksti', compact('ieraksti', 'q', 'from', 'to'));
+    }
 }

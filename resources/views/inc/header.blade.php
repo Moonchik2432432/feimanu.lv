@@ -76,7 +76,7 @@
         <div class="admin-bar">
             <div class="container">
                 <a href="{{ route('admin.users') }}">Lietotāji</a>
-                <a href="{{ route('aktualitates.index') }}">Aktualitātes</a>
+                <a href="{{ route('admin.ieraksti') }}">Aktualitātes</a>
             </div>
         </div>
     @endif

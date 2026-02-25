@@ -20,6 +20,9 @@ Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'cat
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
+    // news list
+    Route::get('/admin/ieraksti', [AdminController::class, 'ieraksti'])->name('admin.ieraksti');
+
     // users list
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 
