@@ -76,8 +76,6 @@
         <div class="admin-bar">
             <div class="container">
                 <a href="{{ route('admin.users') }}">Lietotāji</a>
-                <a href="{{ route('aktualitates.create') }}">Jauna aktualitāte</a>
-                <a href="#">Vēl kaut kas</a>
             </div>
         </div>
     @endif
