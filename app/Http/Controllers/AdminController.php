@@ -8,7 +8,9 @@ class AdminController extends Controller
 {
     public function users()
     {
-        $users = User::orderBy('id', 'desc')->paginate(10);
+        $users = User::select('id','name','email','role','created_at')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
         return view('admin.users', compact('users'));
     }
