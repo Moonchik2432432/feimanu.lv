@@ -71,4 +71,9 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')->with('success', 'Lietotājs izdzēsts');
     }
+
+    public function show(User $user)
+    {
+        return view('admin.users_show', compact('user'));
+    }
 }

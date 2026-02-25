@@ -67,6 +67,7 @@
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
+                    <a href="{{ route('admin.users.show', $user->id) }}">View</a>
                     <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
 
                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"

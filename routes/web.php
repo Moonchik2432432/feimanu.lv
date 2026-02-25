@@ -23,6 +23,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // users list
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 
+    Route::get('/admin/users/{user}', [AdminController::class, 'show'])->name('admin.users.show');
+
     // edit/update user
     Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
