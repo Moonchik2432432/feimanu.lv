@@ -18,6 +18,9 @@ Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('akt
 Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/users', [AdminController::class, 'users'])
+        ->name('admin.users');
+
     Route::get('/aktualitates/create', [AktualitatesController::class, 'create'])->name('aktualitates.create');
     Route::post('/aktualitates', [AktualitatesController::class, 'store'])->name('aktualitates.store');
 
