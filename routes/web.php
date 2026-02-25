@@ -19,15 +19,22 @@ Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('akt
 Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/users', [AdminController::class, 'users'])
-        ->name('admin.users');
 
+    // users list
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+
+    // edit/update user
+    Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
+
+    // delete user
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+
+    // aktualitates admin
     Route::get('/aktualitates/create', [AktualitatesController::class, 'create'])->name('aktualitates.create');
     Route::post('/aktualitates', [AktualitatesController::class, 'store'])->name('aktualitates.store');
-
     Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])->name('aktualitates.edit');
     Route::put('/aktualitates/{id}', [AktualitatesController::class, 'update'])->name('aktualitates.update');
-
     Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
 });
 

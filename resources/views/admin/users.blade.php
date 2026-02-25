@@ -8,6 +8,18 @@
 
     <h1>Lietotāju saraksts</h1>
 
+    @if(session('success'))
+        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; margin:15px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form method="GET" action="{{ route('admin.users') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
             <label>Search</label><br>
@@ -39,6 +51,7 @@
                 <th style="padding:10px; border:1px solid #ddd;">E-pasts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Loma</th>
                 <th style="padding:10px; border:1px solid #ddd;">Reģistrēts</th>
+                <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
         </thead>
 
@@ -51,6 +64,17 @@
                 <td style="padding:10px; border:1px solid #ddd;">{{ $user->role }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $user->created_at->format('d.m.Y H:i') }}
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
+                    <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
+
+                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"
+                          onsubmit="return confirm('Dzēst šo lietotāju?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="margin-left:10px;">Delete</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
