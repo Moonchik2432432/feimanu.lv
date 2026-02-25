@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Ieraksts;
+use App\Models\Kategorija;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -119,5 +120,65 @@ class AdminController extends Controller
             ->appends($request->query());
 
         return view('admin.ieraksti', compact('ieraksti', 'q', 'from', 'to'));
+    }
+
+    //Kategorija
+    public function kategorijas(Request $request)
+    {
+        $q = trim((string) $request->get('q', ''));
+
+        $query = Kategorija::query();
+
+        if ($q !== '') {
+            $query->where('nosaukums', 'like', "%{$q}%");
+        }
+
+        $categories = $query->orderBy('nosaukums')->paginate(15)->appends($request->query());
+
+        return view('admin.kategorijas', compact('categories', 'q'));
+    }
+
+    public function kategorijasCreate()
+    {
+        return view('admin.kategorijas_create');
+    }
+
+    public function kategorijasStore(Request $request)
+    {
+        $data = $request->validate([
+            'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums'],
+        ]);
+
+        Kategorija::create($data);
+
+        return redirect()->route('admin.kategorijas')->with('success', 'Kategorija pievienota');
+    }
+
+    public function kategorijasEdit($id)
+    {
+        $category = Kategorija::findOrFail($id);
+
+        return view('admin.kategorijas_edit', compact('category'));
+    }
+
+    public function kategorijasUpdate(Request $request, $id)
+    {
+        $category = Kategorija::findOrFail($id);
+
+        $data = $request->validate([
+            'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums,' . $category->kategorija_id . ',kategorija_id'],
+        ]);
+
+        $category->update($data);
+
+        return redirect()->route('admin.kategorijas')->with('success', 'Kategorija atjaunināta');
+    }
+
+    public function kategorijasDestroy($id)
+    {
+        $category = Kategorija::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('admin.kategorijas')->with('success', 'Kategorija izdzēsta');
     }
 }

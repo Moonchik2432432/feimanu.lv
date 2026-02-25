@@ -41,6 +41,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])->name('aktualitates.edit');
     Route::put('/aktualitates/{id}', [AktualitatesController::class, 'update'])->name('aktualitates.update');
     Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
+
+
+    // Category
+    Route::get('/admin/kategorijas', [AdminController::class, 'kategorijas'])->name('admin.kategorijas');
+
+    Route::get('/admin/kategorijas/create', [AdminController::class, 'kategorijasCreate'])->name('admin.kategorijas.create');
+    Route::post('/admin/kategorijas', [AdminController::class, 'kategorijasStore'])->name('admin.kategorijas.store');
+
+    Route::get('/admin/kategorijas/{id}/edit', [AdminController::class, 'kategorijasEdit'])->name('admin.kategorijas.edit');
+    Route::put('/admin/kategorijas/{id}', [AdminController::class, 'kategorijasUpdate'])->name('admin.kategorijas.update');
+
+    Route::delete('/admin/kategorijas/{id}', [AdminController::class, 'kategorijasDestroy'])->name('admin.kategorijas.destroy');
 });
 
 Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');

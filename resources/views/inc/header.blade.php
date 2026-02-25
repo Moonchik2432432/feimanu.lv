@@ -75,6 +75,7 @@
             <div class="container">
                 <a href="{{ route('admin.users') }}">Lietotāji</a>
                 <a href="{{ route('admin.ieraksti') }}">Aktualitātes</a>
+                <a href="{{ route('admin.kategorijas') }}">Kategorijas</a>
             </div>
         </div>
     @endif
