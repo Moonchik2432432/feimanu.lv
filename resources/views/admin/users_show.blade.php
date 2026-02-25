@@ -63,5 +63,38 @@
         </form>
     </div>
 
+<hr style="margin:30px 0;">
+
+<h2>Komentāri ({{ $comments->count() }})</h2>
+
+@if($comments->isEmpty())
+    <p>Šim lietotājam nav komentāru.</p>
+@else
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+        @foreach($comments as $c)
+            <div style="border:1px solid #ddd; border-radius:8px; padding:12px;">
+                <div style="font-size:14px; opacity:.8; margin-bottom:6px;">
+                    {{ \Carbon\Carbon::parse($c->created_at)->format('d.m.Y H:i') }}
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    {{ $c->saturs }}
+                </div>
+
+                <div style="font-size:14px;">
+                    <b>Pie aktualitātes:</b>
+                    @if($c->aktualitate_id)
+                        <a href="{{ route('aktualitates.show', $c->aktualitate_id) }}">
+                            {{ $c->aktualitate_title ?? ('Aktualitāte #' . $c->aktualitate_id) }}
+                        </a>
+                    @else
+                        (nav piesaistīts)
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endif
+
 </div>
 @endsection

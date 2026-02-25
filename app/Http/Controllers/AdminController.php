@@ -72,8 +72,21 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'Lietotājs izdzēsts');
     }
 
-    public function show(User $user)
-    {
-        return view('admin.users_show', compact('user'));
-    }
+public function show(\App\Models\User $user)
+{
+    $comments = \App\Models\Komentars::query()
+        ->where('user_id', $user->id)
+        ->leftJoin('aktualitates', 'komentari.aktualitate_id', '=', 'aktualitates.id')
+        ->orderByDesc('komentari.created_at')
+        ->select([
+            'komentari.id',
+            'komentari.saturs',
+            'komentari.created_at',
+            'komentari.aktualitate_id',
+            'aktualitates.virsraksts as aktualitate_title',
+        ])
+        ->get();
+
+    return view('admin.users_show', compact('user', 'comments'));
+}
 }
