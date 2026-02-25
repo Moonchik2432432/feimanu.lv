@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -74,8 +75,8 @@ class AdminController extends Controller
 
     public function show(\App\Models\User $user)
     {
-        $comments = \App\Models\Komentari::query()
-            ->leftJoin('ieraksts', 'komentari.ieraksts_id', '=', 'ieraksts.ieraksts_id')
+        $comments = \App\Models\Komentars::query()
+            ->leftJoin('ieraksts', 'komentars.ieraksts_id', '=', 'ieraksts.ieraksts_id')
             ->where('komentari.user_id', $user->id)
             ->orderByDesc('komentari.izveidots_datums')
             ->select([
