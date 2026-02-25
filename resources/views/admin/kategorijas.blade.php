@@ -27,7 +27,7 @@
             </a>
         </form>
 
-        <a href="{{ route('admin.kategorijas_create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+        <a href="{{ route('admin.kategorijas.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
             + Pievienot
         </a>
     </div>

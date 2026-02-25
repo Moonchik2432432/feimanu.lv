@@ -140,7 +140,7 @@ class AdminController extends Controller
 
     public function kategorijasCreate()
     {
-        return view('admin.kategorijas_create');
+        return view('admin.kategorija_create');
     }
 
     public function kategorijasStore(Request $request)
@@ -158,7 +158,7 @@ class AdminController extends Controller
     {
         $category = Kategorija::findOrFail($id);
 
-        return view('admin.kategorijas_edit', compact('category'));
+        return view('admin.kategorija_edit', compact('category'));
     }
 
     public function kategorijasUpdate(Request $request, $id)
