@@ -5,6 +5,7 @@ use App\Http\Controllers\AktualitatesController;
 use App\Http\Controllers\KomentariController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return redirect()->route('aktualitates.index');
