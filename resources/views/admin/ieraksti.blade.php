@@ -8,6 +8,13 @@
 
     <h1>Ierakstu saraksts</h1>
 
+    <div style="margin:15px 0;">
+        <a href="{{ route('aktualitates.create') }}"
+        style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
+            ➕ Pievienot ierakstu
+        </a>
+    </div>
+
     <form method="GET" action="{{ route('admin.ieraksti') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
             <label>Search</label><br>
