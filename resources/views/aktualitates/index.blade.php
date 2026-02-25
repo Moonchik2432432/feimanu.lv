@@ -22,16 +22,6 @@
         <a href="{{ url()->current() }}">Notīrīt</a>
     </form>
 
-    {{-- Кнопка добавления (только для админа) --}}
-    @if(auth()->check() && auth()->user()->isAdmin())
-        <div style="margin-bottom:20px;">
-            <a href="{{ route('aktualitates.create') }}"
-               style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
-                ➕ Pievienot aktualitāti
-            </a>
-        </div>
-    @endif
-
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
         {{-- Категории --}}
@@ -79,30 +69,6 @@
                         <img src="{{ asset($item->bilde) }}"
                              alt="{{ $item->nosaukums }}"
                              style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
-                    @endif
-
-                    {{-- Админ-кнопки --}}
-                    @if(auth()->check() && auth()->user()->isAdmin())
-                        <div style="margin-top:12px; display:flex; gap:15px; align-items:center;">
-
-                            <a href="{{ route('aktualitates.edit', $item->ieraksts_id) }}"
-                               style="color:#007bff; text-decoration:none;">
-                                ✏ Rediģēt
-                            </a>
-
-                            <form action="{{ route('aktualitates.destroy', $item->ieraksts_id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Vai tiešām dzēst šo aktualitāti?')">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit"
-                                        style="color:#dc3545; background:none; border:none; cursor:pointer; padding:0;">
-                                    🗑 Dzēst
-                                </button>
-                            </form>
-
-                        </div>
                     @endif
 
                 </div>
