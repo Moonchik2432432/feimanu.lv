@@ -69,6 +69,7 @@
         @endauth
 
     </div>
+</header>
 
     @auth
     @if(auth()->user()->role === 'admin')
@@ -81,4 +82,3 @@
         </div>
     @endif
 @endauth
-</header>
