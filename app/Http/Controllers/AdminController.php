@@ -76,7 +76,7 @@ class AdminController extends Controller
     public function show(\App\Models\User $user)
     {
         $comments = \App\Models\Komentars::query()
-            ->leftJoin('ieraksts', 'komentars.ieraksts_id', '=', 'ieraksts.ieraksts_id')
+            ->leftJoin('ieraksts', 'komentari.ieraksts_id', '=', 'ieraksts.ieraksts_id')
             ->where('komentari.user_id', $user->id)
             ->orderByDesc('komentari.izveidots_datums')
             ->select([
