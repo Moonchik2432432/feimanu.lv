@@ -13,7 +13,7 @@ class CommentController extends Controller
             'text' => 'required|string|max:1000',
         ]);
 
-        Comments::create([
+        Comment::create([
             'ieraksts_id' => (int)$id,
             'user_id' => auth()->id(),
             'text' => $request->text,
@@ -25,7 +25,7 @@ class CommentController extends Controller
 
     public function destroy($id)
     {
-    $comment = Comments::findOrFail($id);
+    $comment = Comment::findOrFail($id);
 
     // Можно удалить только свой комментарий
     if ($comment->user_id !== auth()->id()) {
