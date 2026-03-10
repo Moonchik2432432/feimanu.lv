@@ -14,7 +14,7 @@
     @endif
 
     <div style="display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:end; margin:15px 0;">
-        <form method="GET" action="{{ route('admin.kategorijas') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
+        <form method="GET" action="{{ route('admin.category.index') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
             <div>
                 <label>Search</label><br>
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
@@ -27,7 +27,7 @@
             </a>
         </form>
 
-        <a href="{{ route('admin.kategorijas.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+        <a href="{{ route('admin.category.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
             + Pievienot
         </a>
     </div>
@@ -46,9 +46,9 @@
                 <td style="padding:10px; border:1px solid #ddd;">{{ $cat->kategorija_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $cat->nosaukums }}</td>
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('admin.kategorijas.edit', $cat->kategorija_id) }}">Edit</a>
+                    <a href="{{ route('admin.category.edit', $cat->kategorija_id) }}">Edit</a>
 
-                    <form action="{{ route('admin.kategorijas.destroy', $cat->kategorija_id) }}"
+                    <form action="{{ route('admin.category.destroy', $cat->kategorija_id) }}"
                           method="POST" style="display:inline;"
                           onsubmit="return confirm('Dzēst šo kategoriju?');">
                         @csrf
