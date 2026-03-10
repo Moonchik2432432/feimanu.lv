@@ -15,13 +15,13 @@ Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
 Route::view('/history', 'pagasts.history')->name('pagasts.history');
 
 //news
-Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
-Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
+Route::get('aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
+Route::get('aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
     // news list
-    Route::get('/admin/ieraksti', [AdminController::class, 'ieraksti'])->name('admin.ieraksti');
+    Route::get('/admin/aktualitates_admin', [AdminController::class, 'index'])->name('admin.ieraksti');
 
     // users list
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
