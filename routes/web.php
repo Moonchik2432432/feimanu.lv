@@ -26,11 +26,11 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 
 // COMMENTS
-Route::post('/news/{id}/comments', [KomentariController::class, 'store'])
+Route::post('/news/{id}/comments', [CommentController::class, 'store'])
     ->middleware('auth')
     ->name('comments.store');
 
-Route::delete('/comments/{id}', [KomentariController::class, 'destroy'])
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
     ->middleware('auth')
     ->name('comments.destroy');
 
