@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\KomentariController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 
@@ -26,11 +26,11 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 
 // COMMENTS
-Route::post('/news/{id}/komentari', [KomentariController::class, 'store'])
+Route::post('/news/{id}/komentari', [CommentController::class, 'store'])
     ->middleware('auth')
     ->name('komentari.store');
 
-Route::delete('/komentari/{id}', [KomentariController::class, 'destroy'])
+Route::delete('/komentari/{id}', [CommentController::class, 'destroy'])
     ->middleware('auth')
     ->name('komentari.destroy');
 
