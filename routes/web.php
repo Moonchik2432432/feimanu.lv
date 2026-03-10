@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AktualitatesController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\KomentariController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 
 Route::get('/', function () {
-    return redirect()->route('aktualitates.index');
+    return redirect()->route('news.index');
 });
 
 Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
@@ -20,13 +20,13 @@ Route::view('/history', 'pagasts.history')->name('pagasts.history');
 
 
 // PUBLIC NEWS
-Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
-Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
-Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/category/{id}', [NewsController::class, 'category'])->name('news.category');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 
-// COMMENTS (public user actions)
-Route::post('/aktualitates/{id}/komentari', [KomentariController::class, 'store'])
+// COMMENTS
+Route::post('/news/{id}/komentari', [KomentariController::class, 'store'])
     ->middleware('auth')
     ->name('komentari.store');
 
@@ -37,7 +37,7 @@ Route::delete('/komentari/{id}', [KomentariController::class, 'destroy'])
 
 // AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login');
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
