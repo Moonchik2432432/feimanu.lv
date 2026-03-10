@@ -10,15 +10,15 @@
         <nav class="nav">
 
             <div class="menu">
-                <a href="{{ route('aktualitates.index') }}">Aktualitātes</a>
+                <a href="{{ route('news.index') }}">Aktualitātes</a>
 
                 <div class="submenu">
-                    <a href="{{ route('aktualitates.index') }}">
+                    <a href="{{ route('news.index') }}">
                         Visas aktualitātes
                     </a>
 
                     @foreach($headerCategories as $cat)
-                        <a href="{{ route('aktualitates.category', $cat->kategorija_id) }}">
+                        <a href="{{ route('news.category', $cat->kategorija_id) }}">
                             {{ $cat->nosaukums }}
                         </a>
                     @endforeach
@@ -30,11 +30,11 @@
 
                 <div class="submenu">
                     <a href="{{ route('pagasts.history') }}">
-                        Pagasts vesture
+                        Pagasta vēsture
                     </a>
                 </div>
             </div>
-            
+
             <a href="{{ url('/') }}">Pagasta pārvalde</a>
             <a href="{{ url('/') }}">Galerijas</a>
             <a href="{{ url('/') }}">Kontakti</a>
@@ -49,9 +49,8 @@
                     <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}" class="avatar">
                 @endif
 
-                <a href="{{ route('profile.show') }}" 
-                    style="color:white; text-decoration:none;">
-                        {{ auth()->user()->name }}
+                <a href="{{ route('profile.show') }}" style="color:white; text-decoration:none;">
+                    {{ auth()->user()->name }}
                 </a>
             </div>
 
@@ -69,13 +68,14 @@
     </div>
 </header>
 
-    @auth
+@auth
     @if(auth()->user()->role === 'admin')
         <div class="admin-bar">
             <div class="container">
                 <a href="{{ route('admin.users') }}">Lietotāji</a>
                 <a href="{{ route('admin.news') }}">Aktualitātes</a>
                 <a href="{{ route('admin.category') }}">Kategorijas</a>
+                <a href="{{ route('admin.comments') }}">Komentāri</a>
             </div>
         </div>
     @endif
