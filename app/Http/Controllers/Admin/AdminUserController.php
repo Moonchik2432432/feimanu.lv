@@ -66,4 +66,28 @@ class AdminUserController extends Controller
     {
         return view('admin.users.edit', compact('user'));
     }
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'name'  => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'role'  => ['required', 'in:admin,user'],
+        ]);
+
+        $user->update($data);
+
+        return redirect()->route('admin.users')->with('success', 'Lietotājs atjaunināts');
+    }
+
+    public function destroy(User $user)
+    {
+        if (auth()->id() === $user->id) {
+            return back()->with('error', 'Tu nevari izdzēst savu profilu');
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('success', 'Lietotājs izdzēsts');
+    }
 }
