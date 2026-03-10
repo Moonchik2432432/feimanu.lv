@@ -14,10 +14,10 @@ class News extends Model
     protected $fillable = [
         'nosaukums',
         'saturs',
-        'attels',
-        'publicets_datums',
         'kategorija_id',
-        'user_id',
+        'status',
+        'publicets_datums',
+        'bilde'
     ];
 
     public function category()
@@ -27,6 +27,6 @@ class News extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comments::class, 'ieraksts_id', 'ieraksts_id');
+        return $this->hasMany(Comment::class, 'ieraksts_id', 'ieraksts_id');
     }
 }
