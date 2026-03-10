@@ -33,6 +33,6 @@ class AdminNewsController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        return view('admin.ieraksti', compact('news', 'q', 'from', 'to'));
+        return view('admin.news.index', compact('news', 'q', 'from', 'to'));
     }
 }
