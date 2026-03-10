@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Comments;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -46,7 +46,7 @@ class AdminUserController extends Controller
 
     public function show(User $user)
     {
-        $comments = Comments::query()
+        $comments = Comment::query()
             ->leftJoin('ieraksts', 'komentari.ieraksts_id', '=', 'ieraksts.ieraksts_id')
             ->where('komentari.user_id', $user->id)
             ->orderByDesc('komentari.izveidots_datums')
