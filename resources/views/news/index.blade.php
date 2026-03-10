@@ -29,12 +29,12 @@
             <h3>Kategorijas</h3>
 
             <div>
-                <a href="{{ route('aktualitates.index') }}">Visas aktualitātes</a>
+                <a href="{{ route('news.index') }}">Visas aktualitātes</a>
             </div>
 
             @foreach($categories as $cat)
                 <div>
-                    <a href="{{ route('aktualitates.category', $cat->kategorija_id) }}">
+                    <a href="{{ route('news.category', $cat->kategorija_id) }}">
                         {{ $cat->nosaukums }}
                     </a>
                 </div>
@@ -49,7 +49,7 @@
                 <div style="border-bottom:1px solid #ddd; padding:20px 0;">
 
                     <h2>
-                        <a href="{{ route('aktualitates.show', $item->ieraksts_id) }}">
+                        <a href="{{ route('news.show', $item->ieraksts_id) }}">
                             {{ $item->nosaukums }}
                         </a>
                     </h2>
