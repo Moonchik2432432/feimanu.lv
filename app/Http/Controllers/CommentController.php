@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Komentars;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 
-class KomentariController extends Controller
+class CommentController extends Controller
 {
     public function store(Request $request, $id)
     {
@@ -13,7 +13,7 @@ class KomentariController extends Controller
             'text' => 'required|string|max:1000',
         ]);
 
-        Komentars::create([
+        Comments::create([
             'ieraksts_id' => (int)$id,
             'user_id' => auth()->id(),
             'text' => $request->text,
@@ -25,7 +25,7 @@ class KomentariController extends Controller
 
     public function destroy($id)
     {
-    $comment = Komentars::findOrFail($id);
+    $comment = Comments::findOrFail($id);
 
     // Можно удалить только свой комментарий
     if ($comment->user_id !== auth()->id()) {
