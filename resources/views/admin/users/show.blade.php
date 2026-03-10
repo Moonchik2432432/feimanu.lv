@@ -101,7 +101,7 @@
                         </a>
                     </div>
 
-                    <form action="{{ route('admin.comment.destroy', $c->komentars_id) }}"
+                    <form action="{{ route('admin.comments.destroy', $c->komentars_id) }}"
                           method="POST"
                           onsubmit="return confirm('Dzēst šo komentāru?');">
                         @csrf
