@@ -75,7 +75,6 @@
                 <a href="{{ route('admin.users') }}">Lietotāji</a>
                 <a href="{{ route('admin.news') }}">Aktualitātes</a>
                 <a href="{{ route('admin.category') }}">Kategorijas</a>
-                <a href="{{ route('admin.comments') }}">Komentāri</a>
             </div>
         </div>
     @endif

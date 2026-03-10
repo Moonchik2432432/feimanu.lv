@@ -82,7 +82,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/news/{id}', [AdminNewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
 
-    // COMMENTS
-    Route::get('/comments', [AdminCommentsController::class, 'index'])->name('admin.comments');
+    // COMMENT
     Route::delete('/comments/{id}', [AdminCommentsController::class, 'destroy'])->name('admin.comments.destroy');
 });

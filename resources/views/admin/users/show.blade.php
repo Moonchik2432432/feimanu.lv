@@ -24,6 +24,18 @@
         </div>
     </div>
 
+    @if(session('success'))
+        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div style="padding:10px; background:#ffe9e9; border:1px solid #f0b7b7; border-radius:8px; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <table style="width:100%; border-collapse:collapse;">
         <tr>
             <td style="border:1px solid #ddd; padding:10px; width:220px;"><b>ID</b></td>
@@ -63,36 +75,44 @@
         </form>
     </div>
 
-<hr style="margin:30px 0;">
+    <hr style="margin:30px 0;">
 
-<h2>Komentāri ({{ $comments->count() }})</h2>
+    <h2>Komentāri ({{ $comments->count() }})</h2>
 
-@if($comments->isEmpty())
-    <p>Šim lietotājam nav komentāru.</p>
-@else
-    <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
-        @foreach($comments as $c)
-            <div style="border:1px solid #ddd; border-radius:8px; padding:12px;">
+    @if($comments->isEmpty())
+        <p>Šim lietotājam nav komentāru.</p>
+    @else
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+            @foreach($comments as $c)
+                <div style="border:1px solid #ddd; border-radius:8px; padding:12px;">
 
-                <div style="font-size:14px; opacity:.8; margin-bottom:6px;">
-                    {{ \Carbon\Carbon::parse($c->izveidots_datums)->format('d.m.Y H:i') }}
+                    <div style="font-size:14px; opacity:.8; margin-bottom:6px;">
+                        {{ \Carbon\Carbon::parse($c->izveidots_datums)->format('d.m.Y H:i') }}
+                    </div>
+
+                    <div style="margin-bottom:10px;">
+                        {{ $c->text }}
+                    </div>
+
+                    <div style="font-size:14px; margin-bottom:10px;">
+                        <b>Pie ieraksta:</b>
+                        <a href="{{ route('news.show', $c->ieraksts_id) }}">
+                            {{ $c->ieraksts_title }}
+                        </a>
+                    </div>
+
+                    <form action="{{ route('admin.comments.destroy', $c->komentars_id) }}"
+                          method="POST"
+                          onsubmit="return confirm('Dzēst šo komentāru?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="color:red;">Delete comment</button>
+                    </form>
+
                 </div>
-
-                <div style="margin-bottom:10px;">
-                    {{ $c->text }}
-                </div>
-
-                <div style="font-size:14px;">
-                    <b>Pie ieraksta:</b>
-                    <a href="{{ route('news.show', $c->ieraksts_id) }}">
-                        {{ $c->ieraksts_title }}
-                    </a>
-                </div>
-
-            </div>
-        @endforeach
-    </div>
-@endif
+            @endforeach
+        </div>
+    @endif
 
 </div>
 @endsection
