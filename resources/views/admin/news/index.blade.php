@@ -76,7 +76,7 @@
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('aktualitates.show', $i->ieraksts_id) }}">View</a>
+                    <a href="{{ route('news.show', $i->ieraksts_id) }}">View</a>
 
                     <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Edit</a>
 
