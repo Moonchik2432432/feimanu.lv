@@ -23,12 +23,12 @@ class AdminCategoryController extends Controller
             ->paginate(15)
             ->appends($request->query());
 
-        return view('admin.kategorijas', compact('categories', 'q'));
+        return view('admin.category.index', compact('categories', 'q'));
     }
 
     public function create()
     {
-        return view('admin.kategorija_create');
+        return view('admin.category.create');
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class AdminCategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        return view('admin.kategorija_edit', compact('category'));
+        return view('admin.category.edit', compact('category'));
     }
 
     public function update(Request $request, $id)
