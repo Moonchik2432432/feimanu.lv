@@ -22,7 +22,7 @@
 
             <button type="submit" style="padding:9px 14px;">Meklēt</button>
 
-            <a href="{{ route('admin.kategorijas') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
+            <a href="{{ route('admin.category.index') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
                 Reset
             </a>
         </form>
