@@ -8,6 +8,7 @@ class Category extends Model
 {
     protected $table = 'kategorija';
     protected $primaryKey = 'kategorija_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'nosaukums'
