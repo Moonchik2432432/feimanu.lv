@@ -9,6 +9,8 @@ class News extends Model
     protected $table = 'ieraksts';
     protected $primaryKey = 'ieraksts_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nosaukums',
         'saturs',
