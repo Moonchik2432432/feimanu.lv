@@ -84,7 +84,7 @@
 
                 <div style="font-size:14px;">
                     <b>Pie ieraksta:</b>
-                    <a href="{{ route('aktualitates.show', $c->ieraksts_id) }}">
+                    <a href="{{ route('news.show', $c->ieraksts_id) }}">
                         {{ $c->ieraksts_title }}
                     </a>
                 </div>
