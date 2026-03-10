@@ -41,7 +41,7 @@ class AdminUserController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        return view('admin.users', compact('users', 'q', 'from', 'to'));
+        return view('admin.users.index', compact('users', 'q', 'from', 'to'));
     }
 
     public function show(User $user)
@@ -59,12 +59,12 @@ class AdminUserController extends Controller
             ])
             ->get();
 
-        return view('admin.users_show', compact('user', 'comments'));
+        return view('admin.users.show', compact('user', 'comments'));
     }
 
     public function edit(User $user)
     {
-        return view('admin.users_edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
