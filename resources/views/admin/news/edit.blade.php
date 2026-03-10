@@ -54,9 +54,9 @@
         <div style="margin-bottom:10px;">
             <label>Pašreizējā bilde</label><br>
 
-            @if($post->attels)
-                <img src="{{ asset('storage/' . $post->attels) }}"
-                     style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
+            @if($post->bilde)
+                <img src="{{ asset($post->bilde) }}"
+                    style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
             @else
                 <div style="color:gray;">Nav bildes</div>
             @endif
