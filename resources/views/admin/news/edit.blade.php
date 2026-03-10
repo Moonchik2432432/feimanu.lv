@@ -3,7 +3,7 @@
 @section('title', 'Rediģēt aktualitāti')
 
 @section('content')
-<div class="container" style="max-width:800px;">
+<div class="container" style="max-width:800px; margin:40px auto;">
 
     <h1>Rediģēt aktualitāti</h1>
 
@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('aktualitates.update', $post->ieraksts_id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.news.update', $post->ieraksts_id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -53,8 +53,10 @@
 
         <div style="margin-bottom:10px;">
             <label>Pašreizējā bilde</label><br>
-            @if($post->bilde)
-                <img src="{{ asset($post->bilde) }}" style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
+
+            @if($post->attels)
+                <img src="{{ asset('storage/' . $post->attels) }}"
+                     style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
             @else
                 <div style="color:gray;">Nav bildes</div>
             @endif
@@ -67,9 +69,8 @@
 
         <div style="display:flex; gap:10px;">
             <button type="submit">Saglabāt izmaiņas</button>
-            <a href="{{ route('aktualitates.index') }}">Atpakaļ</a>
+            <a href="{{ route('admin.news') }}">Atpakaļ</a>
         </div>
-
     </form>
 
 </div>

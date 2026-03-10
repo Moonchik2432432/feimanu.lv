@@ -5,7 +5,11 @@ use App\Http\Controllers\AktualitatesController;
 use App\Http\Controllers\KomentariController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminNewsController;
+use App\Http\Controllers\Admin\AdminCommentsController;
 
 Route::get('/', function () {
     return redirect()->route('aktualitates.index');
@@ -14,50 +18,14 @@ Route::get('/', function () {
 Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
 Route::view('/history', 'pagasts.history')->name('pagasts.history');
 
-//news
-Route::get('aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
-Route::get('aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-
-    // news list
-    Route::get('/admin/aktualitates_admin', [AdminController::class, 'index'])->name('admin.ieraksti');
-
-    // users list
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-
-    Route::get('/admin/users/{user}', [AdminController::class, 'show'])->name('admin.users.show');
-
-    // edit/update user
-    Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
-    Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
-
-    // delete user
-    Route::delete('/admin/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
-
-    // aktualitates admin
-    Route::get('/aktualitates/create', [AktualitatesController::class, 'create'])->name('aktualitates.create');
-    Route::post('/aktualitates', [AktualitatesController::class, 'store'])->name('aktualitates.store');
-    Route::get('/aktualitates/{id}/edit', [AktualitatesController::class, 'edit'])->name('aktualitates.edit');
-    Route::put('/aktualitates/{id}', [AktualitatesController::class, 'update'])->name('aktualitates.update');
-    Route::delete('/aktualitates/{id}', [AktualitatesController::class, 'destroy'])->name('aktualitates.destroy');
-
-
-    // Category
-    Route::get('/admin/kategorijas', [AdminController::class, 'kategorijas'])->name('admin.kategorijas');
-
-    Route::get('/admin/kategorijas/create', [AdminController::class, 'kategorijasCreate'])->name('admin.kategorijas.create');
-    Route::post('/admin/kategorijas', [AdminController::class, 'kategorijasStore'])->name('admin.kategorijas.store');
-
-    Route::get('/admin/kategorijas/{id}/edit', [AdminController::class, 'kategorijasEdit'])->name('admin.kategorijas.edit');
-    Route::put('/admin/kategorijas/{id}', [AdminController::class, 'kategorijasUpdate'])->name('admin.kategorijas.update');
-
-    Route::delete('/admin/kategorijas/{id}', [AdminController::class, 'kategorijasDestroy'])->name('admin.kategorijas.destroy');
-});
-
+// PUBLIC NEWS
+Route::get('/aktualitates', [AktualitatesController::class, 'index'])->name('aktualitates.index');
+Route::get('/aktualitates/kategorija/{id}', [AktualitatesController::class, 'category'])->name('aktualitates.category');
 Route::get('/aktualitates/{id}', [AktualitatesController::class, 'show'])->name('aktualitates.show');
 
-//Kommentari
+
+// COMMENTS (public user actions)
 Route::post('/aktualitates/{id}/komentari', [KomentariController::class, 'store'])
     ->middleware('auth')
     ->name('komentari.store');
@@ -66,20 +34,55 @@ Route::delete('/komentari/{id}', [KomentariController::class, 'destroy'])
     ->middleware('auth')
     ->name('komentari.destroy');
 
-//Login and register
+
+// AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-//Profile
+
+// PROFILE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::post('/profile/email', [ProfileController::class, 'updateEmail'])
-        ->name('profile.email');
+    Route::post('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.email');
 });
 
+
+// ADMIN
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+
+    // USERS
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
+    Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
+    // CATEGORY
+    Route::get('/category', [AdminCategoryController::class, 'index'])->name('admin.category');
+    Route::get('/category/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
+    Route::post('/category', [AdminCategoryController::class, 'store'])->name('admin.category.store');
+    Route::get('/category/{id}/edit', [AdminCategoryController::class, 'edit'])->name('admin.category.edit');
+    Route::put('/category/{id}', [AdminCategoryController::class, 'update'])->name('admin.category.update');
+    Route::delete('/category/{id}', [AdminCategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+    // NEWS
+    Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news');
+    Route::get('/news/create', [AdminNewsController::class, 'create'])->name('admin.news.create');
+    Route::post('/news', [AdminNewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
+    Route::put('/news/{id}', [AdminNewsController::class, 'update'])->name('admin.news.update');
+    Route::delete('/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
+
+    // COMMENTS
+    Route::get('/comments', [AdminCommentsController::class, 'index'])->name('admin.comments');
+    Route::delete('/comments/{id}', [AdminCommentsController::class, 'destroy'])->name('admin.comments.destroy');
+});

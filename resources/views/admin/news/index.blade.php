@@ -3,19 +3,30 @@
 @section('title', 'Administrācija - Ieraksti')
 
 @section('content')
-
 <div class="container" style="max-width:1100px; margin:40px auto;">
 
     <h1>Ierakstu saraksts</h1>
 
+    @if(session('success'))
+        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div style="padding:10px; background:#ffe9e9; border:1px solid #f0b7b7; border-radius:8px; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div style="margin:15px 0;">
-        <a href="{{ route('aktualitates.create') }}"
-        style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
+        <a href="{{ route('admin.news.create') }}"
+           style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
             ➕ Pievienot ierakstu
         </a>
     </div>
 
-    <form method="GET" action="{{ route('admin.ieraksti') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
+    <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
             <label>Search</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
@@ -32,7 +43,9 @@
         </div>
 
         <button type="submit" style="padding:9px 14px;">Filter</button>
-        <a href="{{ route('admin.ieraksti') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
+
+        <a href="{{ route('admin.news') }}"
+           style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
             Reset
         </a>
     </form>
@@ -50,12 +63,12 @@
         </thead>
 
         <tbody>
-        @foreach($ieraksti as $i)
+        @forelse($news as $i)
             <tr>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->ieraksts_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->nosaukums }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
-                    {{ $i->kategorija?->nosaukums ?? '-' }}
+                    {{ $i->category?->nosaukums ?? '-' }}
                 </td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->status }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
@@ -64,9 +77,10 @@
 
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
                     <a href="{{ route('aktualitates.show', $i->ieraksts_id) }}">View</a>
-                    <a href="{{ route('aktualitates.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Edit</a>
 
-                    <form action="{{ route('aktualitates.destroy', $i->ieraksts_id) }}"
+                    <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Edit</a>
+
+                    <form action="{{ route('admin.news.destroy', $i->ieraksts_id) }}"
                           method="POST"
                           style="display:inline;"
                           onsubmit="return confirm('Dzēst šo ierakstu?');">
@@ -76,14 +90,19 @@
                     </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="6" style="padding:15px; border:1px solid #ddd; text-align:center;">
+                    Ieraksti nav atrasti
+                </td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 
     <div style="margin-top:20px;">
-        {{ $ieraksti->links() }}
+        {{ $news->links() }}
     </div>
 
 </div>
-
 @endsection

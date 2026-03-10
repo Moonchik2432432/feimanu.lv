@@ -4,21 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Komentars extends Model
+class Comments extends Model
 {
     protected $table = 'komentari';
     protected $primaryKey = 'komentars_id';
-    public $timestamps = false; // потому что у тебя izveidots_datums, а не created_at
+    public $timestamps = false;
 
-    protected $fillable = ['ieraksts_id', 'user_id', 'text', 'izveidots_datums'];
+    protected $fillable = [
+        'user_id',
+        'ieraksts_id',
+        'text',
+        'izveidots_datums',
+    ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function ieraksts()
+    public function news()
     {
-        return $this->belongsTo(Ieraksts::class, 'ieraksts_id', 'ieraksts_id');
+        return $this->belongsTo(News::class, 'ieraksts_id', 'ieraksts_id');
     }
 }

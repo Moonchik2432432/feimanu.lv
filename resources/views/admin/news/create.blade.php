@@ -3,7 +3,7 @@
 @section('title', 'Pievienot aktualitāti')
 
 @section('content')
-<div class="container" style="max-width:800px;">
+<div class="container" style="max-width:800px; margin:40px auto;">
 
     <h1>Pievienot aktualitāti</h1>
 
@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('aktualitates.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div style="margin-bottom:12px;">
@@ -29,19 +29,27 @@
             <label>Kategorija</label>
             <select name="kategorija_id" style="width:100%;" required>
                 <option value="">-- Izvēlēties --</option>
+
                 @foreach($categories as $cat)
-                    <option value="{{ $cat->kategorija_id }}" @selected(old('kategorija_id') == $cat->kategorija_id)>
+                    <option value="{{ $cat->kategorija_id }}" 
+                        @selected(old('kategorija_id') == $cat->kategorija_id)>
                         {{ $cat->nosaukums }}
                     </option>
                 @endforeach
+
             </select>
         </div>
 
         <div style="margin-bottom:12px;">
             <label>Status</label>
             <select name="status" style="width:100%;" required>
-                <option value="published" @selected(old('status','published') === 'published')>Published</option>
-                <option value="draft" @selected(old('status') === 'draft')>Draft</option>
+                <option value="published" @selected(old('status','published') === 'published')>
+                    Published
+                </option>
+
+                <option value="draft" @selected(old('status') === 'draft')>
+                    Draft
+                </option>
             </select>
         </div>
 
@@ -57,8 +65,12 @@
 
         <div style="display:flex; gap:10px;">
             <button type="submit">Saglabāt</button>
-            <a href="{{ route('aktualitates.index') }}">Atcelt</a>
+
+            <a href="{{ route('admin.news') }}">
+                Atcelt
+            </a>
         </div>
+
     </form>
 
 </div>
