@@ -37,7 +37,7 @@ Route::delete('/komentari/{id}', [KomentariController::class, 'destroy'])
 
 // AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
