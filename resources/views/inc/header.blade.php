@@ -75,6 +75,7 @@
                 <a href="{{ route('admin.users') }}">Lietotāji/Komentariji</a>
                 <a href="{{ route('admin.news') }}">Aktualitātes</a>
                 <a href="{{ route('admin.category') }}">Kategorijas</a>
+                <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
             </div>
         </div>
     @endif
