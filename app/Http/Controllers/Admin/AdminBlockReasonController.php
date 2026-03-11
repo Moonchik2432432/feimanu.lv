@@ -23,18 +23,19 @@ class AdminBlockReasonController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => ['required','string','max:255'],
-            'description' => ['nullable','string'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
         ]);
 
         BlockReason::create([
             'title' => $data['title'],
-            'description' => $data['description'],
+            'description' => $data['description'] ?? null,
             'is_active' => 1,
         ]);
 
-        return redirect()->route('admin.block_reasons')
-            ->with('success','Iemesls pievienots');
+        return redirect()
+            ->route('admin.block_reasons')
+            ->with('success', 'Iemesls pievienots');
     }
 
     public function edit($id)
@@ -49,24 +50,40 @@ class AdminBlockReasonController extends Controller
         $reason = BlockReason::findOrFail($id);
 
         $data = $request->validate([
-            'title' => ['required','string','max:255'],
-            'description' => ['nullable','string'],
-            'is_active' => ['required','boolean'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'is_active' => ['required', 'boolean'],
         ]);
 
-        $reason->update($data);
+        $reason->update([
+            'title' => $data['title'],
+            'description' => $data['description'] ?? null,
+            'is_active' => $data['is_active'],
+        ]);
 
-        return redirect()->route('admin.block_reasons')
-            ->with('success','Iemesls atjaunināts');
+        return redirect()
+            ->route('admin.block_reasons')
+            ->with('success', 'Iemesls atjaunināts');
     }
 
     public function destroy($id)
     {
         $reason = BlockReason::findOrFail($id);
 
+        if ($reason->userBlocks()->exists()) {
+            $reason->update([
+                'is_active' => 0,
+            ]);
+
+            return redirect()
+                ->route('admin.block_reasons')
+                ->with('error', 'Iemesls jau tiek izmantots. Tas netika izdzēsts, bet tika izslēgts.');
+        }
+
         $reason->delete();
 
-        return redirect()->route('admin.block_reasons')
-            ->with('success','Iemesls izdzēsts');
+        return redirect()
+            ->route('admin.block_reasons')
+            ->with('success', 'Iemesls izdzēsts');
     }
 }
