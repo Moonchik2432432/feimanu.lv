@@ -5,6 +5,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RulesController;
 
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminCategoryController;
@@ -18,6 +19,7 @@ Route::get('/', function () {
 
 Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
 Route::view('/history', 'pagasts.history')->name('pagasts.history');
+Route::get('/rules', [RulesController::class, 'index'])->name('rules.index');
 
 // PUBLIC NEWS
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');

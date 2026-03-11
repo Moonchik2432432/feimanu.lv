@@ -35,6 +35,7 @@
                 </div>
             </div>
 
+            <a href="{{ route('rules.index') }}">Noteikumi</a>
             <a href="{{ url('/') }}">Pagasta pārvalde</a>
             <a href="{{ url('/') }}">Galerijas</a>
             <a href="{{ url('/') }}">Kontakti</a>
