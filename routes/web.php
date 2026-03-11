@@ -66,6 +66,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 
+    Route::post('/users/{user}/block', [AdminUserController::class, 'block'])->name('admin.users.block');
+    Route::post('/users/{user}/unblock', [AdminUserController::class, 'unblock'])->name('admin.users.unblock');
+    Route::get('/users/{user}/history', [AdminUserController::class, 'history'])->name('admin.users.history');
+   
     // CATEGORY
     Route::get('/category', [AdminCategoryController::class, 'index'])->name('admin.category');
     Route::get('/category/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');

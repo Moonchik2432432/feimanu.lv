@@ -20,6 +20,12 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     <form method="GET" action="{{ route('admin.users') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
             <label>Search</label><br>
@@ -51,6 +57,8 @@
                 <th style="padding:10px; border:1px solid #ddd;">E-pasts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Loma</th>
                 <th style="padding:10px; border:1px solid #ddd;">Reģistrēts</th>
+                <th style="padding:10px; border:1px solid #ddd;">Status</th>
+                <th style="padding:10px; border:1px solid #ddd;">Bloķēts līdz</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
         </thead>
@@ -65,17 +73,62 @@
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $user->created_at->format('d.m.Y H:i') }}
                 </td>
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @if($user->isBlockedNow())
+                        <span style="color:red; font-weight:bold;">Bloķēts</span>
+                    @else
+                        <span style="color:green; font-weight:bold;">Aktīvs</span>
+                    @endif
+                </td>
+                <td style="padding:10px; border:1px solid #ddd;">
+                    {{ $user->blocked_until ? $user->blocked_until->format('d.m.Y H:i') : '-' }}
+                </td>
 
-                <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('admin.users.show', $user->id) }}">View</a>
-                    <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
+                <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
 
-                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"
-                          onsubmit="return confirm('Dzēst šo lietotāju?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="margin-left:10px;">Delete</button>
-                    </form>
+                        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                            <a href="{{ route('admin.users.show', $user->id) }}">View</a>
+                            <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
+                            <a href="{{ route('admin.users.history', $user->id) }}">History</a>
+
+                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"
+                                  onsubmit="return confirm('Dzēst šo lietotāju?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+
+                        @if($user->isBlockedNow())
+                            <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
+                                @csrf
+                                <button type="submit" style="padding:6px 12px; color:green;">
+                                    Unblock
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('admin.users.block', $user->id) }}" style="display:flex; flex-direction:column; gap:8px;">
+                                @csrf
+
+                                <select name="block_reason_id" required style="padding:6px;">
+                                    <option value="">Reason</option>
+                                    @foreach($reasons as $reason)
+                                        <option value="{{ $reason->id }}">{{ $reason->title }}</option>
+                                    @endforeach
+                                </select>
+
+                                <textarea name="custom_reason" rows="2" placeholder="Papildu komentārs (optional)" style="padding:6px; resize:vertical;"></textarea>
+
+                                <input type="datetime-local" name="blocked_until" required style="padding:6px;">
+
+                                <button type="submit" style="padding:6px 12px; color:red;">
+                                    Block
+                                </button>
+                            </form>
+                        @endif
+
+                    </div>
                 </td>
             </tr>
         @endforeach
