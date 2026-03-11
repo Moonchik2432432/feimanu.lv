@@ -8,7 +8,7 @@
     <h2>Pieslēgties</h2>
 
     @if($errors->any())
-        <div style="color:red;">
+        <div style="color:red; white-space:pre-line;">
             {{ $errors->first() }}
         </div>
     @endif
