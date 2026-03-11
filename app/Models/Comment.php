@@ -26,4 +26,8 @@ class Comment extends Model
     {
         return $this->belongsTo(News::class, 'ieraksts_id', 'ieraksts_id');
     }
+
+    protected $casts = [
+    'izveidots_datums' => 'datetime',
+    ];
 }

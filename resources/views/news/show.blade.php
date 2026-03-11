@@ -30,6 +30,24 @@
 
     <h2>Komentāri</h2>
 
+    @if(session('success'))
+        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; margin:15px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     @forelse($post->comments as $c)
         <div style="display:flex; gap:15px; border-bottom:1px solid #ddd; padding:15px 0;">
 
@@ -91,7 +109,7 @@
                 required
                 rows="4"
                 style="width:100%; margin-top:8px; padding:8px;"
-            ></textarea>
+            >{{ old('text') }}</textarea>
 
             <button
                 type="submit"
