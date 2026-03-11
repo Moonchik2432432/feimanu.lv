@@ -18,22 +18,19 @@ Route::get('/', function () {
 Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
 Route::view('/history', 'pagasts.history')->name('pagasts.history');
 
-
 // PUBLIC NEWS
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/category/{id}', [NewsController::class, 'category'])->name('news.category');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
-
 // COMMENTS
 Route::post('/news/{id}/comments', [CommentController::class, 'store'])
-    ->middleware(['auth', 'blocked'])
+    ->middleware('auth')
     ->name('comments.store');
 
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
-    ->middleware(['auth', 'blocked'])
+    ->middleware('auth')
     ->name('comments.destroy');
-
 
 // AUTH
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -46,18 +43,16 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-
 // PROFILE
-Route::middleware(['auth', 'blocked'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.email');
 });
 
-
 // ADMIN
-Route::middleware(['auth', 'blocked', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // USERS
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
