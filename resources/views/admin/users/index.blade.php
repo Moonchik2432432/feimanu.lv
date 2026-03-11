@@ -88,7 +88,7 @@
                     <div style="display:flex; flex-direction:column; gap:8px;">
 
                         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-                            <a href="{{ route('admin.users.show', $user->id) }}">View</a>
+                            <a href="{{ route('admin.users.show', $user->id) }}">Info & Comments</a>
                             <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
                             <a href="{{ route('admin.users.history', $user->id) }}">History</a>
 
