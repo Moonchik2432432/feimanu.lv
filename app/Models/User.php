@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'avatar',
         'role',
+        'is_blocked',
+        'blocked_until',
     ];
 
     /**
@@ -51,5 +53,17 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function blocks()
+    {
+        return $this->hasMany(UserBlock::class, 'user_id');
+    }
+
+    public function isBlockedNow(): bool
+    {
+        return $this->is_blocked
+            && $this->blocked_until
+            && now()->lt($this->blocked_until);
     }
 }

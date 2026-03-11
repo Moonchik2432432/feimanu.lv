@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\UserBlock;
+use App\Models\BlockReason;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -15,7 +17,15 @@ class AdminUserController extends Controller
         $from = $request->get('from');
         $to = $request->get('to');
 
-        $usersQuery = User::query()->select('id', 'name', 'email', 'role', 'created_at');
+        $usersQuery = User::query()->select(
+            'id',
+            'name',
+            'email',
+            'role',
+            'created_at',
+            'is_blocked',
+            'blocked_until'
+        );
 
         if ($q !== '') {
             $usersQuery->where(function ($sub) use ($q) {
@@ -41,7 +51,11 @@ class AdminUserController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        return view('admin.users.index', compact('users', 'q', 'from', 'to'));
+        $reasons = BlockReason::where('is_active', 1)
+            ->orderBy('title')
+            ->get();
+
+        return view('admin.users.index', compact('users', 'q', 'from', 'to', 'reasons'));
     }
 
     public function show(User $user)
@@ -89,5 +103,66 @@ class AdminUserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users')->with('success', 'Lietotājs izdzēsts');
+    }
+
+    public function block(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'block_reason_id' => ['nullable', 'exists:block_reasons,id'],
+            'custom_reason'   => ['nullable', 'string', 'max:1000'],
+            'blocked_until'   => ['required', 'date', 'after:now'],
+        ]);
+
+        if (auth()->id() === $user->id) {
+            return back()->with('error', 'Tu nevari bloķēt pats sevi');
+        }
+
+        UserBlock::create([
+            'user_id'         => $user->id,
+            'blocked_by'      => auth()->id(),
+            'block_reason_id' => $data['block_reason_id'] ?? null,
+            'custom_reason'   => $data['custom_reason'] ?? null,
+            'blocked_from'    => now(),
+            'blocked_until'   => $data['blocked_until'],
+        ]);
+
+        $user->update([
+            'is_blocked'    => 1,
+            'blocked_until' => $data['blocked_until'],
+        ]);
+
+        return redirect()->route('admin.users')->with('success', 'Lietotājs bloķēts');
+    }
+
+    public function unblock(User $user)
+    {
+        $activeBlock = UserBlock::where('user_id', $user->id)
+            ->whereNull('unblocked_at')
+            ->orderByDesc('id')
+            ->first();
+
+        if ($activeBlock) {
+            $activeBlock->update([
+                'unblocked_at' => now(),
+                'unblocked_by' => auth()->id(),
+            ]);
+        }
+
+        $user->update([
+            'is_blocked'    => 0,
+            'blocked_until' => null,
+        ]);
+
+        return redirect()->route('admin.users')->with('success', 'Lietotājs atbloķēts');
+    }
+
+    public function history(User $user)
+    {
+        $blocks = UserBlock::with(['reason', 'blocker', 'unblockedBy'])
+            ->where('user_id', $user->id)
+            ->orderByDesc('id')
+            ->get();
+
+        return view('admin.users.history', compact('user', 'blocks'));
     }
 }
