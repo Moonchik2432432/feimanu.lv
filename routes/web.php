@@ -27,11 +27,11 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 // COMMENTS
 Route::post('/news/{id}/comments', [CommentController::class, 'store'])
-    ->middleware('auth')
+    ->middleware(['auth', 'blocked'])
     ->name('comments.store');
 
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
-    ->middleware('auth')
+    ->middleware(['auth', 'blocked'])
     ->name('comments.destroy');
 
 
@@ -48,7 +48,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 
 // PROFILE
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'blocked'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
 
 
 // ADMIN
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'blocked', 'admin'])->prefix('admin')->group(function () {
 
     // USERS
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
@@ -65,11 +65,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
-
     Route::post('/users/{user}/block', [AdminUserController::class, 'block'])->name('admin.users.block');
     Route::post('/users/{user}/unblock', [AdminUserController::class, 'unblock'])->name('admin.users.unblock');
     Route::get('/users/{user}/history', [AdminUserController::class, 'history'])->name('admin.users.history');
-   
+
     // CATEGORY
     Route::get('/category', [AdminCategoryController::class, 'index'])->name('admin.category');
     Route::get('/category/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
