@@ -78,7 +78,7 @@
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
                     <a href="{{ route('news.show', $i->ieraksts_id) }}">Skats</a>
 
-                    <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Rediget</a>
+                    <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Rediģēt</a>
 
                     <form action="{{ route('admin.news.destroy', $i->ieraksts_id) }}"
                           method="POST"
