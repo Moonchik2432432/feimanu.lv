@@ -25,6 +25,7 @@
                 </div>
             </div>
 
+            <s>
             <div class="menu">
                 <a href="{{ route('pagasts.index') }}">Pagasts</a>
 
@@ -34,6 +35,7 @@
                     </a>
                 </div>
             </div>
+            </s>
 
             <a href="{{ route('rules.index') }}">Noteikumi</a>
             <a href="{{ url('/') }}">Pagasta pārvalde</a>
