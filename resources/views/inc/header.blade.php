@@ -25,22 +25,20 @@
                 </div>
             </div>
 
-            <s>
             <div class="menu">
-                <a href="{{ route('pagasts.index') }}">Pagasts</a>
+                <a href="{{ route('pagasts.index') }}">Pagasts (ne strādā)</a>
 
                 <div class="submenu">
                     <a href="{{ route('pagasts.history') }}">
-                        Pagasta vēsture
+                        Pagasta vēsture 
                     </a>
                 </div>
             </div>
-            </s>
 
             <a href="{{ route('rules.index') }}">Noteikumi</a>
-            <a href="{{ url('/') }}">Pagasta pārvalde</a>
-            <a href="{{ url('/') }}">Galerijas</a>
-            <a href="{{ url('/') }}">Kontakti</a>
+            <a href="{{ url('/') }}">Pagasta pārvalde (ne strādā)</a>
+            <a href="{{ url('/') }}">Galerijas (ne strādā)</a>
+            <a href="{{ url('/') }}">Kontakti (ne strādā)</a>
         </nav>
 
         @auth
