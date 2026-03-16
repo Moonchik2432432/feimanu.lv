@@ -28,24 +28,24 @@
 
     <form method="GET" action="{{ route('admin.users') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
-            <label>Search</label><br>
+            <label>Meklēt</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Name / Email / ID" style="padding:8px; width:220px;">
         </div>
 
         <div>
-            <label>From</label><br>
+            <label>Lidz</label><br>
             <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
         <div>
-            <label>To</label><br>
+            <label>No</label><br>
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
         <button type="submit" style="padding:9px 14px;">Filter</button>
 
         <a href="{{ route('admin.users') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000; display:inline-block;">
-            Reset
+            Notīrīt
         </a>
     </form>
 
@@ -88,15 +88,15 @@
                     <div style="display:flex; flex-direction:column; gap:8px;">
 
                         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-                            <a href="{{ route('admin.users.show', $user->id) }}">Info & Comments</a>
-                            <a href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
-                            <a href="{{ route('admin.users.history', $user->id) }}">History</a>
+                            <a href="{{ route('admin.users.show', $user->id) }}">Informacija & Komentariji</a>
+                            <a href="{{ route('admin.users.edit', $user->id) }}">Rediget</a>
+                            <a href="{{ route('admin.users.history', $user->id) }}">Vesture blokešana</a>
 
                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"
                                   onsubmit="return confirm('Dzēst šo lietotāju?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">Delete</button>
+                                <button type="submit">Dzēst</button>
                             </form>
                         </div>
 
@@ -123,7 +123,7 @@
                                 <input type="datetime-local" name="blocked_until" required style="padding:6px;">
 
                                 <button type="submit" style="padding:6px 12px; color:red;">
-                                    Block
+                                    blokešana
                                 </button>
                             </form>
                         @endif

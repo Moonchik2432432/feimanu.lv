@@ -6,7 +6,7 @@
 
 <div class="container">
 
-    {{-- Поиск и фильтрация --}}
+    {{-- Meklešana un filtrēšana --}}
     <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
 
         <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt...">
@@ -24,7 +24,7 @@
 
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
-        {{-- Категории --}}
+        {{-- Kategorija --}}
         <aside style="width:250px; flex:0 0 250px;">
             <h3>Kategorijas</h3>
 
@@ -41,7 +41,7 @@
             @endforeach
         </aside>
 
-        {{-- Новости --}}
+        {{-- Aktualitates --}}
         <main style="flex:1; min-width:0;">
 
             @foreach($news as $item)
