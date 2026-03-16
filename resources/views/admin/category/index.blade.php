@@ -46,14 +46,14 @@
                 <td style="padding:10px; border:1px solid #ddd;">{{ $cat->kategorija_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $cat->nosaukums }}</td>
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('admin.category.edit', $cat->kategorija_id) }}">Edit</a>
+                    <a href="{{ route('admin.category.edit', $cat->kategorija_id) }}">Rediget</a>
 
                     <form action="{{ route('admin.category.destroy', $cat->kategorija_id) }}"
                           method="POST" style="display:inline;"
                           onsubmit="return confirm('Dzēst šo kategoriju?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" style="margin-left:10px;">Delete</button>
+                        <button type="submit" style="margin-left:10px;">Dzēst</button>
                     </form>
                 </td>
             </tr>
