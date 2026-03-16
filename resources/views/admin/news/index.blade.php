@@ -28,7 +28,7 @@
 
     <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
-            <label>Search</label><br>
+            <label>Meklēt</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
         </div>
 
