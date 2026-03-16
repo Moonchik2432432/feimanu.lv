@@ -16,14 +16,14 @@
     <div style="display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:end; margin:15px 0;">
         <form method="GET" action="{{ route('admin.category') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
             <div>
-                <label>Search</label><br>
+                <label>Meklēšana</label><br>
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
             </div>
 
             <button type="submit" style="padding:9px 14px;">Meklēt</button>
 
             <a href="{{ route('admin.category') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
-                Reset
+                Notīrīt
             </a>
         </form>
 
