@@ -42,7 +42,7 @@
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
-        <button type="submit" style="padding:9px 14px;">Filter</button>
+        <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
         <a href="{{ route('admin.users') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000; display:inline-block;">
             Notīrīt
