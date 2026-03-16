@@ -33,20 +33,20 @@
         </div>
 
         <div>
-            <label>From</label><br>
+            <label>Lidz</label><br>
             <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
         <div>
-            <label>To</label><br>
+            <label>No</label><br>
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
-        <button type="submit" style="padding:9px 14px;">Filter</button>
+        <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
         <a href="{{ route('admin.news') }}"
            style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
-            Reset
+            Notīrīt
         </a>
     </form>
 
@@ -76,7 +76,7 @@
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('news.show', $i->ieraksts_id) }}">View</a>
+                    <a href="{{ route('news.show', $i->ieraksts_id) }}">Skats</a>
 
                     <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Edit</a>
 
@@ -86,7 +86,7 @@
                           onsubmit="return confirm('Dzēst šo ierakstu?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" style="margin-left:10px;">Delete</button>
+                        <button type="submit" style="margin-left:10px;">Dzēst</button>
                     </form>
                 </td>
             </tr>
