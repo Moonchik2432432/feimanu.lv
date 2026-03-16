@@ -104,7 +104,7 @@
                             <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
                                 @csrf
                                 <button type="submit" style="padding:6px 12px; color:green;">
-                                    Unblock
+                                    Atbloķēt
                                 </button>
                             </form>
                         @else
@@ -123,7 +123,7 @@
                                 <input type="datetime-local" name="blocked_until" required style="padding:6px;">
 
                                 <button type="submit" style="padding:6px 12px; color:red;">
-                                    blokešana
+                                    Bloķēt
                                 </button>
                             </form>
                         @endif
