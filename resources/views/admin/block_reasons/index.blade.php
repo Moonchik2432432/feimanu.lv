@@ -58,7 +58,7 @@
                     </td>
 
                     <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                        <a href="{{ route('admin.block_reasons.edit', $reason->id) }}">Edit</a>
+                        <a href="{{ route('admin.block_reasons.edit', $reason->id) }}">Rediget</a>
 
                         <form method="POST"
                               action="{{ route('admin.block_reasons.destroy', $reason->id) }}"
@@ -68,7 +68,7 @@
                             @method('DELETE')
 
                             <button type="submit" style="margin-left:10px;">
-                                Delete / Disable
+                                Dzēst 
                             </button>
                         </form>
                     </td>
