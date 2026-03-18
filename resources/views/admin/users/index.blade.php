@@ -71,7 +71,6 @@
                 <td style="padding:10px; border:1px solid #ddd;">{{ $user->id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $user->name }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $user->email }}</td>
-                <td style="padding:10px; border:1px solid #ddd;">{{ $user->role }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $user->created_at->format('d.m.Y H:i') }}
                 </td>
