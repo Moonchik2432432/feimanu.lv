@@ -98,7 +98,7 @@
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
-                    <div style="display:flex; flex-direction:column;">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
                 
                         @if($user->isBlockedNow())
                             <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
@@ -120,7 +120,7 @@
                                 id="block-form-{{ $user->id }}"
                                 method="POST"
                                 action="{{ route('admin.users.block', $user->id) }}"
-                                style="display:none; flex-direction:column; gap:8px; margin-top:8px;"
+                                style="display:none; flex-direction:column; gap:8px;"
                             >
                                 @csrf
                 
