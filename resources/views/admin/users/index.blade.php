@@ -86,6 +86,12 @@
                     {{ $user->blocked_until ? $user->blocked_until->format('d.m.Y H:i') : '-' }}
                 </td>
 
+                <td style="padding:10px; border:1px solid #ddd;">  
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                        <a href="{{ route('admin.users.show', $user->id) }}">Informacija & Komentariji</a>
+                    </div>
+                </td>
+
                 <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
                     <div style="display:flex; flex-direction:column; gap:8px;">
 
@@ -121,7 +127,6 @@
                                 </button>
                             </form>
                         @endif
-
                     </div>
                 </td>
             </tr>
