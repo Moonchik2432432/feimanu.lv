@@ -65,14 +65,6 @@
 
     <div style="margin-top:20px; display:flex; gap:12px;">
         <a href="{{ route('admin.users') }}">Atpakaļ</a>
-        <a href="{{ route('admin.users.edit', $user->id) }}">Redigēt</a>
-
-        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-              onsubmit="return confirm('Dzēst šo lietotāju?');">
-            @csrf
-            @method('DELETE')
-            <button type="submit">Dzēst</button>
-        </form>
     </div>
 
     <hr style="margin:30px 0;">
