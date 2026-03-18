@@ -28,7 +28,7 @@
 
     <form method="GET" action="{{ route('admin.users') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
-            <label>Meklēt</label><br>
+            <label>Nosaukums: </label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Vārds / E-pasts / ID" style="padding:8px; width:220px;">
         </div>
         
