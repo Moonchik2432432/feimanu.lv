@@ -99,7 +99,7 @@
 
                 <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
                     <div style="display:flex; flex-direction:column; gap:8px;">
-
+                
                         @if($user->isBlockedNow())
                             <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
                                 @csrf
@@ -108,25 +108,54 @@
                                 </button>
                             </form>
                         @else
-                            <form method="POST" action="{{ route('admin.users.block', $user->id) }}" style="display:flex; flex-direction:column; gap:8px;">
+                            <button
+                                type="button"
+                                onclick="toggleBlockForm({{ $user->id }})"
+                                style="padding:6px 12px; color:red;"
+                            >
+                                Bloķēt
+                            </button>
+                
+                            <form
+                                id="block-form-{{ $user->id }}"
+                                method="POST"
+                                action="{{ route('admin.users.block', $user->id) }}"
+                                style="display:none; flex-direction:column; gap:8px; margin-top:8px;"
+                            >
                                 @csrf
-
+                
                                 <select name="block_reason_id" required style="padding:6px;">
                                     <option value="">Iemesls</option>
                                     @foreach($reasons as $reason)
                                         <option value="{{ $reason->id }}">{{ $reason->title }}</option>
                                     @endforeach
                                 </select>
-
-                                <textarea name="custom_reason" rows="2" placeholder="Papildu komentārs (optional)" style="padding:6px; resize:vertical;"></textarea>
-
+                
+                                <textarea
+                                    name="custom_reason"
+                                    rows="2"
+                                    placeholder="Papildu komentārs (optional)"
+                                    style="padding:6px; resize:vertical;"
+                                ></textarea>
+                
                                 <input type="datetime-local" name="blocked_until" required style="padding:6px;">
-
-                                <button type="submit" style="padding:6px 12px; color:red;">
-                                    Bloķēt
-                                </button>
+                
+                                <div style="display:flex; gap:8px;">
+                                    <button type="submit" style="padding:6px 12px; color:red;">
+                                        Apstiprināt
+                                    </button>
+                
+                                    <button
+                                        type="button"
+                                        onclick="toggleBlockForm({{ $user->id }})"
+                                        style="padding:6px 12px;"
+                                    >
+                                        Aizvērt
+                                    </button>
+                                </div>
                             </form>
                         @endif
+                
                     </div>
                 </td>
             </tr>
@@ -141,3 +170,15 @@
 </div>
 
 @endsection
+
+<script>
+    function toggleBlockForm(userId) {
+        const form = document.getElementById('block-form-' + userId);
+ 
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'flex';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
