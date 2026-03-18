@@ -89,15 +89,7 @@
 
                         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
                             <a href="{{ route('admin.users.show', $user->id) }}">Informacija & Komentariji</a>
-                            <a href="{{ route('admin.users.edit', $user->id) }}">Rediget</a>
                             <a href="{{ route('admin.users.history', $user->id) }}">Vesture blokešana</a>
-
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;"
-                                  onsubmit="return confirm('Dzēst šo lietotāju?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Dzēst</button>
-                            </form>
                         </div>
 
                         @if($user->isBlockedNow())
