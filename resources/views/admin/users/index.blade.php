@@ -33,12 +33,12 @@
         </div>
         
         <div>
-            <label>No</label><br>
+            <label>No: </label><br>
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
-        
+
         <div>
-            <label>Lidz</label><br>
+            <label>Lidz: </label><br>
             <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
@@ -56,11 +56,12 @@
                 <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Vārds</th>
                 <th style="padding:10px; border:1px solid #ddd;">E-pasts</th>
-                <th style="padding:10px; border:1px solid #ddd;">Loma</th>
                 <th style="padding:10px; border:1px solid #ddd;">Reģistrēts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Status</th>
                 <th style="padding:10px; border:1px solid #ddd;">Bloķēts līdz</th>
-                <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
+                <th style="padding:10px; border:1px solid #ddd;">Info & Kommentariji</th>
+                <th style="padding:10px; border:1px solid #ddd;">Blokešana vēsture</th>
+                <th style="padding:10px; border:1px solid #ddd;">Blokešana</th>
             </tr>
         </thead>
 
