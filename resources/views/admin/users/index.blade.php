@@ -112,7 +112,7 @@
                                 @csrf
 
                                 <select name="block_reason_id" required style="padding:6px;">
-                                    <option value="">Reason</option>
+                                    <option value="">Iemesls</option>
                                     @foreach($reasons as $reason)
                                         <option value="{{ $reason->id }}">{{ $reason->title }}</option>
                                     @endforeach
