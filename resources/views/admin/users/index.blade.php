@@ -91,6 +91,12 @@
                     </div>
                 </td>
 
+                <td style="padding:10px; border:1px solid #ddd;">  
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                        <a href="{{ route('admin.users.history', $user->id) }}">Vesture blokešana</a>
+                    </div>
+                </td>
+
                 <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
                     <div style="display:flex; flex-direction:column; gap:8px;">
 
