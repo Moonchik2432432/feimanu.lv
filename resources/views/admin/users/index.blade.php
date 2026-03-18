@@ -103,7 +103,7 @@
                         @if($user->isBlockedNow())
                             <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
                                 @csrf
-                                <button type="submit" style="padding:6px 12px; color:green;">
+                                <button type="submit" style="padding:6px 12px; color:green; width:100%;">
                                     Atbloķēt
                                 </button>
                             </form>
