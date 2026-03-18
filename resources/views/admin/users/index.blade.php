@@ -100,11 +100,6 @@
                 <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
                     <div style="display:flex; flex-direction:column; gap:8px;">
 
-                        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-                            <a href="{{ route('admin.users.show', $user->id) }}">Informacija & Komentariji</a>
-                            <a href="{{ route('admin.users.history', $user->id) }}">Vesture blokešana</a>
-                        </div>
-
                         @if($user->isBlockedNow())
                             <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
                                 @csrf
