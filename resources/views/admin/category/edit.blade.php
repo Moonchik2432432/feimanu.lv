@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container" style="max-width:650px; margin:40px auto;">
-    <h1>Edit: {{ $category->nosaukums }}</h1>
+    <h1>Redigēt: {{ $category->nosaukums }}</h1>
 
     @if($errors->any())
         <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
