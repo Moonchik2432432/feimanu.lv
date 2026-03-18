@@ -31,16 +31,17 @@
             <label>Meklēt</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Vārds / E-pasts / ID" style="padding:8px; width:220px;">
         </div>
-
+        
+        <div>
+            <label>No</label><br>
+            <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+        </div>
+        
         <div>
             <label>Lidz</label><br>
             <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
-        <div>
-            <label>No</label><br>
-            <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
-        </div>
 
         <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
