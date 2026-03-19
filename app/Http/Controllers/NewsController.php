@@ -44,7 +44,7 @@ class NewsController extends Controller
         $q = trim($request->query('q', ''));
 
         $news = News::with('category')
-            ->where('status', 'published')
+            ->where('status', 'publicets')
             ->where('kategorija_id', $id)
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
@@ -62,7 +62,7 @@ class NewsController extends Controller
     public function show($id)
     {
         $post = News::with(['category', 'comments.user'])
-            ->where('status', 'published')
+            ->where('status', 'publicets')
             ->findOrFail($id);
 
         return view('news.show', compact('post'));
@@ -82,10 +82,10 @@ class NewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:draft,published'],
+            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
-        $data['publicets_datums'] = $data['status'] === 'published' ? now() : null;
+        $data['publicets_datums'] = $data['status'] === 'publicets' ? now() : null;
 
         if ($request->hasFile('bilde')) {
             $dir = base_path('img/aktualitates');
@@ -122,7 +122,7 @@ class NewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:draft,published'],
+            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
         if ($request->hasFile('bilde')) {

@@ -52,10 +52,10 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:draft,published'],
+            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
-        $data['publicets_datums'] = $data['status'] === 'published' ? now() : null;
+        $data['publicets_datums'] = $data['status'] === 'publicets' ? now() : null;
 
         if ($request->hasFile('bilde')) {
             $dir = base_path('img/aktualitates');
@@ -92,10 +92,10 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:draft,published'],
+            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
-        if ($data['status'] === 'published' && empty($post->publicets_datums)) {
+        if ($data['status'] === 'publicets' && empty($post->publicets_datums)) {
             $data['publicets_datums'] = now();
         }
 
