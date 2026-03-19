@@ -29,12 +29,12 @@
     
             <div>
                 <label>No:</label><br>
-                <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
+                <input type="text" name="from" id ="from" value="{{ $from ?? '' }}" style="padding:8px;">
             </div>
     
             <div>
                 <label>Līdz:</label><br>
-                <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+                <input type="text" name="to" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
             </div>
     
             <button type="submit" style="padding:9px 14px;">Filtrēt</button>
@@ -50,6 +50,18 @@
             + Pievienot
         </a>
     </div>
+
+    <script>
+        flatpickr("#from", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        });
+ 
+        flatpickr("#to", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        });
+    </script>
 
     </form>
 
