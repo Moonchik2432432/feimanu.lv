@@ -50,16 +50,6 @@
     </form>
  
     <script>
-        flatpickr("#from", {
-            dateFormat: "Y-m-d",
-            locale: "lv"
-        });
- 
-        flatpickr("#to", {
-            dateFormat: "Y-m-d",
-            locale: "lv"
-        });
- 
         function toggleBlockForm(userId) {
             const form = document.getElementById('block-form-' + userId);
  
