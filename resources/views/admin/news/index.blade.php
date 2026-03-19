@@ -20,34 +20,35 @@
     @endif
 
 
+    <div style="display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:end; margin:15px 0;">
+        <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
+            <div>
+                <label>Nosaukums</label><br>
+                <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
+            </div>
 
-    <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
-        <div>
-            <label>Nosaukums</label><br>
-            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
+            <div>
+                <label>No: </label><br>
+                <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
+            </div>
+
+            <div>
+                <label>Lidz: </label><br>
+                <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+            </div>
+
+            <button type="submit" style="padding:9px 14px;">Filtrēt</button>
+
+            <a href="{{ route('admin.news') }}"
+            style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
+                Notīrīt
+            </a>
+
+            <a href="{{ route('admin.news.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+                + Pievienot
+            </a>
         </div>
 
-        <div>
-            <label>No: </label><br>
-            <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
-        </div>
-
-        <div>
-            <label>Lidz:    </label><br>
-            <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
-        </div>
-
-        <button type="submit" style="padding:9px 14px;">Filtrēt</button>
-
-        <a href="{{ route('admin.news') }}"
-           style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
-            Notīrīt
-        </a>
-
-        <a href="{{ route('admin.news.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
-            + Pievienot
-        </a>
-        
     </form>
 
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
