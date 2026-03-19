@@ -5,12 +5,13 @@
     <title>@yield('title', 'Feimanu')</title>
  
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <script src="{{ asset('js/slider.js') }}"></script>
-    <script src="{{ asset('js/calendar.js') }}"></script>
- 
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/lv.js"></script>
+    
+    <script src="{{ asset('js/slider.js') }}"></script>
+    <script src="{{ asset('js/calendar.js') }}"></script>
 </head>
 <body>
  
