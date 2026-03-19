@@ -34,12 +34,12 @@
  
         <div>
             <label>No: </label><br>
-            <input type="text" id="from" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
+            <input type="text" id="from" name="from" class="date-picker" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
  
         <div>
             <label>Līdz: </label><br>
-            <input type="text" id="to" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+            <input type="text" id="to" name="to" class="date-picker" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
  
         <button type="submit" style="padding:9px 14px;">Filtrēt</button>
