@@ -9,7 +9,7 @@
     {{-- Meklešana un filtrēšana --}}
     <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
 
-        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Meklēt...">
+        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums">
 
         <label>No:</label>
         <input type="date" name="from" value="{{ $from ?? '' }}">
