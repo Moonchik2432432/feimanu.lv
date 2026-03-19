@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale('lv');
+        setLocale(LC_TIME, 'lv_LV.UTF-8');
         View::share('headerCategories', Category::orderBy('nosaukums')->get());
     }
 }
