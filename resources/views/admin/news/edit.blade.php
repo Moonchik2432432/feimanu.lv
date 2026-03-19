@@ -41,8 +41,8 @@
         <div style="margin-bottom:12px;">
             <label>Status</label>
             <select name="status" style="width:100%;" required>
-                <option value="published" @selected(old('status', $post->status) === 'published')>Published</option>
-                <option value="draft" @selected(old('status', $post->status) === 'draft')>Draft</option>
+                <option value="published" @selected(old('status', $post->status) === 'publicets')>Publicets</option>
+                <option value="draft" @selected(old('status', $post->status) === 'melnraksts')>Melnraksts</option>
             </select>
         </div>
 

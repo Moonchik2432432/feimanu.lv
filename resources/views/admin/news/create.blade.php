@@ -43,12 +43,12 @@
         <div style="margin-bottom:12px;">
             <label>Status</label>
             <select name="status" style="width:100%;" required>
-                <option value="published" @selected(old('status','published') === 'published')>
-                    Published
+                <option value="published" @selected(old('status','publicets') === 'publicets')>
+                    Publicets
                 </option>
 
-                <option value="draft" @selected(old('status') === 'draft')>
-                    Draft
+                <option value="draft" @selected(old('status') === 'melnraksts')>
+                    Melnraksts
                 </option>
             </select>
         </div>
