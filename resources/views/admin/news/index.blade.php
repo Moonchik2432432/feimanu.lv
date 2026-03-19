@@ -28,17 +28,17 @@
 
     <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
-            <label>Meklēt</label><br>
+            <label>Nosaukums</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
         </div>
 
         <div>
-            <label>Lidz</label><br>
+            <label>No: </label><br>
             <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
         <div>
-            <label>No</label><br>
+            <label>Lidz: </label><br>
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
