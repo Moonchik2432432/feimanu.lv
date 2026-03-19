@@ -60,8 +60,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // USERS
     Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users');
     Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
-    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
-    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     Route::post('/users/{user}/block', [AdminUserController::class, 'block'])->name('admin.users.block');
     Route::post('/users/{user}/unblock', [AdminUserController::class, 'unblock'])->name('admin.users.unblock');
