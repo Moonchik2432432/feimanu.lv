@@ -18,7 +18,7 @@ class NewsController extends Controller
         $to = $request->query('to');
 
         $news = News::with('category')
-            ->where('status', 'published')
+            ->where('status', 'publicets')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('nosaukums', 'like', "%{$q}%")
