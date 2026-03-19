@@ -26,28 +26,30 @@
                 <label>Nosaukums</label><br>
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
             </div>
-
+    
             <div>
-                <label>No: </label><br>
+                <label>No:</label><br>
                 <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
             </div>
-
+    
             <div>
-                <label>Lidz: </label><br>
+                <label>Līdz:</label><br>
                 <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
             </div>
-
+    
             <button type="submit" style="padding:9px 14px;">Filtrēt</button>
-
+    
             <a href="{{ route('admin.news') }}"
             style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
                 Notīrīt
             </a>
-
-            <a href="{{ route('admin.news.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+        </form>
+    
+        <a href="{{ route('admin.news.create') }}"
+        style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
             + Pievienot
         </a>
-        </div>
+    </div>
 
     </form>
 
