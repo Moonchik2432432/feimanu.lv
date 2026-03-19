@@ -44,12 +44,10 @@
             Notīrīt
         </a>
 
-        <div style="margin:15px 0;">
-            <a href="{{ route('admin.news.create') }}"
-            style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
-                ➕ Pievienot ierakstu
-            </a>
-        </div>
+        <a href="{{ route('admin.news.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+            + Pievienot
+        </a>
+        
     </form>
 
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
