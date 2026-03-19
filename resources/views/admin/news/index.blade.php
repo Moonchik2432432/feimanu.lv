@@ -19,12 +19,7 @@
         </div>
     @endif
 
-    <div style="margin:15px 0;">
-        <a href="{{ route('admin.news.create') }}"
-           style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
-            ➕ Pievienot ierakstu
-        </a>
-    </div>
+
 
     <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
         <div>
@@ -38,7 +33,7 @@
         </div>
 
         <div>
-            <label>Lidz: </label><br>
+            <label>Lidz:    </label><br>
             <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
@@ -48,6 +43,13 @@
            style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
             Notīrīt
         </a>
+
+        <div style="margin:15px 0;">
+            <a href="{{ route('admin.news.create') }}"
+            style="background:#28a745; color:white; padding:8px 14px; border-radius:6px; text-decoration:none;">
+                ➕ Pievienot ierakstu
+            </a>
+        </div>
     </form>
 
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
@@ -76,7 +78,7 @@
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
-                    <a href="{{ route('news.show', $i->ieraksts_id) }}">Skats</a>
+                    <a href="{{ route('news.show', $i->ieraksts_id) }}">Info</a>
 
                     <a href="{{ route('admin.news.edit', $i->ieraksts_id) }}" style="margin-left:10px;">Rediģēt</a>
 
