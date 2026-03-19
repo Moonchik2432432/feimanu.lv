@@ -21,7 +21,7 @@
 
 
     <div style="display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:end; margin:15px 0;">
-        <form method="GET" action="{{ route('admin.news') }}" style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
+        <form method="GET" action="{{ route('admin.news') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
             <div>
                 <label>Nosaukums</label><br>
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
