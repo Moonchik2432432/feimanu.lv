@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Carbon::setLocate('lv');
+        Carbon::setLocale('lv');
         View::share('headerCategories', Category::orderBy('nosaukums')->get());
     }
 }
