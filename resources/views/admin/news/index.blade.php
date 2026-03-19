@@ -45,8 +45,8 @@
             </a>
 
             <a href="{{ route('admin.news.create') }}" style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
-                + Pievienot
-            </a>
+            + Pievienot
+        </a>
         </div>
 
     </form>
