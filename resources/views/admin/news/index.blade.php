@@ -34,7 +34,7 @@
     
             <div>
                 <label>Līdz:</label><br>
-                <input type="text" name="to" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+                <input type="text" name="to" id="to" value="{{ $to ?? '' }}" style="padding:8px;">
             </div>
     
             <button type="submit" style="padding:9px 14px;">Filtrēt</button>
