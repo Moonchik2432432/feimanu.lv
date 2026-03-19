@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/slider.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src ="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src ="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/lv.js"></script>
 </head>
 <body>
 

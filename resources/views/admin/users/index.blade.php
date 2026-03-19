@@ -34,12 +34,12 @@
         
         <div>
             <label>No: </label><br>
-            <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+            <input type="text" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
         </div>
 
         <div>
             <label>Lidz: </label><br>
-            <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
+            <input type="text" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
         </div>
 
 
@@ -49,6 +49,18 @@
             Notīrīt
         </a>
     </form>
+
+    <script>
+        flatpickr("#from", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        })
+
+        flatpickr("#to", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        })
+    </script>
 
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
         <thead>
