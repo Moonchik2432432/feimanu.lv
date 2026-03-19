@@ -74,7 +74,6 @@
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
         <thead>
             <tr style="background:#f5f5f5;">
-                <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Vārds</th>
                 <th style="padding:10px; border:1px solid #ddd;">E-pasts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Reģistrēts</th>
@@ -89,7 +88,6 @@
         <tbody>
             @foreach($users as $user)
                 <tr>
-                    <td style="padding:10px; border:1px solid #ddd;">{{ $user->id }}</td>
                     <td style="padding:10px; border:1px solid #ddd;">{{ $user->name }}</td>
                     <td style="padding:10px; border:1px solid #ddd;">{{ $user->email }}</td>
                     <td style="padding:10px; border:1px solid #ddd;">{{ $user->created_at->format('d.m.Y H:i') }}</td>
