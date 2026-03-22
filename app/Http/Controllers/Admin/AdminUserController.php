@@ -140,7 +140,10 @@ class AdminUserController extends Controller
 
     public function history(User $user)
     {
-        $reasons = BlockReason::orderBy('title')->get();
+        $blocks = UserBlock::with(['reason', 'blocker', 'unblockedBy'])
+            ->where('user_id', $user->id)
+            ->orderByDesc('id')
+            ->get();
 
         return view('admin.users.history', compact('user', 'blocks'));
     }
