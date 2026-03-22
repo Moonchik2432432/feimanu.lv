@@ -16,11 +16,12 @@ class AdminBlockReasonController extends Controller
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('title', 'like', "%{$q}%")
-                       ->orWhere('description', 'like', "%{$q}%");
+                    ->orWhere('description', 'like', "%{$q}%");
                 });
             })
             ->orderBy('id')
-            ->get();
+            ->paginate(10)
+            ->appends($request->query());
 
         return view('admin.block_reasons.index', compact('reasons', 'q'));
     }
