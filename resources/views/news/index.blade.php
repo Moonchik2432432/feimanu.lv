@@ -7,7 +7,7 @@
 <div class="container">
 
     <form method="GET" action="{{ url()->current() }}"
-          style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
+          style="margin:15px 0 25px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
 
         <div>
             <label>Nosaukums</label><br>
@@ -31,35 +31,35 @@
         </a>
     </form>
 
-    <aside style="width:250px; flex:0 0 250px;">
+    <div style="display:flex; gap:30px; align-items:flex-start;">
 
-        <h3 style="margin-bottom:10px;">Kategorijas</h3>
+        <aside style="width:250px; flex:0 0 250px;">
+            <h3 style="margin-bottom:12px;">Kategorijas</h3>
 
-        <div style="border:1px solid #ddd; border-radius:10px; overflow:hidden;">
+            <div style="border:1px solid #ddd; border-radius:12px; overflow:hidden; background:#fff;">
 
-            <a href="{{ route('news.index') }}"
-            style="display:block; padding:10px 14px; border-bottom:1px solid #eee; text-decoration:none; transition:0.2s;">
-                Visas aktualitātes
-            </a>
-
-            @foreach($categories as $cat)
-                <a href="{{ route('news.category', $cat->kategorija_id) }}"
-                style="display:block; padding:10px 14px; border-bottom:1px solid #eee; text-decoration:none; transition:0.2s;">
-                    {{ $cat->nosaukums }}
+                <a href="{{ route('news.index') }}"
+                   style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
+                    Visas aktualitātes
                 </a>
-            @endforeach
 
-        </div>
+                @foreach($categories as $cat)
+                    <a href="{{ route('news.category', $cat->kategorija_id) }}"
+                       style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
+                        {{ $cat->nosaukums }}
+                    </a>
+                @endforeach
 
-    </aside>
+            </div>
+        </aside>
 
         <main style="flex:1; min-width:0;">
 
             @foreach($news as $item)
                 <div style="border-bottom:1px solid #ddd; padding:20px 0;">
 
-                    <h2>
-                        <a href="{{ route('news.show', $item->ieraksts_id) }}">
+                    <h2 style="margin-bottom:8px;">
+                        <a href="{{ route('news.show', $item->ieraksts_id) }}" style="text-decoration:none; color:#222;">
                             {{ $item->nosaukums }}
                         </a>
                     </h2>
