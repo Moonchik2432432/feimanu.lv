@@ -60,7 +60,7 @@
     </table>
 
     <div style="margin-top:20px;">
-        {{ $categories->links() }}
+        {{ $categories->links('pagination.default') }}
     </div>
 
 </div>

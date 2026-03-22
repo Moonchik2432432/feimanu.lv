@@ -88,6 +88,10 @@
         </tbody>
     </table>
 
+     <div style="margin-top:20px;">
+        {{ $reasons->links('pagination.default') }}
+    </div>
+
 </div>
 
 @endsection

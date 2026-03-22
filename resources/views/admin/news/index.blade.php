@@ -112,7 +112,7 @@
     </table>
 
     <div style="margin-top:20px;">
-        {{ $news->links() }}
+        {{ $news->links('pagination.default') }}
     </div>
 
 </div>
