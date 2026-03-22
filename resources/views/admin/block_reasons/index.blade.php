@@ -24,7 +24,7 @@
 
         <form method="GET" action="{{ route('admin.block_reasons') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
             <div>
-                <label>Meklēšana</label><br>
+                <label>Nosaukums</label><br>
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums / Apraksts" style="padding:8px;">
             </div>
 
