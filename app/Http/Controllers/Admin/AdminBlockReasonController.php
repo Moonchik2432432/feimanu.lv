@@ -16,7 +16,7 @@ class AdminBlockReasonController extends Controller
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('title', 'like', "%{$q}%")
-                    ->orWhere('description', 'like', "%{$q}%");
+                       ->orWhere('description', 'like', "%{$q}%");
                 });
             })
             ->orderBy('id')
@@ -40,7 +40,6 @@ class AdminBlockReasonController extends Controller
         BlockReason::create([
             'title' => $data['title'],
             'description' => $data['description'] ?? null,
-            'is_active' => 1,
         ]);
 
         return redirect()
@@ -62,13 +61,11 @@ class AdminBlockReasonController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'is_active' => ['required', 'boolean'],
         ]);
 
         $reason->update([
             'title' => $data['title'],
             'description' => $data['description'] ?? null,
-            'is_active' => $data['is_active'],
         ]);
 
         return redirect()
@@ -80,20 +77,22 @@ class AdminBlockReasonController extends Controller
     {
         $reason = BlockReason::findOrFail($id);
 
-        if ($reason->userBlocks()->exists()) {
-            $reason->update([
-                'is_active' => 0,
-            ]);
+        $hasActiveBlocks = $reason->userBlocks()
+            ->whereNull('unblocked_at')
+            ->where('blocked_until', '>', now())
+            ->exists();
 
+        if ($hasActiveBlocks) {
             return redirect()
                 ->route('admin.block_reasons')
-                ->with('error', 'Iemesls jau tiek izmantots. Tas netika izdzēsts, bet tika izslēgts.');
+                ->with('error', 'Šo iemeslu nevar dzēst, jo tas tiek izmantots aktīvā bloķēšanā.');
         }
 
+        $reason->userBlocks()->delete();
         $reason->delete();
 
         return redirect()
             ->route('admin.block_reasons')
-            ->with('success', 'Iemesls izdzēsts');
+            ->with('success', 'Iemesls un saistītā bloķēšanas vēsture izdzēsti');
     }
 }

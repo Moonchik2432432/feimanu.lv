@@ -22,14 +22,6 @@
             <textarea name="description" rows="4" style="width:100%;padding:8px;">{{ $reason->description }}</textarea>
         </div>
 
-        <div style="margin-bottom:15px;">
-            <label>Status</label>
-            <select name="is_active" style="padding:8px; width:100%;">
-                <option value="1" {{ $reason->is_active ? 'selected':'' }}>Aktīvs</option>
-                <option value="0" {{ !$reason->is_active ? 'selected':'' }}>Izslēgts</option>
-            </select>
-        </div>
-
         <div style="display:flex; gap:10px;">
             <button type="submit" style="padding:9px 14px;">
                 Saglabāt

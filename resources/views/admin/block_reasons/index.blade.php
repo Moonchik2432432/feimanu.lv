@@ -48,7 +48,6 @@
                 <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
                 <th style="padding:10px; border:1px solid #ddd;">Apraksts</th>
-                <th style="padding:10px; border:1px solid #ddd;">Aktīvs</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
         </thead>
@@ -64,14 +63,6 @@
 
                     <td style="padding:10px; border:1px solid #ddd;">
                         {{ $reason->description ?: '-' }}
-                    </td>
-
-                    <td style="padding:10px; border:1px solid #ddd;">
-                        @if($reason->is_active)
-                            <span style="color:green; font-weight:bold;">Aktīvs</span>
-                        @else
-                            <span style="color:red; font-weight:bold;">Izslēgts</span>
-                        @endif
                     </td>
 
                     <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
