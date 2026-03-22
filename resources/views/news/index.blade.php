@@ -55,34 +55,43 @@
 
         <main style="flex:1; min-width:0;">
 
-            @foreach($news as $item)
-                <div style="border-bottom:1px solid #ddd; padding:20px 0;">
+        @foreach($news as $item)
+            <a href="{{ route('news.show', $item->ieraksts_id) }}"
+            style="display:block; text-decoration:none; color:inherit; margin-bottom:20px;">
 
-                    <h2 style="margin-bottom:8px;">
-                        <a href="{{ route('news.show', $item->ieraksts_id) }}" style="text-decoration:none; color:#222;">
-                            {{ $item->nosaukums }}
-                        </a>
+                <div style="
+                    border:1px solid #ddd;
+                    border-radius:14px;
+                    padding:18px;
+                    background:#fff;
+                    transition:0.2s;
+                    box-shadow:0 2px 8px rgba(0,0,0,0.04);
+                ">
+
+                    @if($item->bilde)
+                        <img src="{{ asset($item->bilde) }}"
+                            alt="{{ $item->nosaukums }}"
+                            style="width:100%; max-height:260px; object-fit:cover; border-radius:10px; margin-bottom:14px; display:block;">
+                    @endif
+
+                    <h2 style="margin:0 0 8px 0; color:#222;">
+                        {{ $item->nosaukums }}
                     </h2>
 
-                    <small style="color:gray;">
+                    <small style="color:gray; display:block; margin-bottom:10px;">
                         {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
                         @if($item->category)
                             • {{ $item->category->nosaukums }}
                         @endif
                     </small>
 
-                    <p style="margin-top:10px;">
-                        {{ \Illuminate\Support\Str::limit($item->saturs, 100) }}
+                    <p style="margin:0; color:#444; line-height:1.5;">
+                        {{ \Illuminate\Support\Str::limit($item->saturs, 180) }}
                     </p>
 
-                    @if($item->bilde)
-                        <img src="{{ asset($item->bilde) }}"
-                             alt="{{ $item->nosaukums }}"
-                             style="max-width:260px; border-radius:10px; margin:10px 0; display:block;">
-                    @endif
-
                 </div>
-            @endforeach
+            </a>
+        @endforeach
 
             <div class="pagination-wrapper" style="margin-top:20px;">
                 {{ $news->links('pagination.default') }}
