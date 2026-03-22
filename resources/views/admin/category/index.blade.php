@@ -35,7 +35,6 @@
     <table style="width:100%; border-collapse:collapse;">
         <thead>
             <tr style="background:#f5f5f5;">
-                <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
@@ -43,7 +42,6 @@
         <tbody>
         @foreach($categories as $cat)
             <tr>
-                <td style="padding:10px; border:1px solid #ddd;">{{ $cat->kategorija_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $cat->nosaukums }}</td>
                 <td style="padding:10px; border:1px solid #ddd; white-space:nowrap;">
                     <a href="{{ route('admin.category.edit', $cat->kategorija_id) }}">Rediget</a>

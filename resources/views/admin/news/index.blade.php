@@ -68,7 +68,6 @@
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
         <thead>
             <tr style="background:#f5f5f5;">
-                <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
                 <th style="padding:10px; border:1px solid #ddd;">Kategorija</th>
                 <th style="padding:10px; border:1px solid #ddd;">Publicēts</th>
@@ -79,7 +78,6 @@
         <tbody>
         @forelse($news as $i)
             <tr>
-                <td style="padding:10px; border:1px solid #ddd;">{{ $i->ieraksts_id }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">{{ $i->nosaukums }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $i->category?->nosaukums ?? '-' }}
