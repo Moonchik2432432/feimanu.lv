@@ -6,25 +6,33 @@
 
 <div class="container">
 
-    {{-- Meklešana un filtrēšana --}}
-    <form method="GET" action="{{ url()->current() }}" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+    <form method="GET" action="{{ url()->current() }}"
+          style="margin:15px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
 
-        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums">
+        <div>
+            <label>Meklēšana</label><br>
+            <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
+        </div>
 
-        <label>No:</label>
-        <input type="date" name="from" value="{{ $from ?? '' }}">
+        <div>
+            <label>No</label><br>
+            <input type="date" name="from" value="{{ $from ?? '' }}" style="padding:8px;">
+        </div>
 
-        <label>Līdz:</label>
-        <input type="date" name="to" value="{{ $to ?? '' }}">
+        <div>
+            <label>Līdz</label><br>
+            <input type="date" name="to" value="{{ $to ?? '' }}" style="padding:8px;">
+        </div>
 
-        <button type="submit">Filtrēt</button>
+        <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
-        <a href="{{ url()->current() }}">Notīrīt</a>
+        <a href="{{ url()->current() }}" style="padding:9px 14px; text-decoration:none;">
+            Notīrīt
+        </a>
     </form>
 
     <div style="display:flex; gap:30px; align-items:flex-start;">
 
-        {{-- Kategorija --}}
         <aside style="width:250px; flex:0 0 250px;">
             <h3>Kategorijas</h3>
 
@@ -41,11 +49,9 @@
             @endforeach
         </aside>
 
-        {{-- Aktualitates --}}
         <main style="flex:1; min-width:0;">
 
             @foreach($news as $item)
-
                 <div style="border-bottom:1px solid #ddd; padding:20px 0;">
 
                     <h2>
@@ -56,8 +62,8 @@
 
                     <small style="color:gray;">
                         {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
-                        @if($item->kategorija)
-                            • {{ $item->kategorija->nosaukums }}
+                        @if($item->category)
+                            • {{ $item->category->nosaukums }}
                         @endif
                     </small>
 
@@ -72,7 +78,6 @@
                     @endif
 
                 </div>
-
             @endforeach
 
             <div class="pagination-wrapper" style="margin-top:20px;">
