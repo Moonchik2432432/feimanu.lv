@@ -31,23 +31,27 @@
         </a>
     </form>
 
-    <div style="display:flex; gap:30px; align-items:flex-start;">
+    <aside style="width:250px; flex:0 0 250px;">
 
-        <aside style="width:250px; flex:0 0 250px;">
-            <h3>Kategorijas</h3>
+        <h3 style="margin-bottom:10px;">Kategorijas</h3>
 
-            <div>
-                <a href="{{ route('news.index') }}">Visas aktualitātes</a>
-            </div>
+        <div style="border:1px solid #ddd; border-radius:10px; overflow:hidden;">
+
+            <a href="{{ route('news.index') }}"
+            style="display:block; padding:10px 14px; border-bottom:1px solid #eee; text-decoration:none; transition:0.2s;">
+                Visas aktualitātes
+            </a>
 
             @foreach($categories as $cat)
-                <div>
-                    <a href="{{ route('news.category', $cat->kategorija_id) }}">
-                        {{ $cat->nosaukums }}
-                    </a>
-                </div>
+                <a href="{{ route('news.category', $cat->kategorija_id) }}"
+                style="display:block; padding:10px 14px; border-bottom:1px solid #eee; text-decoration:none; transition:0.2s;">
+                    {{ $cat->nosaukums }}
+                </a>
             @endforeach
-        </aside>
+
+        </div>
+
+    </aside>
 
         <main style="flex:1; min-width:0;">
 
