@@ -8,11 +8,21 @@ use Illuminate\Http\Request;
 
 class AdminBlockReasonController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reasons = BlockReason::orderBy('id', 'desc')->get();
+        $q = trim((string) $request->get('q', ''));
 
-        return view('admin.block_reasons.index', compact('reasons'));
+        $reasons = BlockReason::query()
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($qq) use ($q) {
+                    $qq->where('title', 'like', "%{$q}%")
+                    ->orWhere('description', 'like', "%{$q}%");
+                });
+            })
+            ->orderBy('id')
+            ->get();
+
+        return view('admin.block_reasons.index', compact('reasons', 'q'));
     }
 
     public function create()
