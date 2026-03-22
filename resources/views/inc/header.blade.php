@@ -1,5 +1,5 @@
 <header class="site-header">
-    <div class="container">
+    <div class="container header-inner">
 
         <div class="logo">
             <a href="{{ url('/') }}">
@@ -13,9 +13,7 @@
                 <a href="{{ route('news.index') }}">Aktualitātes</a>
 
                 <div class="submenu">
-                    <a href="{{ route('news.index') }}">
-                        Visas aktualitātes
-                    </a>
+                    <a href="{{ route('news.index') }}">Visas aktualitātes</a>
 
                     @foreach($headerCategories as $cat)
                         <a href="{{ route('news.category', $cat->kategorija_id) }}">
@@ -29,9 +27,7 @@
                 <a href="{{ route('pagasts.index') }}">Pagasts</a>
 
                 <div class="submenu">
-                    <a href="{{ route('pagasts.history') }}">
-                        Pagasta vēsture
-                    </a>
+                    <a href="{{ route('pagasts.history') }}">Pagasta vēsture</a>
                 </div>
             </div>
 
@@ -42,28 +38,29 @@
         </nav>
 
         @auth
-        <div class="user-menu">
-            <div class="user-trigger">
-                @if(auth()->user()->avatar)
-                    <img src="{{ asset('img/usersAvatars/' . auth()->user()->avatar) }}" class="avatar">
-                @else
-                    <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}" class="avatar">
-                @endif
+            <div class="user-menu">
+                <div class="user-trigger">
+                    @if(auth()->user()->avatar)
+                        <img src="{{ asset('img/usersAvatars/' . auth()->user()->avatar) }}" class="avatar" alt="Avatar">
+                    @else
+                        <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}" class="avatar" alt="Avatar">
+                    @endif
 
-                <a href="{{ route('profile.show') }}" style="color:white; text-decoration:none;">
-                    {{ auth()->user()->name }}
-                </a>
-            </div>
+                    <span class="user-name">{{ auth()->user()->name }}</span>
+                    <span class="user-arrow">▾</span>
+                </div>
 
-            <div class="user-dropdown">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit">Iziet</button>
-                </form>
+                <div class="user-dropdown">
+                    <a href="{{ route('profile.show') }}" class="dropdown-link">Profils</a>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-button">Iziet</button>
+                    </form>
+                </div>
             </div>
-        </div>
         @else
-            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('login') }}" class="login-link">Pieslēgties</a>
         @endauth
 
     </div>
@@ -72,8 +69,8 @@
 @auth
     @if(auth()->user()->role === 'admin')
         <div class="admin-bar">
-            <div class="container">
-                <a href="{{ route('admin.users') }}">Lietotāji/Komentariji</a>
+            <div class="container admin-bar-inner">
+                <a href="{{ route('admin.users') }}">Lietotāji / Komentāri</a>
                 <a href="{{ route('admin.news') }}">Aktualitātes</a>
                 <a href="{{ route('admin.category') }}">Kategorijas</a>
                 <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
