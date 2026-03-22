@@ -71,7 +71,6 @@
                 <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
                 <th style="padding:10px; border:1px solid #ddd;">Kategorija</th>
-                <th style="padding:10px; border:1px solid #ddd;">Status</th>
                 <th style="padding:10px; border:1px solid #ddd;">Publicēts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
@@ -85,7 +84,6 @@
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $i->category?->nosaukums ?? '-' }}
                 </td>
-                <td style="padding:10px; border:1px solid #ddd;">{{ $i->status }}</td>
                 <td style="padding:10px; border:1px solid #ddd;">
                     {{ $i->publicets_datums }}
                 </td>

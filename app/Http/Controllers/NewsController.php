@@ -18,7 +18,6 @@ class NewsController extends Controller
         $to = $request->query('to');
 
         $news = News::with('category')
-            ->where('status', 'publicets')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('nosaukums', 'like', "%{$q}%")
@@ -44,7 +43,6 @@ class NewsController extends Controller
         $q = trim($request->query('q', ''));
 
         $news = News::with('category')
-            ->where('status', 'publicets')
             ->where('kategorija_id', $id)
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
@@ -62,7 +60,6 @@ class NewsController extends Controller
     public function show($id)
     {
         $post = News::with(['category', 'comments.user'])
-            ->where('status', 'publicets')
             ->findOrFail($id);
 
         return view('news.show', compact('post'));
@@ -82,10 +79,9 @@ class NewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
-        $data['publicets_datums'] = $data['status'] === 'publicets' ? now() : null;
+        $data['publicets_datums'] = now();
 
         if ($request->hasFile('bilde')) {
             $dir = base_path('img/aktualitates');
@@ -122,7 +118,6 @@ class NewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
         if ($request->hasFile('bilde')) {
@@ -157,7 +152,7 @@ class NewsController extends Controller
         $post->comments()->delete();
 
         if (!empty($post->bilde)) {
-            $path = public_path(ltrim($post->bilde, '/'));
+            $path = base_path($post->bilde);
             if (File::exists($path)) {
                 File::delete($path);
             }

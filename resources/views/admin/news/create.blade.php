@@ -38,19 +38,6 @@
         </div>
 
         <div style="margin:10px 0;">
-            <label>Status</label><br>
-            <select name="status" style="width:100%; padding:8px;">
-                <option value="publicets" @selected(old('status','publicets') === 'publicets')>
-                    Publicēts
-                </option>
-
-                <option value="melnraksts" @selected(old('status') === 'melnraksts')>
-                    Melnraksts
-                </option>
-            </select>
-        </div>
-
-        <div style="margin:10px 0;">
             <label>Saturs</label><br>
             <textarea name="saturs" rows="6" style="width:100%; padding:8px;">{{ old('saturs') }}</textarea>
         </div>

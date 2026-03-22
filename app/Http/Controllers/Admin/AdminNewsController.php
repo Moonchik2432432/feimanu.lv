@@ -52,10 +52,9 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
 
-        $data['publicets_datums'] = $data['status'] === 'publicets' ? now() : null;
+        $data['publicets_datums'] = now();
 
         if ($request->hasFile('bilde')) {
             $dir = base_path('img/aktualitates');
@@ -92,12 +91,7 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'status' => ['required', 'in:melnraksts,publicets'],
         ]);
-
-        if ($data['status'] === 'publicets' && empty($post->publicets_datums)) {
-            $data['publicets_datums'] = now();
-        }
 
         if ($request->hasFile('bilde')) {
             if (!empty($post->bilde)) {
@@ -131,7 +125,7 @@ class AdminNewsController extends Controller
         $post->comments()->delete();
 
         if (!empty($post->bilde)) {
-            $path = public_path(ltrim($post->bilde, '/'));
+            $path = base_path($post->bilde);
             if (File::exists($path)) {
                 File::delete($path);
             }
