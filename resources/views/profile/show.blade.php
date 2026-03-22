@@ -3,124 +3,143 @@
 @section('title', 'Mans profils')
 
 @section('content')
-<div class="container" style="max-width:700px;">
-<!-- VIEW PROFILE-->
-    <h1>Mans profils</h1>
+<div class="container" style="max-width:800px; margin:40px auto;">
+
+    <h1 style="margin-bottom:20px;">Mans profils</h1>
 
     @if(session('success'))
-        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
+        <div style="padding:12px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:10px; margin-bottom:20px;">
             {{ session('success') }}
         </div>
     @endif
 
-    <div style="display:flex; gap:20px; align-items:center; margin:20px 0;">
+    {{-- PROFILE INFO --}}
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:20px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.04);
+        margin-bottom:25px;
+        display:flex;
+        gap:20px;
+        align-items:center;
+    ">
+
         <div>
-            @if($user->avatar)
-                <img src="{{ asset('img/usersAvatars/' . $user->avatar) }}"
-                     style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
-            @else
-                <img src="{{ asset('img/usersAvatars/default_avatar.jpg') }}"
-                     style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
-            @endif
+            <img src="{{ asset($user->avatar ? 'img/usersAvatars/' . $user->avatar : 'img/usersAvatars/default_avatar.jpg') }}"
+                 style="width:90px;height:90px;border-radius:50%;object-fit:cover;">
         </div>
 
         <div>
             <div><b>Vārds:</b> {{ $user->name }}</div>
             <div><b>E-pasts:</b> {{ $user->email }}</div>
 
-            @if(!empty($user->created_at))
-                <div><b>Reģistrēts:</b> {{ \Carbon\Carbon::parse($user->created_at)->format('d.m.Y') }}</div>
-            @endif
+            <div><b>Reģistrēts:</b> {{ $user->created_at->format('d.m.Y') }}</div>
 
             @if(!is_null($commentsCount))
                 <div><b>Komentāri:</b> {{ $commentsCount }}</div>
             @endif
         </div>
+
     </div>
 
-<!-- CHANGE PROFILE NAME AND AVATAR-->
-    <hr style="margin:25px 0;">
-    <h3>Mainīt profilu</h3>
+    {{-- EDIT PROFILE --}}
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:20px;
+        margin-bottom:25px;
+    ">
+        <h3>Mainīt profilu</h3>
 
-    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" style="max-width:400px;">
-        @csrf
+        <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+            @csrf
 
-        <div style="margin-bottom:10px;">
-            <label>Vārds</label>
-            <input type="text" name="name" value="{{ old('name', $user->name) }}" style="width:100%;" required>
-            @error('name')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
+            <div style="margin-bottom:12px;">
+                <label>Vārds</label><br>
+                <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
 
-        <div style="margin-bottom:15px;">
-            <label>Jauns avatars</label><br>
-            <input type="file" name="avatar" accept="image/*">
-            @error('avatar')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
-        <button type="submit">Saglabāt</button>
-    </form>
+            <div style="margin-bottom:12px;">
+                <label>Jauns avatars</label><br>
+                <input type="file" name="avatar">
+            </div>
 
-<!-- CHANGE PAROLE-->
-    <hr style="margin:25px 0;">
-    <h3>Mainīt paroli</h3>
+            <button style="padding:8px 14px; border-radius:10px; cursor:pointer;">
+                Saglabāt
+            </button>
+        </form>
+    </div>
 
-    <form method="POST" action="{{ route('profile.password') }}" style="max-width:400px;">
-        @csrf
+    {{-- CHANGE PASSWORD --}}
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:20px;
+        margin-bottom:25px;
+    ">
+        <h3>Mainīt paroli</h3>
 
-        <div style="margin-bottom:10px;">
-            <label>Pašreizējā parole</label>
-            <input type="password" name="current_password" style="width:100%;" required>
-            @error('current_password')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <form method="POST" action="{{ route('profile.password') }}">
+            @csrf
 
-        <div style="margin-bottom:10px;">
-            <label>Jaunā parole</label>
-            <input type="password" name="new_password" style="width:100%;" required>
-            @error('new_password')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
+            <div style="margin-bottom:10px;">
+                <label>Pašreizējā parole</label><br>
+                <input type="password" name="current_password"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
 
-        <div style="margin-bottom:15px;">
-            <label>Atkārtot jauno paroli</label>
-            <input type="password" name="new_password_confirmation" style="width:100%;" required>
-        </div>
+            <div style="margin-bottom:10px;">
+                <label>Jaunā parole</label><br>
+                <input type="password" name="new_password"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
 
-        <button type="submit">Mainīt paroli</button>
-    </form>
+            <div style="margin-bottom:12px;">
+                <label>Atkārtot paroli</label><br>
+                <input type="password" name="new_password_confirmation"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
 
-<!-- CHANGE E-PASTS-->
-    <hr style="margin:25px 0;">
-    <h3>Mainīt e-pastu</h3>
+            <button style="padding:8px 14px; border-radius:10px; cursor:pointer;">
+                Mainīt paroli
+            </button>
+        </form>
+    </div>
 
-    <form method="POST" action="{{ route('profile.email') }}" style="max-width:400px;">
-        @csrf
+    {{-- CHANGE EMAIL --}}
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:20px;
+    ">
+        <h3>Mainīt e-pastu</h3>
 
-        <div style="margin-bottom:10px;">
-            <label>Jaunais e-pasts</label>
-            <input type="email" name="email" value="{{ old('email', $user->email) }}" style="width:100%;" required>
-            @error('email')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
+        <form method="POST" action="{{ route('profile.email') }}">
+            @csrf
 
-        <div style="margin-bottom:15px;">
-            <label>Apstipriniet ar paroli</label>
-            <input type="password" name="password" style="width:100%;" required>
-            @error('password')
-                <div style="color:red;">{{ $message }}</div>
-            @enderror
-        </div>
+            <div style="margin-bottom:10px;">
+                <label>Jaunais e-pasts</label><br>
+                <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
 
-        <button type="submit">Mainīt e-pastu</button>
-    </form>
+            <div style="margin-bottom:12px;">
+                <label>Parole apstiprināšanai</label><br>
+                <input type="password" name="password"
+                       style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;">
+            </div>
+
+            <button style="padding:8px 14px; border-radius:10px; cursor:pointer;">
+                Mainīt e-pastu
+            </button>
+        </form>
+    </div>
 
 </div>
 @endsection
-
-
