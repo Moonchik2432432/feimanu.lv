@@ -26,7 +26,7 @@
 
         <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
-        <a href="{{ url()->current() }}" style="padding:9px 14px; text-decoration:none;">
+        <a href="{{ url()->current() }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
             Notīrīt
         </a>
     </form>
