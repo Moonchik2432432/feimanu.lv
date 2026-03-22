@@ -59,6 +59,13 @@
             dateFormat: "Y-m-d",
             locale: "lv"
         });
+
+        flatpickr(".datetime-picker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: "lv"
+        });
  
         function toggleBlockForm(userId) {
             const form = document.getElementById('block-form-' + userId);
@@ -151,7 +158,7 @@
                                         style="padding:6px; resize:vertical;"
                                     ></textarea>
  
-                                    <input type="datetime-local" name="blocked_until" required style="padding:6px;">
+                                    <input type="text" class="datetime-picker" name="blocked_until" required style="padding:6px;">
  
                                     <div style="display:flex; gap:8px;">
                                         <button type="submit" style="padding:6px 12px; color:red;">
