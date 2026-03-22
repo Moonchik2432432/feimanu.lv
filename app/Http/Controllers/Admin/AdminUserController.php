@@ -51,9 +51,7 @@ class AdminUserController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        $reasons = BlockReason::where('is_active', 1)
-            ->orderBy('title')
-            ->get();
+        $reasons = BlockReason::orderBy('title')->get();
 
         return view('admin.users.index', compact('users', 'q', 'from', 'to', 'reasons'));
     }
