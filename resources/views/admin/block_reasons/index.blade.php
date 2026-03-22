@@ -37,7 +37,7 @@
         </form>
 
         <a href="{{ route('admin.block_reasons.create') }}"
-           style="padding:9px 14px; background:#28a745; text-decoration:none; color:#000; display:inline-block;">
+           style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
             + Pievienot
         </a>
     </div>
