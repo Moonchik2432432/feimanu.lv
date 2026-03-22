@@ -3,40 +3,72 @@
 @section('title', 'Login')
 
 @section('content')
-<div class="container" style="max-width:400px; margin:40px auto;">
+<div class="container" style="max-width:420px; margin:60px auto;">
 
-    <h2>Pieslēgties</h2>
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:25px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    ">
 
-    @if($errors->any())
-        <div style="color:red; white-space:pre-line;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+        <h2 style="margin-top:0; text-align:center;">Pieslēgties</h2>
 
-    <form method="POST" action="/login">
-        @csrf
+        @if($errors->any())
+            <div style="
+                padding:10px;
+                background:#ffecec;
+                border:1px solid #ffbcbc;
+                border-radius:10px;
+                margin:15px 0;
+                color:#a30000;
+            ">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-        <div style="margin-bottom:10px;">
-            <label>E-pasts</label>
-            <input type="email" name="email" required style="width:100%;">
-        </div>
+        <form method="POST" action="/login">
+            @csrf
 
-        <div style="margin-bottom:10px;">
-            <label>Parole</label>
-            <input type="password" name="password" required style="width:100%;">
-        </div>
+            <div style="margin-bottom:15px;">
+                <label>E-pasts</label><br>
+                <input type="email" name="email" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-        <div style="margin-bottom:10px;">
-            <label>
-                <input type="checkbox" name="remember">
-                Atcerēties mani
-            </label>
-        </div>
+            <div style="margin-bottom:15px;">
+                <label>Parole</label><br>
+                <input type="password" name="password" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-        <a href="{{ route('register') }}">Registracija</a>
+            <div style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+                <label style="display:flex; align-items:center; gap:6px;">
+                    <input type="checkbox" name="remember">
+                    Atcerēties mani
+                </label>
 
-        <button type="submit">Pieslēgties</button>
-    </form>
+                <a href="{{ route('register') }}" style="font-size:14px;">
+                    Reģistrācija
+                </a>
+            </div>
+
+            <button type="submit"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                        font-weight:bold;
+                    ">
+                Pieslēgties
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 @endsection

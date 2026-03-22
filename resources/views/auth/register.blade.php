@@ -3,45 +3,78 @@
 @section('title', 'Reģistrācija')
 
 @section('content')
-<div class="container" style="max-width:420px; margin:40px auto;">
+<div class="container" style="max-width:420px; margin:60px auto;">
 
-    <h2>Reģistrācija</h2>
+    <div style="
+        background:#fff;
+        border:1px solid #ddd;
+        border-radius:16px;
+        padding:25px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    ">
 
-    @if($errors->any())
-        <div style="color:red; margin-bottom:10px;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+        <h2 style="margin-top:0; text-align:center;">Reģistrācija</h2>
 
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+        @if($errors->any())
+            <div style="
+                padding:10px;
+                background:#ffecec;
+                border:1px solid #ffbcbc;
+                border-radius:10px;
+                margin:15px 0;
+                color:#a30000;
+            ">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-        <div style="margin-bottom:10px;">
-            <label>Vārds</label>
-            <input type="text" name="name" value="{{ old('name') }}" required style="width:100%;">
-        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <div style="margin-bottom:10px;">
-            <label>E-pasts</label>
-            <input type="email" name="email" value="{{ old('email') }}" required style="width:100%;">
-        </div>
+            <div style="margin-bottom:15px;">
+                <label>Vārds</label><br>
+                <input type="text" name="name" value="{{ old('name') }}" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-        <div style="margin-bottom:10px;">
-            <label>Parole</label>
-            <input type="password" name="password" required style="width:100%;">
-        </div>
+            <div style="margin-bottom:15px;">
+                <label>E-pasts</label><br>
+                <input type="email" name="email" value="{{ old('email') }}" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-        <div style="margin-bottom:10px;">
-            <label>Atkārtot paroli</label>
-            <input type="password" name="password_confirmation" required style="width:100%;">
-        </div>
+            <div style="margin-bottom:15px;">
+                <label>Parole</label><br>
+                <input type="password" name="password" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-        <button type="submit">Izveidot kontu</button>
-    </form>
+            <div style="margin-bottom:15px;">
+                <label>Atkārtot paroli</label><br>
+                <input type="password" name="password_confirmation" required
+                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+            </div>
 
-    <p style="margin-top:12px;">
-        Jau ir konts? <a href="{{ route('login') }}">Pieslēgties</a>
-    </p>
+            <button type="submit"
+                    style="
+                        width:100%;
+                        padding:10px;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                        font-weight:bold;
+                    ">
+                Izveidot kontu
+            </button>
+
+        </form>
+
+        <p style="margin-top:15px; text-align:center;">
+            Jau ir konts?
+            <a href="{{ route('login') }}">Pieslēgties</a>
+        </p>
+
+    </div>
 
 </div>
 @endsection
