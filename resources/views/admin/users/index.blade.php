@@ -50,28 +50,34 @@
     </form>
  
     <script>
-        flatpickr("#from", {
-            dateFormat: "Y-m-d",
-            locale: "lv"
-        });
- 
-        flatpickr("#to", {
-            dateFormat: "Y-m-d",
-            locale: "lv"
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr("#from", {
+                dateFormat: "Y-m-d",
+                locale: "lv"
+            });
+
+            flatpickr("#to", {
+                dateFormat: "Y-m-d",
+                locale: "lv"
+            });
         });
 
-        flatpickr(".datetime-picker", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true,
-            locale: "lv"
-        });
- 
         function toggleBlockForm(userId) {
             const form = document.getElementById('block-form-' + userId);
- 
+
             if (form.style.display === 'none' || form.style.display === '') {
                 form.style.display = 'flex';
+
+                const input = form.querySelector('.datetime-picker');
+
+                if (input && !input._flatpickr) {
+                    flatpickr(input, {
+                        enableTime: true,
+                        dateFormat: "Y-m-d H:i",
+                        time_24hr: true,
+                        locale: "lv"
+                    });
+                }
             } else {
                 form.style.display = 'none';
             }
