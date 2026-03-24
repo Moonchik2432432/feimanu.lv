@@ -52,6 +52,19 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ], [
+            'required' => 'Lauks :attribute ir obligāts.',
+            'string' => 'Laukam :attribute jābūt tekstam.',
+            'integer' => 'Laukam :attribute jābūt skaitlim.',
+            'exists' => 'Izvēlētais :attribute nav derīgs.',
+            'image' => 'Laukam :attribute jābūt attēlam.',
+            'mimes' => 'Laukam :attribute jābūt JPG, JPEG, PNG vai WEBP failam.',
+            'max' => 'Lauks :attribute nedrīkst būt lielāks par 4 MB.',
+        ], [
+            'nosaukums' => 'nosaukums',
+            'saturs' => 'saturs',
+            'kategorija_id' => 'kategorija',
+            'bilde' => 'attēls',
         ]);
 
         $data['publicets_datums'] = now();
@@ -90,7 +103,20 @@ class AdminNewsController extends Controller
             'nosaukums' => ['required', 'string', 'max:255'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
-            'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ], [
+            'required' => 'Lauks :attribute ir obligāts.',
+            'string' => 'Laukam :attribute jābūt tekstam.',
+            'integer' => 'Laukam :attribute jābūt skaitlim.',
+            'exists' => 'Izvēlētais :attribute nav derīgs.',
+            'image' => 'Laukam :attribute jābūt attēlam.',
+            'mimes' => 'Laukam :attribute jābūt JPG, JPEG, PNG vai WEBP failam.',
+            'max' => 'Lauks :attribute nedrīkst būt lielāks par 4 MB.',
+        ], [
+            'nosaukums' => 'nosaukums',
+            'saturs' => 'saturs',
+            'kategorija_id' => 'kategorija',
+            'bilde' => 'attēls',
         ]);
 
         if ($request->hasFile('bilde')) {
