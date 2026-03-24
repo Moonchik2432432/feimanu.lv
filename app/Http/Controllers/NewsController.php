@@ -17,6 +17,10 @@ class NewsController extends Controller
         $from = $request->query('from');
         $to = $request->query('to');
 
+        if ($from && $to && $from > $to) {
+            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+        }
+
         $news = News::with('category')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
