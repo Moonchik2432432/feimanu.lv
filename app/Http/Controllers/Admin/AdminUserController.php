@@ -94,41 +94,41 @@ class AdminUserController extends Controller
         if (auth()->id() === $user->id) {
             return back()->with('error', 'Tu nevari bloķēt pats sevi');
         }
- 
+     
         $data = $request->validate([
             'block_reason_id' => ['nullable', 'exists:block_reasons,id'],
             'custom_reason' => ['nullable', 'string', 'max:1000'],
-            'blocked_until' => ['required', 'date', 'after:now'],
+            'blocked_until' => ['nullable', 'date', 'after:now'],
         ], [
-            'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
             'max' => 'Lauks :attribute nedrīkst būt garāks par :max rakstzīmēm.',
             'exists' => 'Izvēlētais :attribute nav derīgs.',
             'date' => 'Laukam :attribute jābūt derīgam datumam.',
             'after' => 'Laukam :attribute jābūt datumam pēc šī brīža.',
- 
-            'blocked_until.required' => 'Lūdzu, norādi bloķēšanas termiņu.',
-            'blocked_until.after' => 'Bloķēšanas termiņam jābūt nākotnē.',
         ], [
             'block_reason_id' => 'bloķēšanas iemesls',
             'custom_reason' => 'papildu iemesls',
             'blocked_until' => 'bloķēšanas termiņš',
         ]);
- 
+     
+        $blockedUntil = !empty($data['blocked_until'])
+            ? $data['blocked_until']
+            : now()->addMonth();
+     
         UserBlock::create([
             'user_id' => $user->id,
             'blocked_by' => auth()->id(),
             'block_reason_id' => $data['block_reason_id'] ?? null,
             'custom_reason' => $data['custom_reason'] ?? null,
             'blocked_from' => now(),
-            'blocked_until' => $data['blocked_until'],
+            'blocked_until' => $blockedUntil,
         ]);
- 
+     
         $user->update([
             'is_blocked' => 1,
-            'blocked_until' => $data['blocked_until'],
+            'blocked_until' => $blockedUntil,
         ]);
- 
+     
         return redirect()->route('admin.users')->with('success', 'Lietotājs bloķēts');
     }
  
