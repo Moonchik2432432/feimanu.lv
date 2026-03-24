@@ -164,7 +164,8 @@
                                         style="padding:6px; resize:vertical;"
                                     ></textarea>
  
-                                    <input type="text" class="datetime-picker" name="blocked_until" placeholder= "Ja bloķēšanas laiks netiek izvēlēts, lietotājs automātiski tiek bloķēts uz 1 mēnesi." style="padding:6px; height: 120%;">
+                                    <input type="text" class="datetime-picker" name="blocked_until" placeholder= "Ja bloķēšanas laiks netiek izvēlēts, 
+                                    lietotājs automātiski tiek bloķēts uz 1 mēnesi." style="padding:6px;">
  
                                     <div style="display:flex; gap:8px;">
                                         <button type="submit" style="padding:6px 12px; color:red;">
