@@ -18,7 +18,7 @@ class AdminUserController extends Controller
         $to = $request->get('to');
 
         if ($from && $to && $from > $to) {
-            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".')
+            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
  
         $usersQuery = User::query()->select(
