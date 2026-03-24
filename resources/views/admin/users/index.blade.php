@@ -126,14 +126,15 @@
                     <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
                         <div style="display:flex; flex-direction:column; gap:8px;">
  
-                            @if($user->isBlockedNow())
-                                <form method="POST" action="{{ route('admin.users.unblock', $user->id) }}">
-                                    @csrf
-                                    <button type="submit" style="padding:6px 12px; color:green; width:100%;">
-                                        Atbloķēt
-                                    </button>
-                                </form>
-                            @else
+                        @if($user->isBlockedNow())
+                            <form action="{{ route('admin.users.unblock', $user->id) }}"
+                                method="POST"
+                                onsubmit="return confirm('Vai jūs tiešām vēlaties atbloķēt lietotāju?');">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit">Atbloķēt</button>
+                            </form>
+                        @else
                                 <button
                                     type="button"
                                     onclick="toggleBlockForm({{ $user->id }})"
