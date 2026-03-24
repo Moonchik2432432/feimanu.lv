@@ -51,7 +51,7 @@ class AdminNewsController extends Controller
             'nosaukums' => ['required', 'string', 'max:255'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
-            'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ]);
 
         $data['publicets_datums'] = now();
