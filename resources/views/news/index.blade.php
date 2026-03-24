@@ -6,9 +6,6 @@
 
 <div class="container">
 
-    <form method="GET" action="{{ url()->current() }}"
-          style="margin:15px 0 25px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
-
         @if(session('success'))
             <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
                 {{ session('success') }}
@@ -21,6 +18,9 @@
             </div>
         @endif
 
+
+    <form method="GET" action="{{ url()->current() }}"
+          style="margin:15px 0 25px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
 
         <div>
             <label>Nosaukums</label><br>
