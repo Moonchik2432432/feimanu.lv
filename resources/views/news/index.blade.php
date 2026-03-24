@@ -9,6 +9,19 @@
     <form method="GET" action="{{ url()->current() }}"
           style="margin:15px 0 25px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
 
+        @if(session('success'))
+            <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div style="padding:10px; background:#ffe9e9; border:1px solid #f0b7b7; border-radius:8px; margin:15px 0;">
+                {{ session('error') }}
+            </div>
+        @endif
+
+
         <div>
             <label>Nosaukums</label><br>
             <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
