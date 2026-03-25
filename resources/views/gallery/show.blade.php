@@ -5,8 +5,21 @@
 @section('content')
 <div class="container" style="max-width:1100px; margin:40px auto;">
 
-    <a href="{{ route('gallery.index') }}" style="display:inline-block; margin-bottom:20px;">
-        ← Atpakaļ
+    <a href="{{ url()->previous() }}"
+        style="
+            display:inline-block;
+            margin-bottom:20px;
+            padding:8px 14px;
+            border:1px solid #ddd;
+            border-radius:10px;
+            text-decoration:none;
+            color:#333;
+            background:#fff;
+            transition:0.2s;
+        "
+        onmouseover="this.style.background='#f5f5f5'"
+        onmouseout="this.style.background='#fff'">
+            ← Atpakaļ
     </a>
 
     <h1>{{ $album->title }}</h1>
