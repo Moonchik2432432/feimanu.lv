@@ -73,12 +73,18 @@
     @if(auth()->user()->role === 'admin')
         <div class="admin-bar">
             <div class="container admin-bar-inner">
-                <a href="{{ route('admin.users') }}">Lietotāji / Komentāri</a>
-                <a href="{{ route('admin.news') }}">Aktualitātes</a>
-                <a href="{{ route('admin.category') }}">Kategorijas</a>
-                <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
-                <a href="{{ route('admin.gallery.albums') }}">Galerijas albumi</a>
-                <a href="{{ route('admin.gallery.images') }}">Galerijas foto</a>
+
+                <div class="admin-bar-title">ADMIN PANEL</div>
+
+                <div class="admin-bar-links">
+                    <a href="{{ route('admin.users') }}">Lietotāji / Komentāri</a>
+                    <a href="{{ route('admin.news') }}">Aktualitātes</a>
+                    <a href="{{ route('admin.category') }}">Kategorijas</a>
+                    <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
+                    <a href="{{ route('admin.gallery.albums') }}">Galerijas albumi</a>
+                    <a href="{{ route('admin.gallery.images') }}">Galerijas foto</a>
+                </div>
+
             </div>
         </div>
     @endif
