@@ -19,7 +19,7 @@
         "
         onmouseover="this.style.background='#f5f5f5'"
         onmouseout="this.style.background='#fff'">
-            ← Atpakaļ
+        ← Atpakaļ
     </a>
 
     <article style="background:#fff; border:1px solid #ddd; border-radius:16px; padding:25px; box-shadow:0 2px 10px rgba(0,0,0,0.04);">
@@ -67,25 +67,37 @@
         @endif
 
         @forelse($post->comments as $c)
-            <div style="display:flex; gap:15px; padding:16px; border:1px solid #e5e5e5; border-radius:14px; background:#fff; margin-bottom:14px; box-shadow:0 1px 6px rgba(0,0,0,0.03);">
+            <div style="
+                display:flex;
+                gap:15px;
+                padding:16px;
+                border:1px solid #e5e5e5;
+                border-radius:14px;
+                background:#fff;
+                margin-bottom:14px;
+                box-shadow:0 1px 6px rgba(0,0,0,0.03);
+            ">
 
-                <div>
+                <!-- AVATAR -->
+                <div style="flex:0 0 52px;">
                     @if($c->user && $c->user->avatar)
                         <img
                             src="{{ asset('img/usersAvatars/' . $c->user->avatar) }}"
-                            style="width:52px; height:52px; border-radius:50%; object-fit:cover;"
+                            style="width:52px; height:52px; border-radius:50%; object-fit:cover; display:block;"
                             alt="Avatar"
                         >
                     @else
                         <img
                             src="{{ asset('img/usersAvatars/default_avatar.jpg') }}"
-                            style="width:52px; height:52px; border-radius:50%; object-fit:cover;"
+                            style="width:52px; height:52px; border-radius:50%; object-fit:cover; display:block;"
                             alt="Avatar"
                         >
                     @endif
                 </div>
 
-                <div style="flex:1;">
+                <!-- CONTENT -->
+                <div style="flex:1; min-width:0;">
+
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
                         <div>
                             <b>{{ $c->user->name ?? 'Lietotājs' }}</b><br>
@@ -109,9 +121,18 @@
                         @endauth
                     </div>
 
-                    <div style="margin-top:10px; color:#333; line-height:1.6; overflow-wrap:anywhere; word-break:break-word; white-space:pre-wrap;">
+                    <!-- TEXT -->
+                    <div style="
+                        margin-top:10px;
+                        color:#333;
+                        line-height:1.6;
+                        overflow-wrap:anywhere;
+                        word-break:break-word;
+                        white-space:pre-wrap;
+                    ">
                         {{ $c->text }}
                     </div>
+
                 </div>
 
             </div>
@@ -133,7 +154,7 @@
                     name="text"
                     required
                     rows="4"
-                    style="width:100%; margin-top:10px; padding:10px; border:1px solid #ccc; border-radius:10px; resize:vertical;"
+                    style="width:100%; margin-top:10px; padding:10px; border:1px solid #ccc; border-radius:10px; resize:vertical; box-sizing:border-box;"
                 >{{ old('text') }}</textarea>
 
                 <button
