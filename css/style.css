@@ -353,30 +353,28 @@ body {
 }
 
 /* GALLERY */
-.lightbox .lb-image {
-    max-width: 90vw !important;
-    max-height: 85vh !important;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain !important;
-}
-
 .lightbox .lb-outerContainer {
-    width: auto !important;
-    height: auto !important;
-    max-width: 90vw !important;
-    max-height: 85vh !important;
+    width: 1200px !important;
+    height: 700px !important;
+    max-width: 1200px !important;
+    max-height: 700px !important;
+    background: #fff !important;
 }
 
 .lightbox .lb-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 90vw !important;
-    max-height: 85vh !important;
+    width: 1200px !important;
+    height: 700px !important;
+}
+
+.lightbox .lb-image {
+    width: 1200px !important;
+    height: 700px !important;
+    max-width: 1200px !important;
+    max-height: 700px !important;
+    object-fit: fill !important;
 }
 
 .lb-dataContainer {
-    width: 90vw !important;
-    max-width: 90vw !important;
+    width: 1200px !important;
+    max-width: 1200px !important;
 }

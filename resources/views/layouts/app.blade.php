@@ -36,5 +36,16 @@
     <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox.min.js"></script>
 
     <script src="{{ asset('js/slider.js') }}"></script>
+
+    <script>
+        lightbox.option({
+            'resizeDuration': 0,
+            'fitImagesInViewport': false,
+            'wrapAround': true,
+            'positionFromTop': 30,
+            'maxWidth': 1200,
+            'maxHeight': 700
+        });
+    </script>
 </body>
 </html>
