@@ -26,17 +26,16 @@
         </div>
     @endif
 
-    <div style="margin:15px 0;">
+    <div style="display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:end; margin:15px 0;">
         <a href="{{ route('admin.gallery.albums.create') }}"
-           style="padding:9px 14px; background:#093600; color:#fff; text-decoration:none; display:inline-block; border-radius:4px;">
-            Pievienot albumu
+        style="padding:9px 14px; background:#28a745; color:#fff; text-decoration:none; border-radius:6px;">
+            + Pievienot
         </a>
     </div>
 
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
         <thead>
             <tr style="background:#f5f5f5;">
-                <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Vāks</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
                 <th style="padding:10px; border:1px solid #ddd;">Apraksts</th>
@@ -49,8 +48,6 @@
         <tbody>
             @forelse($albums as $album)
                 <tr>
-                    <td style="padding:10px; border:1px solid #ddd;">{{ $album->id }}</td>
-
                     <td style="padding:10px; border:1px solid #ddd;">
                         @if($album->cover_image)
                             <img src="{{ asset($album->cover_image) }}"
