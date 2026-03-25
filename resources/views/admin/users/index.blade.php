@@ -131,7 +131,6 @@
                                 method="POST"
                                 onsubmit="return confirm('Vai jūs tiešām vēlaties atbloķēt lietotāju?');">
                                 @csrf
-                                @method('PATCH')
                                 <button type="submit" style="padding:6px 12px; color:green; width:100%;">Atbloķēt</button>
                             </form>
                         @else
