@@ -48,6 +48,8 @@
                 </div>
             </div>
         @empty
+            <p>Nav fotogrāfiju</p>
+        @endforelse
     </div>
 
 </div>
