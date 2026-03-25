@@ -149,13 +149,11 @@
 
                 <label for="text"><b>Pievienot komentāru</b></label>
 
-                <textarea
-                    id="text"
+                <textarea id="text"
                     name="text"
                     required
                     rows="4"
-                    style="width:100%; margin-top:10px; padding:10px; border:1px solid #ccc; border-radius:10px; resize:vertical; box-sizing:border-box;"
-                >{{ old('text') }}</textarea>
+                    style="width:100%; margin-top:10px; padding:10px; border:1px solid #ccc; border-radius:10px; resize:vertical; box-sizing:border-box;">{{ old('text') }}</textarea>
 
                 <button
                     type="submit"
