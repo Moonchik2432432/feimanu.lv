@@ -28,12 +28,12 @@
 
         <div>
             <label>No</label><br>
-            <input type="text" name="from" id="from" value="{{ $from ?? '' }}" style="padding:8px;">
+            <input type="text" name="from" id="from" value="{{ $from ?? '' }}" placeholder="Datums no" style="padding:8px;">
         </div>
 
         <div>
             <label>Līdz</label><br>
-            <input type="text" name="to" id="to" value="{{ $to ?? '' }}" style="padding:8px;">
+            <input type="text" name="to" id="to" value="{{ $to ?? '' }}" placeholder="Datums līdz" style="padding:8px;">
         </div>
 
         <button type="submit" style="padding:9px 14px;">Filtrēt</button>
