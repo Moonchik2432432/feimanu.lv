@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::view('/pagasts', 'pagasts.index')->name('pagasts.index');
 Route::view('/history', 'pagasts.history')->name('pagasts.history');
+Route::view('/about', 'pagasts.about')->name('pagasts.about');
 Route::get('/rules', [RulesController::class, 'index'])->name('rules.index');
 
 // PUBLIC NEWS

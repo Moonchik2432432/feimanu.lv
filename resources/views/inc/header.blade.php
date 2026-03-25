@@ -27,12 +27,15 @@
                 <a href="{{ route('pagasts.index') }}">Pagasts</a>
 
                 <div class="submenu">
+                    <a href="{{ route('pagasts.about') }}">Par mums/a>
+                </div>
+
+                <div class="submenu">
                     <a href="{{ route('pagasts.history') }}">Pagasta vēsture</a>
                 </div>
             </div>
 
             <a href="{{ route('rules.index') }}">Noteikumi</a>
-            <a href="{{ url('/') }}">Pagasta pārvalde</a>
             <a href="{{ route('gallery.index') }}">Galerijas</a>
             <a href="{{ url('/') }}">Kontakti</a>
         </nav>
