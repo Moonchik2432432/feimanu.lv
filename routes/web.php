@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminBlockReasonController;
 
+use App\Http\Controllers\GalleryController;
+
 Route::get('/', function () {
     return redirect()->route('news.index');
 });
@@ -92,3 +94,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/block-reasons/{id}', [AdminBlockReasonController::class, 'update'])->name('admin.block_reasons.update');
     Route::delete('/block-reasons/{id}', [AdminBlockReasonController::class, 'destroy'])->name('admin.block_reasons.destroy');
 });
+
+// GALLERY
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
