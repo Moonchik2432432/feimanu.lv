@@ -31,6 +31,7 @@
                     <a href="{{ route('pagasts.history') }}">Pagasta vēsture</a>
                     <a href="{{ route('pagasts.sport') }}">Sports</a>
                     <a href="{{ route('pagasts.culture') }}">Kultūra</a>
+                    <a href="{{ route('pagasts.religia') }}">Reliģija</a>
                 </div>
             </div>
 

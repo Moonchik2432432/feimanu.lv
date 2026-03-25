@@ -26,6 +26,7 @@ Route::view('/history', 'pagasts.history')->name('pagasts.history');
 Route::view('/about', 'pagasts.about')->name('pagasts.about');
 Route::view('/sport', 'pagasts.sport')->name('pagasts.sport');
 Route::view('/culture', 'pagasts.culture')->name('pagasts.culture');
+Route::view('/religia', 'pagasts.religia')->name('pagasts.religia');
 Route::get('/rules', [RulesController::class, 'index'])->name('rules.index');
 
 // PUBLIC NEWS
