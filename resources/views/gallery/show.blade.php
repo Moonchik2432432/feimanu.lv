@@ -31,13 +31,23 @@
         margin-top:20px;
     ">
         @forelse($album->images as $img)
-            <a href="{{ asset($img->image_path) }}" data-lightbox="gallery">
-                <img src="{{ asset($img->image_path) }}"
-                     style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
-            </a>
+            <div>
+                <a href="{{ asset($img->image_path) }}" data-lightbox="gallery">
+                    <img src="{{ asset($img->image_path) }}"
+                        style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
+                </a>
+
+                <div style="margin-top:6px;">
+                    <small style="color:#666; display:block;">
+                        {{ $img->title ?? 'Bez nosaukuma' }}
+                    </small>
+
+                    <small style="color:#999;">
+                        {{ \Carbon\Carbon::parse($img->created_at)->format('d.m.Y') }}
+                    </small>
+                </div>
+            </div>
         @empty
-            <p>Nav fotogrāfiju</p>
-        @endforelse
     </div>
 
 </div>
