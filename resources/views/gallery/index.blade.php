@@ -26,7 +26,12 @@
                     @endif
 
                     <div style="padding:15px;">
-                        <h3 style="margin:0 0 10px 0;">{{ $album->title }}</h3>
+                        <h3 style="margin:0 0 6px 0;">{{ $album->title }}</h3>
+
+                        <small style="color:#888; display:block; margin-bottom:8px;">
+                            {{ \Carbon\Carbon::parse($album->created_at)->format('d.m.Y') }}
+                        </small>
+
                         <p style="color:#666; margin:0;">
                             {{ $album->images_count }} foto
                         </p>
