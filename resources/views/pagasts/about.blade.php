@@ -7,29 +7,41 @@
 
     <h1 style="margin-bottom:20px;">Par mums</h1>
 
+    <img 
+        src="{{ asset('img/pagasts/feimani2.jpg') }}"
+        alt="Feimaņu pagasts"
+        style="width:100%; max-height:400px; object-fit:cover; border-radius:14px; margin-bottom:20px;"
+    >
+
     <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px;">
 
         <p style="line-height:1.7; margin-top:0;">
-            Feimaņu pagasts ir Rēzeknes novada administratīvā teritorija Latgales reģionā, kas izceļas ar bagātu kultūrvēsturisko mantojumu un skaistu dabas vidi. Pagasta centrs ir Feimaņi, kas atrodas gleznainā vietā pie Feimaņu ezera.
+            Feimaņu pagasts ir Rēzeknes novada administratīvā teritorija Latgales reģionā, kas atrodas novada dienvidu daļā. Pagasta centrs ir Feimaņi, kas izvietots gleznainā vietā pie Feimaņu ezera.</p>
         </p>
 
         <p style="line-height:1.7;">
-            Mūsu pagasts ir vieta, kur harmoniski savienojas tradīcijas un mūsdienīga dzīve. Vietējā kopiena aktīvi piedalās kultūras, izglītības un sabiedriskajās aktivitātēs, saglabājot Latgales identitāti un vērtības.
+            Pagasts ietilpst Maltas apvienības pārvaldes sastāvā un nodrošina iedzīvotājiem nepieciešamos pakalpojumus un infrastruktūru. Feimaņu pagastā pieejama pamatskola, bibliotēka, kultūras nams un citi sabiedriskie objekti, kas veicina vietējās kopienas attīstību.
         </p>
 
         <p style="line-height:1.7;">
-            Feimaņu pagastā iedzīvotājiem ir pieejami svarīgi pakalpojumi, tostarp izglītības iestādes, kultūras nams, bibliotēka un citi sabiedriskie objekti, kas nodrošina kvalitatīvu dzīves vidi.
+            Feimaņu pagasts ir vieta, kur tiek saglabātas Latgales kultūras tradīcijas, valoda un identitāte. Vietējie iedzīvotāji aktīvi piedalās kultūras pasākumos, sabiedriskajā dzīvē un dažādos projektos, kas veicina pagasta attīstību.
         </p>
 
         <p style="line-height:1.7;">
-            Mēs cenšamies attīstīt pagastu, veicinot vietējo iniciatīvu, atbalstot projektus un uzlabojot infrastruktūru. Mūsu mērķis ir radīt drošu, sakārtotu un pievilcīgu vidi gan iedzīvotājiem, gan viesiem.
+            Apkārtne izceļas ar bagātu dabas vidi – ezeriem, mežiem un ainavām, kas piesaista gan vietējos iedzīvotājus, gan viesus. Feimaņu pagasts ir piemērota vieta mierīgai dzīvei, atpūtai dabā un tradicionālo vērtību saglabāšanai.
         </p>
 
         <p style="line-height:1.7; margin-bottom:0;">
-            Feimaņu pagasts ir vieta, kur ikviens var justies piederīgs — šeit tiek cienītas tradīcijas, kopiena un daba.
+            Pagasta attīstības mērķis ir nodrošināt kvalitatīvu dzīves vidi iedzīvotājiem, attīstīt infrastruktūru un saglabāt kultūrvēsturisko mantojumu nākamajām paaudzēm.
         </p>
 
     </div>
+
+    <img 
+        src="{{ asset('img/pagasts/feimani3.jpg') }}"
+        alt="Feimaņu pagasts"
+        style="width:100%; max-height:400px; object-fit:cover; border-radius:14px; margin-bottom:20px;"
+    >
 
 </div>
 @endsection
