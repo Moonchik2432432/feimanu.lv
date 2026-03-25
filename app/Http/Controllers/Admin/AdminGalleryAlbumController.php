@@ -9,13 +9,31 @@ use Illuminate\Support\Facades\File;
 
 class AdminGalleryAlbumController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $albums = GalleryAlbum::withCount('images')
+        $q = trim($request->query('q', ''));
+        $from = $request->query('from');
+        $to = $request->query('to');
+    
+        if ($from && $to && $from > $to) {
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+        }
+    
+        $albums = \App\Models\GalleryAlbum::withCount('images')
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where('title', 'like', "%{$q}%");
+            })
+            ->when($from, function ($query) use ($from) {
+                $query->whereDate('created_at', '>=', $from);
+            })
+            ->when($to, function ($query) use ($to) {
+                $query->whereDate('created_at', '<=', $to);
+            })
             ->orderByDesc('created_at')
-            ->paginate(10);
-
-        return view('admin.gallery_albums.index', compact('albums'));
+            ->paginate(10)
+            ->withQueryString();
+    
+        return view('admin.gallery_albums.index', compact('albums', 'q', 'from', 'to'));
     }
 
     public function create()

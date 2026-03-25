@@ -10,13 +10,44 @@ use Illuminate\Support\Facades\File;
 
 class AdminGalleryImageController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $images = GalleryImage::with('album')
+        $q = trim($request->query('q', ''));
+        $albumId = $request->query('album_id');
+        $from = $request->query('from');
+        $to = $request->query('to');
+    
+        if ($from && $to && $from > $to) {
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+        }
+    
+        $albums = \App\Models\GalleryAlbum::orderBy('title')->get();
+    
+        $images = \App\Models\GalleryImage::with('album')
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where('title', 'like', "%{$q}%");
+            })
+            ->when($albumId, function ($query) use ($albumId) {
+                $query->where('album_id', $albumId);
+            })
+            ->when($from, function ($query) use ($from) {
+                $query->whereDate('created_at', '>=', $from);
+            })
+            ->when($to, function ($query) use ($to) {
+                $query->whereDate('created_at', '<=', $to);
+            })
             ->orderByDesc('created_at')
-            ->paginate(12);
-
-        return view('admin.gallery_images.index', compact('images'));
+            ->paginate(10)
+            ->withQueryString();
+    
+        return view('admin.gallery_images.index', compact(
+            'images',
+            'albums',
+            'q',
+            'albumId',
+            'from',
+            'to'
+        ));
     }
 
     public function create()
