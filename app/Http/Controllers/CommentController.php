@@ -10,7 +10,7 @@ class CommentController extends Controller
     public function store(Request $request, $id)
     {
         $request->validate([
-            'text' => 'required|string|max:1000',
+            'text' => 'required|string|max:100',
         ]);
 
         $lastComment = Comment::where('user_id', auth()->id())
