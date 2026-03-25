@@ -9,7 +9,7 @@
 
     <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px; margin-bottom:25px;">
         <p style="line-height:1.7; margin-top:0;">
-            Feimaņu pagasts ir Rēzeknes novada teritoriālā vienība Latgales reģionā, un tā administratīvais centrs ir Feimaņi. Pagasts atrodas novada dienvidrietumu daļā, bet Feimaņu ciems izvietojies Feimaņu ezera austrumu krastā. :contentReference[oaicite:0]{index=0}
+            Feimaņu pagasts ir Rēzeknes novada teritoriālā vienība Latgales reģionā, un tā administratīvais centrs ir Feimaņi. Pagasts atrodas novada dienvidrietumu daļā, bet Feimaņu ciems izvietojies Feimaņu ezera austrumu krastā. 
         </p>
 
         <p style="line-height:1.7;">
