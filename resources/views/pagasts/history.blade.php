@@ -7,6 +7,12 @@
 
     <h1 style="margin-bottom:20px;">Feimaņu vēsture</h1>
 
+    <img 
+        src="{{ asset('img/pagasts/feimani.jpg') }}"
+        alt="Feimaņu pagasts"
+        style="width:100%; max-height:400px; object-fit:cover; border-radius:14px; margin-bottom:20px;"
+    >
+
     <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px; margin-bottom:25px;">
         <p style="line-height:1.7; margin-top:0;">
           1945. gadās Rēzeknes apriņķa Silajāņu pagastā izveidoja Feimaņu ciema padomi. Feimaņu ciems ietilpis Maltas (1949-1959) un Rēzeknes (pēc 1959. gada) rajonos.
