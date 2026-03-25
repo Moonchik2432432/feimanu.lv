@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Administrācija - Albumi')
+@section('title', 'Administrācija - Galerijas albumi')
 
 @section('content')
+
 <div class="container" style="max-width:1100px; margin:40px auto;">
 
     <h1>Galerijas albumi</h1>
@@ -13,43 +14,85 @@
         </div>
     @endif
 
-    <a href="{{ route('admin.gallery.albums.create') }}" style="display:inline-block; margin-bottom:20px; padding:10px 14px; background:#093600; color:#fff; text-decoration:none; border-radius:10px;">
-        Pievienot albumu
-    </a>
+    @if(session('error'))
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
 
-    <table style="width:100%; border-collapse:collapse; background:#fff;">
+    @if($errors->any())
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <div style="margin:15px 0;">
+        <a href="{{ route('admin.gallery.albums.create') }}"
+           style="padding:9px 14px; background:#093600; color:#fff; text-decoration:none; display:inline-block; border-radius:4px;">
+            Pievienot albumu
+        </a>
+    </div>
+
+    <table style="width:100%; border-collapse: collapse; margin-top:20px;">
         <thead>
-            <tr>
+            <tr style="background:#f5f5f5;">
                 <th style="padding:10px; border:1px solid #ddd;">ID</th>
                 <th style="padding:10px; border:1px solid #ddd;">Vāks</th>
                 <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
+                <th style="padding:10px; border:1px solid #ddd;">Apraksts</th>
                 <th style="padding:10px; border:1px solid #ddd;">Foto skaits</th>
+                <th style="padding:10px; border:1px solid #ddd;">Izveidots</th>
                 <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
             </tr>
         </thead>
+
         <tbody>
             @forelse($albums as $album)
                 <tr>
                     <td style="padding:10px; border:1px solid #ddd;">{{ $album->id }}</td>
+
                     <td style="padding:10px; border:1px solid #ddd;">
                         @if($album->cover_image)
-                            <img src="{{ asset($album->cover_image) }}" style="width:80px; height:60px; object-fit:cover; border-radius:8px;">
+                            <img src="{{ asset($album->cover_image) }}"
+                                 alt="Cover"
+                                 style="width:80px; height:60px; object-fit:cover; border-radius:8px;">
+                        @else
+                            -
                         @endif
                     </td>
+
                     <td style="padding:10px; border:1px solid #ddd;">{{ $album->title }}</td>
+
+                    <td style="padding:10px; border:1px solid #ddd;">
+                        {{ \Illuminate\Support\Str::limit($album->description, 60) }}
+                    </td>
+
                     <td style="padding:10px; border:1px solid #ddd;">{{ $album->images_count }}</td>
+
+                    <td style="padding:10px; border:1px solid #ddd;">
+                        {{ $album->created_at ? $album->created_at->format('d.m.Y H:i') : '-' }}
+                    </td>
+
                     <td style="padding:10px; border:1px solid #ddd;">
                         <a href="{{ route('admin.gallery.albums.edit', $album->id) }}">Rediģēt</a>
 
-                        <form method="POST" action="{{ route('admin.gallery.albums.delete', $album->id) }}" style="display:inline-block; margin-left:10px;">
+                        <form method="POST"
+                              action="{{ route('admin.gallery.albums.delete', $album->id) }}"
+                              style="display:inline-block; margin-left:10px;">
                             @csrf
-                            <button type="submit" onclick="return confirm('Dzēst albumu?')" style="color:red;">Dzēst</button>
+                            <button type="submit"
+                                    onclick="return confirm('Vai tiešām dzēst albumu?')"
+                                    style="color:red; cursor:pointer;">
+                                Dzēst
+                            </button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" style="padding:10px; border:1px solid #ddd;">Nav albumu</td>
+                    <td colspan="7" style="padding:10px; border:1px solid #ddd; text-align:center;">
+                        Nav albumu
+                    </td>
                 </tr>
             @endforelse
         </tbody>
@@ -60,4 +103,5 @@
     </div>
 
 </div>
+
 @endsection
