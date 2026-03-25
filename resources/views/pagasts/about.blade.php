@@ -5,20 +5,6 @@
 @section('content')
 <div class="container" style="max-width:900px; margin:40px auto;">
 
-    <a href="{{ route('pagasts.index') }}"
-       style="
-            display:inline-block;
-            margin-bottom:20px;
-            padding:8px 14px;
-            border:1px solid #ddd;
-            border-radius:10px;
-            text-decoration:none;
-            color:#333;
-            background:#fff;
-        ">
-        ← Atpakaļ
-    </a>
-
     <h1 style="margin-bottom:20px;">Par mums</h1>
 
     <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px;">

@@ -28,9 +28,6 @@
 
                 <div class="submenu">
                     <a href="{{ route('pagasts.about') }}">Par mums/a>
-                </div>
-
-                <div class="submenu">
                     <a href="{{ route('pagasts.history') }}">Pagasta vēsture</a>
                 </div>
             </div>
