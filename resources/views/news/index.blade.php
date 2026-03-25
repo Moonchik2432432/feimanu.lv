@@ -6,18 +6,17 @@
 
 <div class="container">
 
-        @if(session('success'))
-            <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
-                {{ session('success') }}
-            </div>
-        @endif
+    @if(session('success'))
+        <div style="padding:10px; background:#e9ffe9; border:1px solid #b7f0b7; border-radius:8px; margin:15px 0;">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @if(session('error'))
-            <div style="padding:10px; background:#ffe9e9; border:1px solid #f0b7b7; border-radius:8px; margin:15px 0;">
-                {{ session('error') }}
-            </div>
-        @endif
-
+    @if(session('error'))
+        <div style="padding:10px; background:#ffe9e9; border:1px solid #f0b7b7; border-radius:8px; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <form method="GET" action="{{ url()->current() }}"
           style="margin:15px 0 25px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
@@ -49,7 +48,7 @@
             dateFormat: "Y-m-d",
             locale: "lv"
         });
- 
+
         flatpickr("#to", {
             dateFormat: "Y-m-d",
             locale: "lv"
@@ -80,49 +79,67 @@
 
         <main style="flex:1; min-width:0;">
 
-        @foreach($news as $item)
-            <a href="{{ route('news.show', $item->ieraksts_id) }}"
-            style="display:block; text-decoration:none; color:inherit; margin-bottom:20px;">
+            @foreach($news as $item)
+                <a href="{{ route('news.show', $item->ieraksts_id) }}"
+                   style="display:block; text-decoration:none; color:inherit; margin-bottom:20px;">
 
-                <div style="
-                    border:1px solid #ddd;
-                    border-radius:14px;
-                    padding:18px;
-                    background:#fff;
-                    transition:0.2s;
-                    box-shadow:0 2px 8px rgba(0,0,0,0.04);
-                ">
+                    <div style="
+                        border:1px solid #ddd;
+                        border-radius:14px;
+                        padding:18px;
+                        background:#fff;
+                        transition:0.2s;
+                        box-shadow:0 2px 8px rgba(0,0,0,0.04);
+                    ">
 
-                    @if($item->bilde)
-                        <img src="{{ asset($item->bilde) }}"
-                            alt="{{ $item->nosaukums }}"
-                            style="width:100%; max-height:260px; object-fit:cover; border-radius:10px; margin-bottom:14px; display:block;">
-                    @endif
-
-                    <h2 style="margin:0 0 8px 0; color:#222;">
-                        {{ $item->nosaukums }}
-                    </h2>
-
-                    <small style="color:gray; display:block; margin-bottom:10px;">
-                        {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
-                        @if($item->category)
-                            • {{ $item->category->nosaukums }}
+                        @if($item->bilde)
+                            <img src="{{ asset($item->bilde) }}"
+                                 alt="{{ $item->nosaukums }}"
+                                 style="width:100%; max-height:260px; object-fit:cover; border-radius:10px; margin-bottom:14px; display:block;">
                         @endif
-                    </small>
 
-                    <p style="margin:0; color:#444; line-height:1.5;">
-                        {{ \Illuminate\Support\Str::limit($item->saturs, 180) }}
-                    </p>
+                        <h2 style="margin:0 0 8px 0; color:#222;">
+                            {{ $item->nosaukums }}
+                        </h2>
 
-                </div>
-            </a>
-        @endforeach
+                        <small style="color:gray; display:block; margin-bottom:10px;">
+                            {{ \Carbon\Carbon::parse($item->publicets_datums)->format('d.m.Y H:i') }}
+                            @if($item->category)
+                                • {{ $item->category->nosaukums }}
+                            @endif
+                        </small>
+
+                        <p style="margin:0; color:#444; line-height:1.5;">
+                            {{ \Illuminate\Support\Str::limit($item->saturs, 180) }}
+                        </p>
+
+                    </div>
+                </a>
+            @endforeach
 
             <div class="pagination-wrapper" style="margin-top:20px;">
                 {{ $news->links('pagination.default') }}
             </div>
 
         </main>
+
+        <aside style="width:280px; flex:0 0 280px;">
+            <h3 style="margin-bottom:12px;">Jaunākās fotogrāfijas</h3>
+
+            <div style="border:1px solid #ddd; border-radius:12px; background:#fff; padding:12px;">
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+                    @forelse($latestPhotos as $photo)
+                        <a href="{{ route('gallery.index') }}" style="display:block;">
+                            <img src="{{ asset($photo->image_path) }}"
+                                 alt="{{ $photo->title ?? 'Foto' }}"
+                                 style="width:100%; height:80px; object-fit:cover; border-radius:8px; display:block;">
+                        </a>
+                    @empty
+                        <p style="grid-column:1 / -1; margin:0;">Nav fotogrāfiju</p>
+                    @endforelse
+                </div>
+            </div>
+        </aside>
 
     </div>
 </div>

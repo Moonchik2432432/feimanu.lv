@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Category;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -18,7 +19,7 @@ class NewsController extends Controller
         $to = $request->query('to');
 
         if ($from && $to && $from > $to) {
-            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
 
         $news = News::with('category')
@@ -38,7 +39,11 @@ class NewsController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('news.index', compact('categories', 'news', 'q', 'from', 'to'));
+        $latestPhotos = GalleryImage::orderByDesc('created_at')
+            ->take(3)
+            ->get();
+
+        return view('news.index', compact('categories', 'news', 'q', 'from', 'to', 'latestPhotos'));
     }
 
     public function category(Request $request, $id)
@@ -58,7 +63,11 @@ class NewsController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('news.index', compact('categories', 'news', 'q'));
+        $latestPhotos = GalleryImage::orderByDesc('created_at')
+            ->take(3)
+            ->get();
+
+        return view('news.index', compact('categories', 'news', 'q', 'latestPhotos'));
     }
 
     public function show($id)
