@@ -37,7 +37,7 @@
 
             <div>
                 <label>Albums</label><br>
-                <select name="album_id" style="padding:8px; width:200px;">
+                <select name="album_id" style="padding:8px; width:150px;">
                     <option value="">Visi albumi</option>
                     @foreach($albums as $album)
                         <option value="{{ $album->id }}" {{ ($albumId ?? '') == $album->id ? 'selected' : '' }}>
