@@ -352,8 +352,15 @@ body {
     min-width: auto;
 }
 
+/* GALLERY */
+
 .lb-image {
     width: 80vw !important;
     height: 80vh !important;
     object-fit: contain !important;
+}
+
+.lb-outerContainer {
+    width: 80vw !important;
+    height: 80vh !important;
 }
