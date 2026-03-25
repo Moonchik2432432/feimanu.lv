@@ -13,7 +13,7 @@
         style="width:100%; max-height:400px; object-fit:cover; border-radius:14px; margin-bottom:20px;"
     >
 
-    <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px;">
+    <div style="background:#fff; border:1px solid #ddd; border-radius:14px; padding:24px 24px;">
 
         <p style="line-height:1.7; margin-top:0;">
             Feimaņu pagasts ir Rēzeknes novada administratīvā teritorija Latgales reģionā, kas atrodas novada dienvidu daļā. Pagasta centrs ir Feimaņi, kas izvietots gleznainā vietā pie Feimaņu ezera.</p>
