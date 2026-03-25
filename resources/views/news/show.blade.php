@@ -109,7 +109,7 @@
                         @endauth
                     </div>
 
-                    <div style="margin-top:10px; color:#333; line-height:1.6;">
+                    <div style="margin-top:10px; color:#333; line-height:1.6; overflow-wrap:anywhere; word-break:break-word; white-space:pre-wrap;">
                         {{ $c->text }}
                     </div>
                 </div>
