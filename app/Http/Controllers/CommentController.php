@@ -18,10 +18,10 @@ class CommentController extends Controller
             ->first();
 
         if ($lastComment) {
-            $secondsPassed = $lastComment->izveidots_datums->diffInSeconds(now());
+            $secondsPassed = (int) $lastComment->izveidots_datums->diffInSeconds(now());
 
             if ($secondsPassed < 30) {
-                $wait = 30 - $secondsPassed;
+                $wait = max(0, (int) ceil(30 - $secondsPassed));
 
                 return back()->with('error', "Tu vari rakstīt nākamo komentāru pēc {$wait} sek.");
             }
