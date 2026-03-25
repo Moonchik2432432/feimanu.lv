@@ -74,6 +74,8 @@
                 <a href="{{ route('admin.news') }}">Aktualitātes</a>
                 <a href="{{ route('admin.category') }}">Kategorijas</a>
                 <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
+                <a href="{{ route('admin.gallery.albums') }}">Galerijas albumi</a>
+                <a href="{{ route('admin.gallery.images') }}">Galerijas foto</a>
             </div>
         </div>
     @endif
