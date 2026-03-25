@@ -127,12 +127,12 @@
             <h3 style="margin-bottom:12px;">Jaunākās fotogrāfijas</h3>
 
             <div style="border:1px solid #ddd; border-radius:12px; background:#fff; padding:12px;">
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+                <div style="display:flex; flex-direction:column; gap:12px;">
                     @forelse($latestPhotos as $photo)
                         <a href="{{ route('gallery.index') }}" style="display:block;">
                             <img src="{{ asset($photo->image_path) }}"
                                  alt="{{ $photo->title ?? 'Foto' }}"
-                                 style="width:100%; height:80px; object-fit:cover; border-radius:8px; display:block;">
+                                 style="width:100%; height:150px; object-fit:cover; border-radius:10px;">
                         </a>
                     @empty
                         <p style="grid-column:1 / -1; margin:0;">Nav fotogrāfiju</p>
