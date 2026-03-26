@@ -17,7 +17,7 @@ class ContactController extends Controller
                 ->get();
         }
 
-        return view('kontakti.index', compact('messages'));
+        return view('contacts.index', compact('messages'));
     }
 
     public function store(Request $request)
