@@ -38,4 +38,12 @@ class AdminContactController extends Controller
 
         return back()->with('success', 'Atbilde saglabāta.');
     }
+
+    public function close($id)
+    {
+        $message = ContactMessage::findOrFail($id);
+        $message->delete();
+    
+        return redirect()->route('admin.contacts')->with('success', 'Jautājums aizvērts.');
+    }
 }
