@@ -129,7 +129,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
     Route::get('/contacts/{id}', [AdminContactController::class, 'show'])->name('admin.contacts.show');
     Route::post('/contacts/{id}/reply', [AdminContactController::class, 'reply'])->name('admin.contacts.reply');
-    Route::get('/contacts/{id}/close', [AdminContactController::class, 'close'])->name('admin.contacts.close');
+    Route::delete('/contacts/{id}/close', [AdminContactController::class, 'close'])->name('admin.contacts.close');
 });
 
 
