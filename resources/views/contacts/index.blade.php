@@ -20,7 +20,7 @@
     @endif
 
     <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:25px;">
-        <form method="POST" action="{{ route('kontakti.store') }}">
+        <form method="POST" action="{{ route('contacts.store') }}">
             @csrf
 
             <div style="margin-bottom:15px;">
