@@ -37,7 +37,7 @@
 
             <a href="{{ route('rules.index') }}">Noteikumi</a>
             <a href="{{ route('gallery.index') }}">Galerijas</a>
-            <a href="{{ url('/') }}">Kontakti</a>
+            <a href="{{ url('contacts.index') }}">Kontakti</a>
         </nav>
 
         @auth
