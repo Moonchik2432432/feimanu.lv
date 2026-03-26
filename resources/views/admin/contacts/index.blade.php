@@ -16,13 +16,25 @@
     <div style="display:grid; gap:15px;">
         @forelse($messages as $item)
             <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px;">
-                <div style="font-weight:bold;">{{ $item->subject }}</div>
+                <div style="font-weight:bold; font-size:18px; margin-bottom:10px;">
+                    {{ $item->subject }}
+                </div>
 
-                <div style="margin:10px 0; color:#666;">
-                    {{ $item->name }} | {{ $item->email }} | {{ $item->created_at->format('d.m.Y H:i') }}
+                <div style="margin:10px 0; color:#666; line-height:1.8;">
+                    <div><strong>Vārds un uzvārds:</strong> {{ $item->name }}</div>
+
+                    @if($item->user)
+                        <div><strong>Lietotājvārds vietnē:</strong> {{ $item->user->name }}</div>
+                    @else
+                        <div><strong>Lietotājvārds vietnē:</strong> Nav piesaistīta konta</div>
+                    @endif
+
+                    <div><strong>E-pasts:</strong> {{ $item->email }}</div>
+                    <div><strong>Datums:</strong> {{ $item->created_at->format('d.m.Y H:i') }}</div>
                 </div>
 
                 <div style="margin-bottom:15px;">
+                    <strong>Ziņojums:</strong><br>
                     {{ \Illuminate\Support\Str::limit($item->message, 150) }}
                 </div>
 
