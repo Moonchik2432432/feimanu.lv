@@ -20,7 +20,14 @@
     @endif
 
     <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:20px;">
-        <p><strong>Vārds:</strong> {{ $message->name }}</p>
+        <p><strong>Vārds un uzvārds:</strong> {{ $message->name }}</p>
+
+        @if($message->user)
+            <p><strong>Lietotājvārds vietnē:</strong> {{ $message->user->name }}</p>
+        @else
+            <p><strong>Lietotājvārds vietnē:</strong> Nav piesaistīta konta</p>
+        @endif
+
         <p><strong>E-pasts:</strong> {{ $message->email }}</p>
         <p><strong>Tēma:</strong> {{ $message->subject }}</p>
         <p><strong>Ziņojums:</strong><br>{!! nl2br(e($message->message)) !!}</p>
