@@ -69,8 +69,8 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index
 Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
 
 // CONTACT
-Route::get('/kontakti', [ContactController::class, 'index'])->name('kontakti');
-Route::post('/kontakti', [ContactController::class, 'store'])->name('kontakti.store');
+Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 // ADMIN
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
