@@ -24,8 +24,8 @@
             @csrf
 
             <div style="margin-bottom:15px;">
-                <label>Vārds</label><br>
-                <input type="text" name="name" value="{{ old('name', auth()->user()->name ?? '') }}" style="width:100%; padding:10px;">
+                <label>Vārds un uzvārds</label><br>
+                <input type="text" name="name" value="{{ old('name') }}" style="width:100%; padding:10px;">
             </div>
 
             <div style="margin-bottom:15px;">
