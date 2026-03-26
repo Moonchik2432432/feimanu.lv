@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RulesController;
+use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminCategoryController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\AdminCommentsController;
 use App\Http\Controllers\Admin\AdminBlockReasonController;
 use App\Http\Controllers\Admin\AdminGalleryAlbumController;
 use App\Http\Controllers\Admin\AdminGalleryImageController;
+use App\Http\Controllers\Admin\AdminContactController;
 
 use App\Http\Controllers\GalleryController;
 
@@ -65,6 +67,10 @@ Route::middleware('auth')->group(function () {
 // GALLERY
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+
+// CONTACT
+Route::get('/kontakti', [ContactController::class, 'index'])->name('kontakti');
+Route::post('/kontakti', [ContactController::class, 'store'])->name('kontakti.store');
 
 // ADMIN
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
@@ -118,6 +124,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/gallery-images/{id}/edit', [AdminGalleryImageController::class, 'edit'])->name('admin.gallery.images.edit');
     Route::post('/gallery-images/{id}/update', [AdminGalleryImageController::class, 'update'])->name('admin.gallery.images.update');
     Route::post('/gallery-images/{id}/delete', [AdminGalleryImageController::class, 'destroy'])->name('admin.gallery.images.delete');
+
+    //CONTACT
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
+    Route::get('/contacts/{id}', [AdminContactController::class, 'show'])->name('admin.contacts.show');
+    Route::post('/contacts/{id}/reply', [AdminContactController::class, 'reply'])->name('admin.contacts.reply');
 });
 
 
