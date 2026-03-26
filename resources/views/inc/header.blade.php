@@ -37,7 +37,7 @@
 
             <a href="{{ route('rules.index') }}">Noteikumi</a>
             <a href="{{ route('gallery.index') }}">Galerijas</a>
-            <a href="{{ url('contacts.index') }}">Kontakti</a>
+            <a href="{{ route('contacts') }}">Kontakti</a>
         </nav>
 
         @auth
@@ -83,6 +83,7 @@
                     <a href="{{ route('admin.block_reasons') }}">Bloķēšanas iemesli</a>
                     <a href="{{ route('admin.gallery.albums') }}">Galerijas albumi</a>
                     <a href="{{ route('admin.gallery.images') }}">Galerijas foto</a>
+                    <a href="{{ route('admin.contacts') }}">Kontakti</a>
                 </div>
 
             </div>
