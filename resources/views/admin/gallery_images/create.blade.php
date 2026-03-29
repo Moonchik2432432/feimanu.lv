@@ -45,9 +45,25 @@
                    style="padding:8px; width:100%; box-sizing:border-box;">
         </div>
 
+        {{-- FILE INPUT --}}
         <div style="margin:15px 0;">
             <label>Fotogrāfija</label><br>
-            <input type="file" name="image_path" required>
+
+            <label style="
+                display:inline-block;
+                padding:8px 14px;
+                border-radius:10px;
+                border:1px solid #ccc;
+                cursor:pointer;
+                background:#f5f5f5;
+            ">
+                Izvēlēties failu
+                <input type="file" name="image_path" id="image-input" required style="display:none;">
+            </label>
+
+            <div id="image-name" style="margin-top:8px; color:#666;">
+                Fails nav izvēlēts
+            </div>
         </div>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
@@ -61,5 +77,15 @@
     </form>
 
 </div>
+
+<script>
+document.getElementById('image-input')?.addEventListener('change', function() {
+    const fileName = this.files.length > 0
+        ? this.files[0].name
+        : 'Fails nav izvēlēts';
+
+    document.getElementById('image-name').textContent = fileName;
+});
+</script>
 
 @endsection

@@ -16,6 +16,7 @@
 
     <form method="POST" action="{{ route('admin.gallery.albums.update', $album->id) }}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <div style="margin:15px 0;">
             <label>Nosaukums</label><br>
@@ -43,7 +44,22 @@
 
         <div style="margin:15px 0;">
             <label>Jauns vāka attēls</label><br>
-            <input type="file" name="cover_image">
+
+            <label style="
+                display:inline-block;
+                padding:8px 14px;
+                border-radius:10px;
+                border:1px solid #ccc;
+                cursor:pointer;
+                background:#f5f5f5;
+            ">
+                Izvēlēties failu
+                <input type="file" name="cover_image" id="cover-input" style="display:none;">
+            </label>
+
+            <div id="cover-name" style="margin-top:8px; color:#666;">
+                Fails nav izvēlēts
+            </div>
         </div>
 
         <div style="display:flex; gap:10px; margin-top:20px;">
@@ -57,5 +73,15 @@
     </form>
 
 </div>
+
+<script>
+document.getElementById('cover-input')?.addEventListener('change', function() {
+    const fileName = this.files.length > 0
+        ? this.files[0].name
+        : 'Fails nav izvēlēts';
+
+    document.getElementById('cover-name').textContent = fileName;
+});
+</script>
 
 @endsection
