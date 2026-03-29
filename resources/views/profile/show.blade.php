@@ -65,7 +65,22 @@
 
             <div style="margin-bottom:12px;">
                 <label>Jauns avatars</label><br>
-                <input type="file" name="avatar">
+
+                <label style="
+                    display:inline-block;
+                    padding:8px 14px;
+                    border-radius:10px;
+                    border:1px solid #ccc;
+                    cursor:pointer;
+                    background:#f5f5f5;
+                ">
+                    Izvēlēties failu
+                    <input type="file" name="avatar" id="avatar-input" style="display:none;">
+                </label>
+
+                <div id="avatar-name" style="margin-top:8px; color:#666;">
+                    Fails nav izvēlēts
+                </div>
             </div>
 
             <button style="padding:8px 14px; border-radius:10px; cursor:pointer;">
