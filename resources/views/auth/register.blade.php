@@ -31,27 +31,39 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
+            <!-- NAME -->
             <div style="margin-bottom:15px;">
                 <label>Vārds</label><br>
                 <input type="text" name="name" value="{{ old('name') }}" required
+                       oninvalid="this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')"
+                       oninput="this.setCustomValidity('')"
                        style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
             </div>
 
+            <!-- EMAIL -->
             <div style="margin-bottom:15px;">
                 <label>E-pasts</label><br>
                 <input type="email" name="email" value="{{ old('email') }}" required
+                       oninvalid="if(this.value===''){this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')}else{this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.')}"
+                       oninput="this.setCustomValidity('')"
                        style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
             </div>
 
+            <!-- PASSWORD -->
             <div style="margin-bottom:15px;">
                 <label>Parole</label><br>
-                <input type="password" name="password" required
+                <input type="password" name="password" required minlength="6"
+                       oninvalid="if(this.value===''){this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')}else{this.setCustomValidity('Parolei jābūt vismaz 6 simboliem.')}"
+                       oninput="this.setCustomValidity('')"
                        style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
             </div>
 
+            <!-- PASSWORD CONFIRM -->
             <div style="margin-bottom:15px;">
                 <label>Atkārtot paroli</label><br>
                 <input type="password" name="password_confirmation" required
+                       oninvalid="this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')"
+                       oninput="this.setCustomValidity('')"
                        style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
             </div>
 
