@@ -42,9 +42,25 @@
             <textarea name="saturs" rows="6" style="width:100%; padding:8px;">{{ old('saturs') }}</textarea>
         </div>
 
+        {{-- FILE INPUT --}}
         <div style="margin:10px 0;">
             <label>Bilde</label><br>
-            <input type="file" name="bilde">
+
+            <label style="
+                display:inline-block;
+                padding:8px 14px;
+                border-radius:10px;
+                border:1px solid #ccc;
+                cursor:pointer;
+                background:#f5f5f5;
+            ">
+                Izvēlēties failu
+                <input type="file" name="bilde" id="bilde-input" required style="display:none;">
+            </label>
+
+            <div id="bilde-name" style="margin-top:8px; color:#666;">
+                Fails nav izvēlēts
+            </div>
         </div>
 
         <button type="submit" style="padding:10px 14px;">Saglabāt</button>
@@ -53,4 +69,16 @@
     </form>
 
 </div>
+
+{{-- JS --}}
+<script>
+document.getElementById('bilde-input')?.addEventListener('change', function() {
+    const fileName = this.files.length > 0
+        ? this.files[0].name
+        : 'Fails nav izvēlēts';
+
+    document.getElementById('bilde-name').textContent = fileName;
+});
+</script>
+
 @endsection
