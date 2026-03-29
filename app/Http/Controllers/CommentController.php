@@ -9,9 +9,16 @@ class CommentController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $request->validate([
-            'text' => 'required|string|max:95',
-        ]);
+        $request->validate(
+            [
+                'text' => 'required|string|max:95',
+            ],
+            [
+                'text.required' => 'Lūdzu, ievadiet komentāru.',
+                'text.string' => 'Komentāram jābūt tekstam.',
+                'text.max' => 'Komentārs nedrīkst būt garāks par 95 simboliem.',
+            ]
+        );
 
         $lastComment = Comment::where('user_id', auth()->id())
             ->orderByDesc('izveidots_datums')

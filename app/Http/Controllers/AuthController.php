@@ -18,10 +18,17 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $credentials = $request->validate(
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+            ],
+            [
+                'email.required' => 'Lūdzu, ievadiet e-pastu.',
+                'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
+                'password.required' => 'Lūdzu, ievadiet paroli.',
+            ]
+        );
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
@@ -94,11 +101,26 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::min(8)],
-        ]);
+        $data = $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'password' => ['required', 'confirmed', Password::min(8)],
+            ],
+            [
+                'name.required' => 'Lūdzu, ievadiet vārdu.',
+                'name.string' => 'Vārdam jābūt tekstam.',
+                'name.max' => 'Vārds nedrīkst būt garāks par 255 simboliem.',
+
+                'email.required' => 'Lūdzu, ievadiet e-pastu.',
+                'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
+                'email.max' => 'E-pasts nedrīkst būt garāks par 255 simboliem.',
+                'email.unique' => 'Šāds e-pasts jau ir reģistrēts.',
+
+                'password.required' => 'Lūdzu, ievadiet paroli.',
+                'password.confirmed' => 'Paroles nesakrīt.',
+            ]
+        );
 
         $user = User::create([
             'name' => $data['name'],

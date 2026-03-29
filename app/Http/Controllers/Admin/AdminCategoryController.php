@@ -33,9 +33,17 @@ class AdminCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums'],
-        ]);
+        $data = $request->validate(
+            [
+                'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums'],
+            ],
+            [
+                'nosaukums.required' => 'Lūdzu, ievadiet kategorijas nosaukumu.',
+                'nosaukums.string' => 'Nosaukumam jābūt tekstam.',
+                'nosaukums.max' => 'Nosaukums nedrīkst būt garāks par 100 simboliem.',
+                'nosaukums.unique' => 'Šāda kategorija jau eksistē.',
+            ]
+        );
 
         Category::create($data);
 
@@ -53,9 +61,17 @@ class AdminCategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $data = $request->validate([
-            'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums,' . $category->kategorija_id . ',kategorija_id'],
-        ]);
+        $data = $request->validate(
+            [
+                'nosaukums' => ['required', 'string', 'max:100', 'unique:kategorija,nosaukums,' . $category->kategorija_id . ',kategorija_id'],
+            ],
+            [
+                'nosaukums.required' => 'Lūdzu, ievadiet kategorijas nosaukumu.',
+                'nosaukums.string' => 'Nosaukumam jābūt tekstam.',
+                'nosaukums.max' => 'Nosaukums nedrīkst būt garāks par 100 simboliem.',
+                'nosaukums.unique' => 'Šāda kategorija jau eksistē.',
+            ]
+        );
 
         $category->update($data);
 

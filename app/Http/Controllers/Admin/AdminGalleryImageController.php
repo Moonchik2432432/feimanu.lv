@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 
 class AdminGalleryImageController extends Controller
 {
-    public function index(\Illuminate\Http\Request $request)
+    public function index(Request $request)
     {
         $q = trim($request->query('q', ''));
         $albumId = $request->query('album_id');
@@ -21,9 +21,9 @@ class AdminGalleryImageController extends Controller
             return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
     
-        $albums = \App\Models\GalleryAlbum::orderBy('title')->get();
+        $albums = GalleryAlbum::orderBy('title')->get();
     
-        $images = \App\Models\GalleryImage::with('album')
+        $images = GalleryImage::with('album')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where('title', 'like', "%{$q}%");
             })
@@ -59,12 +59,29 @@ class AdminGalleryImageController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'album_id' => ['required', 'integer', 'exists:gallery_albums,id'],
-            'title' => ['nullable', 'string', 'max:255'],
-            'sort_order' => ['nullable', 'integer'],
-            'image_path' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-        ]);
+        $data = $request->validate(
+            [
+                'album_id' => ['required', 'integer', 'exists:gallery_albums,id'],
+                'title' => ['nullable', 'string', 'max:255'],
+                'sort_order' => ['nullable', 'integer'],
+                'image_path' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            ],
+            [
+                'album_id.required' => 'Lūdzu, izvēlieties albumu.',
+                'album_id.integer' => 'Albums nav derīgs.',
+                'album_id.exists' => 'Izvēlētais albums nepastāv.',
+
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'sort_order.integer' => 'Kārtošanas numuram jābūt skaitlim.',
+
+                'image_path.required' => 'Lūdzu, augšupielādējiet fotogrāfiju.',
+                'image_path.image' => 'Failam jābūt attēlam.',
+                'image_path.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'image_path.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+            ]
+        );
 
         $album = GalleryAlbum::findOrFail($data['album_id']);
         $folder = base_path('img/gallery/album_' . $album->id);
@@ -96,12 +113,28 @@ class AdminGalleryImageController extends Controller
     {
         $image = GalleryImage::findOrFail($id);
 
-        $data = $request->validate([
-            'album_id' => ['required', 'integer', 'exists:gallery_albums,id'],
-            'title' => ['nullable', 'string', 'max:255'],
-            'sort_order' => ['nullable', 'integer'],
-            'image_path' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-        ]);
+        $data = $request->validate(
+            [
+                'album_id' => ['required', 'integer', 'exists:gallery_albums,id'],
+                'title' => ['nullable', 'string', 'max:255'],
+                'sort_order' => ['nullable', 'integer'],
+                'image_path' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            ],
+            [
+                'album_id.required' => 'Lūdzu, izvēlieties albumu.',
+                'album_id.integer' => 'Albums nav derīgs.',
+                'album_id.exists' => 'Izvēlētais albums nepastāv.',
+
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'sort_order.integer' => 'Kārtošanas numuram jābūt skaitlim.',
+
+                'image_path.image' => 'Failam jābūt attēlam.',
+                'image_path.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'image_path.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+            ]
+        );
 
         if ($request->hasFile('image_path')) {
             if (!empty($image->image_path)) {

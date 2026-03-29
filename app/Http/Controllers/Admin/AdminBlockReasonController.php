@@ -33,10 +33,19 @@ class AdminBlockReasonController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validate(
+            [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['nullable', 'string'],
+            ],
+            [
+                'title.required' => 'Lūdzu, ievadiet iemesla nosaukumu.',
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'description.string' => 'Aprakstam jābūt tekstam.',
+            ]
+        );
 
         BlockReason::create([
             'title' => $data['title'],
@@ -59,10 +68,19 @@ class AdminBlockReasonController extends Controller
     {
         $reason = BlockReason::findOrFail($id);
 
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-        ]);
+        $data = $request->validate(
+            [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['nullable', 'string'],
+            ],
+            [
+                'title.required' => 'Lūdzu, ievadiet iemesla nosaukumu.',
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'description.string' => 'Aprakstam jābūt tekstam.',
+            ]
+        );
 
         $reason->update([
             'title' => $data['title'],

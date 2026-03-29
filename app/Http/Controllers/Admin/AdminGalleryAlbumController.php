@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 
 class AdminGalleryAlbumController extends Controller
 {
-    public function index(\Illuminate\Http\Request $request)
+    public function index(Request $request)
     {
         $q = trim($request->query('q', ''));
         $from = $request->query('from');
@@ -19,7 +19,7 @@ class AdminGalleryAlbumController extends Controller
             return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
     
-        $albums = \App\Models\GalleryAlbum::withCount('images')
+        $albums = GalleryAlbum::withCount('images')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where('title', 'like', "%{$q}%");
             })
@@ -43,11 +43,24 @@ class AdminGalleryAlbumController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'cover_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-        ]);
+        $data = $request->validate(
+            [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['nullable', 'string'],
+                'cover_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            ],
+            [
+                'title.required' => 'Lūdzu, ievadiet albuma nosaukumu.',
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'description.string' => 'Aprakstam jābūt tekstam.',
+
+                'cover_image.image' => 'Failam jābūt attēlam.',
+                'cover_image.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'cover_image.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+            ]
+        );
 
         if ($request->hasFile('cover_image')) {
             $dir = base_path('img/gallery/albums');
@@ -78,11 +91,24 @@ class AdminGalleryAlbumController extends Controller
     {
         $album = GalleryAlbum::findOrFail($id);
 
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'cover_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-        ]);
+        $data = $request->validate(
+            [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['nullable', 'string'],
+                'cover_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            ],
+            [
+                'title.required' => 'Lūdzu, ievadiet albuma nosaukumu.',
+                'title.string' => 'Nosaukumam jābūt tekstam.',
+                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
+
+                'description.string' => 'Aprakstam jābūt tekstam.',
+
+                'cover_image.image' => 'Failam jābūt attēlam.',
+                'cover_image.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'cover_image.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+            ]
+        );
 
         if ($request->hasFile('cover_image')) {
             if (!empty($album->cover_image)) {

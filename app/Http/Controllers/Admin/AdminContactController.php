@@ -24,9 +24,16 @@ class AdminContactController extends Controller
 
     public function reply(Request $request, $id)
     {
-        $request->validate([
-            'reply' => 'required|string|max:3000',
-        ]);
+        $request->validate(
+            [
+                'reply' => 'required|string|max:3000',
+            ],
+            [
+                'reply.required' => 'Lūdzu, ievadiet atbildi.',
+                'reply.string' => 'Atbildei jābūt tekstam.',
+                'reply.max' => 'Atbilde nedrīkst būt garāka par 3000 simboliem.',
+            ]
+        );
 
         $message = ContactMessage::findOrFail($id);
 

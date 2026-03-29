@@ -21,24 +21,31 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-        ]);
+        $data = $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            ],
+            [
+                'name.required' => 'Lūdzu, ievadiet vārdu.',
+                'name.string' => 'Vārdam jābūt tekstam.',
+                'name.max' => 'Vārds nedrīkst būt garāks par 255 simboliem.',
 
-        // имя
+                'avatar.image' => 'Failam jābūt attēlam.',
+                'avatar.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'avatar.max' => 'Attēla izmērs nedrīkst pārsniegt 2 MB.',
+            ]
+        );
+
         $user->name = $data['name'];
 
-        // аватар
         if ($request->hasFile('avatar')) {
             $dir = base_path('img/usersAvatars');
 
-            // если папки нет — создаём
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
 
-            // удалить старый (если есть)
             if ($user->avatar) {
                 $old = $dir . DIRECTORY_SEPARATOR . $user->avatar;
                 if (File::exists($old)) {
@@ -46,7 +53,6 @@ class ProfileController extends Controller
                 }
             }
 
-            // сохранить новый
             $filename = Str::uuid() . '.' . $request->file('avatar')->extension();
             $request->file('avatar')->move($dir, $filename);
 
@@ -60,21 +66,27 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => ['required'],
-            'new_password' => ['required', 'min:6', 'confirmed'],
-        ]);
+        $request->validate(
+            [
+                'current_password' => ['required'],
+                'new_password' => ['required', 'min:6', 'confirmed'],
+            ],
+            [
+                'current_password.required' => 'Lūdzu, ievadiet pašreizējo paroli.',
+                'new_password.required' => 'Lūdzu, ievadiet jauno paroli.',
+                'new_password.min' => 'Jaunajai parolei jābūt vismaz 6 simboliem.',
+                'new_password.confirmed' => 'Jaunās paroles nesakrīt.',
+            ]
+        );
 
         $user = auth()->user();
 
-        // проверка старого пароля
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors([
                 'current_password' => 'Nepareiza pašreizējā parole.',
             ]);
         }
 
-        // обновление пароля
         $user->password = Hash::make($request->new_password);
         $user->save();
 
@@ -85,12 +97,21 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $request->validate([
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'password' => ['required'],
-        ]);
+        $request->validate(
+            [
+                'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'password' => ['required'],
+            ],
+            [
+                'email.required' => 'Lūdzu, ievadiet e-pastu.',
+                'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
+                'email.max' => 'E-pasts nedrīkst būt garāks par 255 simboliem.',
+                'email.unique' => 'Šāds e-pasts jau ir reģistrēts.',
 
-        // проверка пароля
+                'password.required' => 'Lūdzu, ievadiet paroli.',
+            ]
+        );
+
         if (!Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'password' => 'Nepareiza parole.',
@@ -98,7 +119,7 @@ class ProfileController extends Controller
         }
 
         $user->email = $request->email;
-        $user->email_verified_at = null; // сбрасываем подтверждение
+        $user->email_verified_at = null;
         $user->save();
 
         return back()->with('success', 'E-pasts veiksmīgi nomainīts!');
