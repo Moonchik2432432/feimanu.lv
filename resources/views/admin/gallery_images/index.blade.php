@@ -95,9 +95,11 @@
                 box-shadow:0 2px 8px rgba(0,0,0,0.06);
             ">
                 <div style="position:relative;">
+                <a href="{{ asset($image->image_path) }}" data-lightbox="admin-gallery">
                     <img src="{{ asset($image->image_path) }}"
                          alt="Foto"
-                         style="width:100%; height:180px; object-fit:cover; display:block;">
+                         style="width:100%; height:180px; object-fit:cover; display:block; cursor:pointer;">
+                </a>
 
                     <div style="
                         position:absolute;
