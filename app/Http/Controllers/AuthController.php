@@ -120,6 +120,7 @@ class AuthController extends Controller
                 'password.required' => 'Lūdzu, ievadiet paroli.',
             '    password.confirmed' => 'Paroles nesakrīt.',
                 'password.min' => 'Parolei jābūt vismaz 8 simbolus garai.',
+                'password.confirmed' => 'Paroles nesakrīt.',
             ]
         );
 
