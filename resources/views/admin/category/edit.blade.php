@@ -22,7 +22,7 @@
         </div>
 
         <button type="submit" style="padding:10px 14px;">Saglābat</button>
-        <a href="{{ route('admin.category') }}" style="margin-left:10px;">Back</a>
+        <a href="{{ route('admin.category') }}" style="margin-left:10px;">Atpakal</a>
     </form>
 </div>
 @endsection
