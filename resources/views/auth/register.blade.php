@@ -28,57 +28,101 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" novalidate>
             @csrf
 
-            <!-- NAME -->
             <div style="margin-bottom:15px;">
                 <label>Vārds</label><br>
-                <input type="text" name="name" value="{{ old('name') }}" required
-                       oninvalid="this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ old('name') }}"
+                    required
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
-            <!-- EMAIL -->
             <div style="margin-bottom:15px;">
                 <label>E-pasts</label><br>
-                <input type="email" name="email" value="{{ old('email') }}" required
-                       oninvalid="if(this.value===''){this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')}else{this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.')}"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                        } else if (this.validity.typeMismatch) {
+                            this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
-            <!-- PASSWORD -->
             <div style="margin-bottom:15px;">
                 <label>Parole</label><br>
-                <input type="password" name="password" required minlength="6"
-                       oninvalid="if(this.value===''){this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')}else{this.setCustomValidity('Parolei jābūt vismaz 6 simboliem.')}"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="password"
+                    name="password"
+                    required
+                    minlength="6"
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                        } else if (this.validity.tooShort) {
+                            this.setCustomValidity('Parolei jābūt vismaz 6 simboliem.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
-            <!-- PASSWORD CONFIRM -->
             <div style="margin-bottom:15px;">
                 <label>Atkārtot paroli</label><br>
-                <input type="password" name="password_confirmation" required
-                       oninvalid="this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    required
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
-            <button type="submit"
-                    style="
-                        width:100%;
-                        padding:10px;
-                        border:none;
-                        border-radius:10px;
-                        cursor:pointer;
-                        font-weight:bold;
-                    ">
+            <button
+                type="submit"
+                style="
+                    width:100%;
+                    padding:10px;
+                    border:none;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:bold;
+                "
+            >
                 Izveidot kontu
             </button>
-
         </form>
 
         <p style="margin-top:15px; text-align:center;">
