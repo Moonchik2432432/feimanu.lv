@@ -28,25 +28,32 @@
             </div>
         @endif
 
-        <form method="POST" action="/login">
+        <form method="POST" action="/login" novalidate>
             @csrf
 
-            <!-- EMAIL -->
             <div style="margin-bottom:15px;">
                 <label>E-pasts</label><br>
-                <input type="email" name="email" required
-                       oninvalid="if(this.value===''){this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')}else{this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.')}"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Lūdzu, aizpildiet šo lauku.' : 'Lūdzu, ievadiet derīgu e-pasta adresi.')"
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
-            <!-- PASSWORD -->
             <div style="margin-bottom:15px;">
                 <label>Parole</label><br>
-                <input type="password" name="password" required
-                       oninvalid="this.setCustomValidity('Lūdzu, aizpildiet šo lauku.')"
-                       oninput="this.setCustomValidity('')"
-                       style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
+                <input
+                    type="password"
+                    name="password"
+                    required
+                    oninvalid="this.setCustomValidity('Lūdzu, ievadiet paroli.')"
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
             </div>
 
             <div style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
@@ -71,7 +78,6 @@
                     ">
                 Pieslēgties
             </button>
-
         </form>
 
     </div>
