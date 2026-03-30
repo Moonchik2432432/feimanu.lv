@@ -52,7 +52,7 @@ class AdminNewsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nosaukums' => ['required', 'string', 'max:255'],
+            'nosaukums' => ['required', 'string', 'max:55'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
@@ -104,7 +104,7 @@ class AdminNewsController extends Controller
         $post = News::findOrFail($id);
 
         $data = $request->validate([
-            'nosaukums' => ['required', 'string', 'max:255'],
+            'nosaukums' => ['required', 'string', 'max:55'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullabe', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
