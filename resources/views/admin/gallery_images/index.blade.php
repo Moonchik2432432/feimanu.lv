@@ -119,11 +119,6 @@
                     </div>
 
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-                        <a href="{{ route('admin.gallery.images.edit', $image->id) }}"
-                           style="text-decoration:none; color:#007bff;">
-                            Rediģēt
-                        </a>
-
                         <form method="POST"
                               action="{{ route('admin.gallery.images.delete', $image->id) }}"
                               style="margin:0;">
