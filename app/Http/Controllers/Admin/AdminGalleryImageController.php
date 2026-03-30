@@ -57,49 +57,49 @@ class AdminGalleryImageController extends Controller
         $data = $request->validate(
             [
                 'album_id' => ['required', 'integer', 'exists:gallery_albums,id'],
-                'title' => ['nullable', 'string', 'max:255'],
-                'sort_order' => ['nullable', 'integer'],
-                'image_path' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+                'images' => ['required'],
+                'images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             ],
             [
                 'album_id.required' => 'Lūdzu, izvēlieties albumu.',
                 'album_id.integer' => 'Albums nav derīgs.',
                 'album_id.exists' => 'Izvēlētais albums nepastāv.',
-
-                'title.string' => 'Nosaukumam jābūt tekstam.',
-                'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
-
-                'sort_order.integer' => 'Kārtošanas numuram jābūt skaitlim.',
-
-                'image_path.required' => 'Lūdzu, augšupielādējiet fotogrāfiju.',
-                'image_path.image' => 'Failam jābūt attēlam.',
-                'image_path.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
-                'image_path.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+    
+                'images.required' => 'Lūdzu, izvēlieties fotogrāfijas.',
+                'images.*.image' => 'Failam jābūt attēlam.',
+                'images.*.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
+                'images.*.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
             ]
         );
-
+    
         $album = GalleryAlbum::findOrFail($data['album_id']);
         $folder = base_path('img/gallery/album_' . $album->id);
-
+    
         if (!File::exists($folder)) {
             File::makeDirectory($folder, 0755, true);
         }
-
-        $filename = uniqid('photo_') . '.' . $request->file('image_path')->extension();
-        $request->file('image_path')->move($folder, $filename);
-
-        $data['image_path'] = 'img/gallery/album_' . $album->id . '/' . $filename;
-        $data['sort_order'] = $data['sort_order'] ?? 0;
-
-        $image = GalleryImage::create($data);
-        
-        if (empty($album->cover_image)) {
-            $album->update([
-                'cover_image' => $image->image_path,
+    
+        foreach ($request->file('images') as $file) {
+    
+            $filename = uniqid('photo_') . '.' . $file->extension();
+            $file->move($folder, $filename);
+    
+            $imagePath = 'img/gallery/album_' . $album->id . '/' . $filename;
+    
+            $image = GalleryImage::create([
+                'album_id' => $album->id,
+                'image_path' => $imagePath,
             ]);
+    
+            // 👉 первая картинка становится обложкой
+            if (empty($album->cover_image)) {
+                $album->update([
+                    'cover_image' => $imagePath,
+                ]);
+            }
         }
-
-return redirect()->route('admin.gallery.images')->with('success', 'Fotogrāfija pievienota');
+    
+        return redirect()->route('admin.gallery.images')->with('success', 'Fotogrāfijas pievienotas');
     }
 
     public function edit($id)
