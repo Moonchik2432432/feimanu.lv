@@ -18,9 +18,6 @@
         <div>
             <h1 style="margin:0;">{{ $user->name }}</h1>
             <div style="opacity:.8;">{{ $user->email }}</div>
-            <div style="margin-top:6px;">
-                <b>Loma:</b> {{ $user->role }}
-            </div>
         </div>
     </div>
 
@@ -44,10 +41,6 @@
         <tr>
             <td style="border:1px solid #ddd; padding:10px;"><b>E-pasts</b></td>
             <td style="border:1px solid #ddd; padding:10px;">{{ $user->email }}</td>
-        </tr>
-        <tr>
-            <td style="border:1px solid #ddd; padding:10px;"><b>Loma</b></td>
-            <td style="border:1px solid #ddd; padding:10px;">{{ $user->role }}</td>
         </tr>
         <tr>
             <td style="border:1px solid #ddd; padding:10px;"><b>Reģistrēts</b></td>
