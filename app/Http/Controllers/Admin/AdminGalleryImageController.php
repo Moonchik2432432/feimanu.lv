@@ -33,7 +33,7 @@ class AdminGalleryImageController extends Controller
                 $query->whereDate('created_at', '<=', $to);
             })
             ->orderByDesc('created_at')
-            ->paginate(12) 
+            ->paginate(15) 
             ->withQueryString();
     
         return view('admin.gallery_images.index', compact(
