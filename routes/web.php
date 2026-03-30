@@ -116,14 +116,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/gallery-albums/store', [AdminGalleryAlbumController::class, 'store'])->name('admin.gallery.albums.store');
     Route::get('/gallery-albums/{id}/edit', [AdminGalleryAlbumController::class, 'edit'])->name('admin.gallery.albums.edit');
     Route::put('/gallery-albums/{id}/update', [AdminGalleryAlbumController::class, 'update'])->name('admin.gallery.albums.update');
-    Route::put('/gallery-albums/{id}/delete', [AdminGalleryAlbumController::class, 'destroy'])->name('admin.gallery.albums.delete');
+    Route::delete('/gallery-albums/{id}/delete', [AdminGalleryAlbumController::class, 'destroy'])->name('admin.gallery.albums.delete');
 
     Route::get('/gallery-images', [AdminGalleryImageController::class, 'index'])->name('admin.gallery.images');
     Route::get('/gallery-images/create', [AdminGalleryImageController::class, 'create'])->name('admin.gallery.images.create');
     Route::post('/gallery-images/store', [AdminGalleryImageController::class, 'store'])->name('admin.gallery.images.store');
     Route::get('/gallery-images/{id}/edit', [AdminGalleryImageController::class, 'edit'])->name('admin.gallery.images.edit');
     Route::put('/gallery-images/{id}/update', [AdminGalleryImageController::class, 'update'])->name('admin.gallery.images.update');
-    Route::put('/gallery-images/{id}/delete', [AdminGalleryImageController::class, 'destroy'])->name('admin.gallery.images.delete');
+    Route::delete('/gallery-images/{id}/delete', [AdminGalleryImageController::class, 'destroy'])->name('admin.gallery.images.delete');
 
     //CONTACT
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
