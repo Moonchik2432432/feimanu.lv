@@ -31,18 +31,21 @@
         <form method="POST" action="/login" novalidate>
             @csrf
 
-            <div style="margin-bottom:15px;">
-                <label>E-pasts</label><br>
-                <input
-                    type="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    required
-                    oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Lūdzu, aizpildiet šo lauku.' : 'Lūdzu, ievadiet derīgu e-pasta adresi.')"
-                    oninput="this.setCustomValidity('')"
-                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
-                >
-            </div>
+            <input
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                oninvalid="
+                    if (this.validity.valueMissing) {
+                        this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                    } else if (this.validity.typeMismatch) {
+                        this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.');
+                    }
+                "
+                oninput="this.setCustomValidity('')"
+                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+            >
 
             <div style="margin-bottom:15px;">
                 <label>Parole</label><br>
