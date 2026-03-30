@@ -56,4 +56,15 @@
     </div>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (typeof lightbox !== 'undefined') {
+        lightbox.option({
+            albumLabel: "Attēls %1 no %2"
+        });
+    }
+});
+</script>
+
 @endsection
