@@ -107,7 +107,7 @@ class AdminNewsController extends Controller
             'nosaukums' => ['required', 'string', 'max:255'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
-            'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'bilde' => ['nullabe', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ], [
             'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
