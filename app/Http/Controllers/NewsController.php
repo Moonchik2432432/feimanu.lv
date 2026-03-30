@@ -140,10 +140,10 @@ class NewsController extends Controller
         return view('news.edit', compact('post', 'categories'));
     }
 
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
         $post = News::findOrFail($id);
-
+    
         $data = $request->validate(
             [
                 'nosaukums' => ['required', 'string', 'max:255'],
@@ -155,20 +155,24 @@ class NewsController extends Controller
                 'nosaukums.required' => 'Lūdzu, ievadiet nosaukumu.',
                 'nosaukums.string' => 'Nosaukumam jābūt tekstam.',
                 'nosaukums.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
-
+    
                 'saturs.required' => 'Lūdzu, ievadiet saturu.',
                 'saturs.string' => 'Saturam jābūt tekstam.',
-
+    
                 'kategorija_id.required' => 'Lūdzu, izvēlieties kategoriju.',
                 'kategorija_id.integer' => 'Kategorija nav derīga.',
                 'kategorija_id.exists' => 'Izvēlētā kategorija nepastāv.',
-
+    
                 'bilde.image' => 'Failam jābūt attēlam.',
                 'bilde.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
                 'bilde.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
             ]
         );
-
+    
+        if (!$request->hasFile('bilde')) {
+            unset($data['bilde']);
+        }
+    
         if ($request->hasFile('bilde')) {
             if (!empty($post->bilde)) {
                 $old = base_path($post->bilde);
@@ -176,21 +180,21 @@ class NewsController extends Controller
                     File::delete($old);
                 }
             }
-
+    
             $dir = base_path('img/aktualitates');
-
+    
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
-
+    
             $filename = uniqid('news_') . '.' . $request->file('bilde')->extension();
             $request->file('bilde')->move($dir, $filename);
-
+    
             $data['bilde'] = 'img/aktualitates/' . $filename;
         }
-
+    
         $post->update($data);
-
+    
         return redirect()->route('news.index')->with('success', 'Ziņa atjaunināta');
     }
 
