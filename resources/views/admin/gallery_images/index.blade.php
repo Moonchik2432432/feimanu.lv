@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container" style="max-width:1100px; margin:40px auto;">
+<div class="container" style="max-width:1200px; margin:40px auto;">
 
     <h1>Galerijas fotogrāfijas</h1>
 
@@ -31,13 +31,8 @@
         <form method="GET" action="{{ route('admin.gallery.images') }}" style="display:flex; gap:10px; flex-wrap:wrap; align-items:end;">
 
             <div>
-                <label>Nosaukums</label><br>
-                <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px; width:200px;">
-            </div>
-
-            <div>
                 <label>Albums</label><br>
-                <select name="album_id" style="padding:8px; width:150px;">
+                <select name="album_id" style="padding:8px; width:180px;">
                     <option value="">Visi albumi</option>
                     @foreach($albums as $album)
                         <option value="{{ $album->id }}" {{ ($albumId ?? '') == $album->id ? 'selected' : '' }}>
@@ -85,70 +80,80 @@
         });
     </script>
 
-    <table style="width:100%; border-collapse: collapse; margin-top:20px;">
-        <thead>
-            <tr style="background:#f5f5f5;">
-                <th style="padding:10px; border:1px solid #ddd;">Foto</th>
-                <th style="padding:10px; border:1px solid #ddd;">Albums</th>
-                <th style="padding:10px; border:1px solid #ddd;">Nosaukums</th>
-                <th style="padding:10px; border:1px solid #ddd;">Secība</th>
-                <th style="padding:10px; border:1px solid #ddd;">Izveidots</th>
-                <th style="padding:10px; border:1px solid #ddd;">Darbības</th>
-            </tr>
-        </thead>
+    <div style="
+        display:grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap:20px;
+        margin-top:25px;
+    ">
+        @forelse($images as $image)
+            <div style="
+                background:#fff;
+                border:1px solid #ddd;
+                border-radius:14px;
+                overflow:hidden;
+                box-shadow:0 2px 8px rgba(0,0,0,0.06);
+            ">
+                <div style="position:relative;">
+                    <img src="{{ asset($image->image_path) }}"
+                         alt="Foto"
+                         style="width:100%; height:180px; object-fit:cover; display:block;">
 
-        <tbody>
-            @forelse($images as $image)
-                <tr>
-                    <td style="padding:10px; border:1px solid #ddd;">
-                        <img src="{{ asset($image->image_path) }}"
-                             alt="Foto"
-                             style="width:80px; height:60px; object-fit:cover; border-radius:8px;">
-                    </td>
-
-                    <td style="padding:10px; border:1px solid #ddd;">
+                    <div style="
+                        position:absolute;
+                        bottom:10px;
+                        left:10px;
+                        background:rgba(0,0,0,0.65);
+                        color:#fff;
+                        padding:5px 10px;
+                        border-radius:8px;
+                        font-size:13px;
+                    ">
                         {{ $image->album->title ?? '-' }}
-                    </td>
+                    </div>
+                </div>
 
-                    <td style="padding:10px; border:1px solid #ddd;">
-                        {{ $image->title ?: '-' }}
-                    </td>
-
-                    <td style="padding:10px; border:1px solid #ddd;">
-                        {{ $image->sort_order }}
-                    </td>
-
-                    <td style="padding:10px; border:1px solid #ddd;">
+                <div style="padding:12px;">
+                    <div style="font-size:13px; color:#666; margin-bottom:12px;">
                         {{ $image->created_at ? $image->created_at->format('d.m.Y H:i') : '-' }}
-                    </td>
+                    </div>
 
-                    <td style="padding:10px; border:1px solid #ddd;">
-                        <a href="{{ route('admin.gallery.images.edit', $image->id) }}">Rediģēt</a>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                        <a href="{{ route('admin.gallery.images.edit', $image->id) }}"
+                           style="text-decoration:none; color:#007bff;">
+                            Rediģēt
+                        </a>
 
                         <form method="POST"
                               action="{{ route('admin.gallery.images.delete', $image->id) }}"
-                              style="display:inline-block; margin-left:10px;">
+                              style="margin:0;">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
                                     onclick="return confirm('Vai tiešām dzēst fotogrāfiju?')"
-                                    style="color:red; cursor:pointer;">
+                                    style="border:none; background:none; color:red; cursor:pointer; padding:0;">
                                 Dzēst
                             </button>
                         </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6" style="padding:10px; border:1px solid #ddd; text-align:center;">
-                        Nav fotogrāfiju
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div style="
+                grid-column:1 / -1;
+                text-align:center;
+                padding:30px;
+                border:1px solid #ddd;
+                border-radius:12px;
+                background:#fafafa;
+                color:#666;
+            ">
+                Nav fotogrāfiju
+            </div>
+        @endforelse
+    </div>
 
-    <div style="margin-top:20px;">
+    <div style="margin-top:25px;">
         {{ $images->links('pagination.default') }}
     </div>
 
