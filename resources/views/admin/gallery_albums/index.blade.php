@@ -117,6 +117,7 @@
                               action="{{ route('admin.gallery.albums.delete', $album->id) }}"
                               style="display:inline-block; margin-left:10px;">
                             @csrf
+                            @method('DELETE')
                             <button type="submit"
                                     onclick="return confirm('Vai tiešām dzēst albumu?')"
                                     style="color:red; cursor:pointer;">
