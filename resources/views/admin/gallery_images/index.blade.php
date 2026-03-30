@@ -129,6 +129,7 @@
                               action="{{ route('admin.gallery.images.delete', $image->id) }}"
                               style="display:inline-block; margin-left:10px;">
                             @csrf
+                            @method('DELETE')
                             <button type="submit"
                                     onclick="return confirm('Vai tiešām dzēst fotogrāfiju?')"
                                     style="color:red; cursor:pointer;">
