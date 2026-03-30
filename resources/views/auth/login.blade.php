@@ -31,21 +31,26 @@
         <form method="POST" action="/login" novalidate>
             @csrf
 
-            <input
-                type="email"
-                name="email"
-                value="{{ old('email') }}"
-                required
-                oninvalid="
-                    if (this.validity.valueMissing) {
-                        this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
-                    } else if (this.validity.typeMismatch) {
-                        this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.');
-                    }
-                "
-                oninput="this.setCustomValidity('')"
-                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
-            >
+            <div style="margin-bottom:15px;">
+                <label>E-pasts</label><br>
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, aizpildiet šo lauku.');
+                        } else if (this.validity.typeMismatch) {
+                            this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
+                    oninput="this.setCustomValidity('')"
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
+                >
+            </div>
 
             <div style="margin-bottom:15px;">
                 <label>Parole</label><br>
@@ -53,7 +58,13 @@
                     type="password"
                     name="password"
                     required
-                    oninvalid="this.setCustomValidity('Lūdzu, ievadiet paroli.')"
+                    oninvalid="
+                        if (this.validity.valueMissing) {
+                            this.setCustomValidity('Lūdzu, ievadiet paroli.');
+                        } else {
+                            this.setCustomValidity('');
+                        }
+                    "
                     oninput="this.setCustomValidity('')"
                     style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"
                 >
@@ -70,15 +81,17 @@
                 </a>
             </div>
 
-            <button type="submit"
-                    style="
-                        width:100%;
-                        padding:10px;
-                        border:none;
-                        border-radius:10px;
-                        cursor:pointer;
-                        font-weight:bold;
-                    ">
+            <button
+                type="submit"
+                style="
+                    width:100%;
+                    padding:10px;
+                    border:none;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:bold;
+                "
+            >
                 Pieslēgties
             </button>
         </form>
