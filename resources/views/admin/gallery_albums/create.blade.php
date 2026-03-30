@@ -34,7 +34,7 @@
 
         <div style="margin:15px 0;">
             <label>Vāka attēls</label><br>
-
+        
             <label style="
                 display:inline-block;
                 padding:8px 14px;
@@ -46,9 +46,13 @@
                 Izvēlēties failu
                 <input type="file" name="cover_image" id="cover-input" style="display:none;">
             </label>
-
+        
             <div id="cover-name" style="margin-top:8px; color:#666;">
                 Fails nav izvēlēts
+            </div>
+        
+            <div style="margin-top:6px; color:#888; font-size:14px;">
+                Ja attēls netiks izvēlēts, automātiski tiks izmantots jaunākais pievienotais attēls no galerijas.
             </div>
         </div>
 
