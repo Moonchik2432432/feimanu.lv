@@ -30,7 +30,12 @@
 
             <div style="margin-bottom:15px;">
                 <label>E-pasts</label><br>
-                <input type="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" style="width:100%; padding:10px;">
+                <input type="email" name="email"
+                   value="{{ old('email', auth()->user()->email ?? '') }}"
+                   required
+                   oninvalid="this.setCustomValidity('Lūdzu, ievadiet derīgu e-pasta adresi')"
+                   oninput="this.setCustomValidity('')"
+                   style="width:100%; padding:10px;">
             </div>
 
             <div style="margin-bottom:15px;">
