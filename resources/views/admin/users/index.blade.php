@@ -148,7 +148,6 @@
                                     method="POST"
                                     action="{{ route('admin.users.block', $user->id) }}"
                                     style="display:none; flex-direction:column; gap:8px; margin-top:8px;"
-                                    novalidate
                                 >
                                     @csrf
  
