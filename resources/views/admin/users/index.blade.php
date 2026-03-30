@@ -148,10 +148,23 @@
                                     method="POST"
                                     action="{{ route('admin.users.block', $user->id) }}"
                                     style="display:none; flex-direction:column; gap:8px; margin-top:8px;"
+                                    novalidate
                                 >
                                     @csrf
  
-                                    <select name="block_reason_id" required style="padding:6px;">
+                                    <select
+                                        name="block_reason_id"
+                                        required
+                                        oninvalid="
+                                            if (this.validity.valueMissing) {
+                                                this.setCustomValidity('Lūdzu, izvēlieties iemeslu.');
+                                            } else {
+                                                this.setCustomValidity('');
+                                            }
+                                        "
+                                        onchange="this.setCustomValidity('')"
+                                        style="padding:6px;"
+                                    >
                                         <option value="">Iemesls</option>
                                         @foreach($reasons as $reason)
                                             <option value="{{ $reason->id }}">{{ $reason->title }}</option>
@@ -165,9 +178,15 @@
                                         style="padding:6px; resize:vertical;"
                                     ></textarea>
  
-                                    <input type="text" class="datetime-picker" name="blocked_until" placeholder= "Bloķēšanas datums" style="padding:6px;">
+                                    <input
+                                        type="text"
+                                        class="datetime-picker"
+                                        name="blocked_until"
+                                        placeholder="Bloķēšanas datums"
+                                        style="padding:6px;"
+                                    >
  
-                                    <small style = "display:block; margin-top:5px; color:#666;">
+                                    <small style="display:block; margin-top:5px; color:#666;">
                                         Ja bloķēšanas laiks netiek izvēlēts, lietotājs automātiski tiek bloķēts uz 1 mēnesi.
                                     </small>
 
