@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactQuestionMail;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -31,6 +33,7 @@ class ContactController extends Controller
             ],
             [
                 'name.required' => 'Lūdzu, ievadiet vārdu.',
+                'name.string' => 'Vārdam jābūt tekstam.',
                 'name.max' => 'Vārds nedrīkst būt garāks par 100 simboliem.',
 
                 'email.required' => 'Lūdzu, ievadiet e-pastu.',
@@ -38,20 +41,24 @@ class ContactController extends Controller
                 'email.max' => 'E-pasts nedrīkst būt garāks par 150 simboliem.',
 
                 'subject.required' => 'Lūdzu, ievadiet tēmu.',
+                'subject.string' => 'Tēmai jābūt tekstam.',
                 'subject.max' => 'Tēma nedrīkst būt garāka par 150 simboliem.',
 
                 'message.required' => 'Lūdzu, ievadiet ziņojumu.',
+                'message.string' => 'Ziņojumam jābūt tekstam.',
                 'message.max' => 'Ziņojums nedrīkst būt garāks par 300 simboliem.',
             ]
         );
 
-        ContactMessage::create([
+        $contactMessage = ContactMessage::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
         ]);
+
+        Mail::to(env('ADMIN_CONTACT_EMAIL'))->send(new ContactQuestionMail($contactMessage));
 
         return back()->with('success', 'Ziņojums veiksmīgi nosūtīts.');
     }
