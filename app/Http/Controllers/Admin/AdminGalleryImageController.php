@@ -96,9 +96,15 @@ class AdminGalleryImageController extends Controller
         $data['image_path'] = 'img/gallery/album_' . $album->id . '/' . $filename;
         $data['sort_order'] = $data['sort_order'] ?? 0;
 
-        GalleryImage::create($data);
+        $image = GalleryImage::create($data);
+        
+        if (empty($album->cover_image)) {
+            $album->update([
+                'cover_image' => $image->image_path,
+            ]);
+        }
 
-        return redirect()->route('admin.gallery.images')->with('success', 'Fotogrāfija pievienota');
+return redirect()->route('admin.gallery.images')->with('success', 'Fotogrāfija pievienota');
     }
 
     public function edit($id)
