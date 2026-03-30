@@ -55,7 +55,7 @@
                 background:#f5f5f5;
             ">
                 Izvēlēties failu
-                <input type="file" name="bilde" id="bilde-input" required style="display:none;">
+                <input type="file" name="bilde" id="bilde-input" style="display:none;">
             </label>
 
             <div id="bilde-name" style="margin-top:8px; color:#666;">
