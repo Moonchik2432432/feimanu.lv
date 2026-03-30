@@ -24,7 +24,6 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        dd(config('mail.admin_contact_email'));
         $request->validate(
             [
                 'name' => 'required|string|max:100',
