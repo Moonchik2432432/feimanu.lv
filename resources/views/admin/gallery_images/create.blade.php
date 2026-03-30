@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Administrācija - Pievienot fotogrāfiju')
+@section('title', 'Administrācija - Pievienot fotogrāfijas')
 
 @section('content')
 
-<div class="container" style="max-width:700px; margin:40px auto;">
+<div class="container" style="max-width:800px; margin:40px auto;">
 
-    <h1>Pievienot fotogrāfiju</h1>
+    <h1>Pievienot fotogrāfijas</h1>
 
     @if($errors->any())
         <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
@@ -19,10 +19,10 @@
 
         <div style="margin:15px 0;">
             <label>Albums</label><br>
-            <select name="album_id" style="padding:8px; width:100%; box-sizing:border-box;">
+            <select name="album_id" style="padding:8px; width:100%;">
                 <option value="">Izvēlies albumu</option>
                 @foreach($albums as $album)
-                    <option value="{{ $album->id }}" {{ old('album_id') == $album->id ? 'selected' : '' }}>
+                    <option value="{{ $album->id }}">
                         {{ $album->title }}
                     </option>
                 @endforeach
@@ -30,61 +30,79 @@
         </div>
 
         <div style="margin:15px 0;">
-            <label>Nosaukums</label><br>
-            <input type="text"
-                   name="title"
-                   value="{{ old('title') }}"
-                   style="padding:8px; width:100%; box-sizing:border-box;">
-        </div>
-
-        <div style="margin:15px 0;">
-            <label>Secība</label><br>
-            <input type="number"
-                   name="sort_order"
-                   value="{{ old('sort_order', 0) }}"
-                   style="padding:8px; width:100%; box-sizing:border-box;">
-        </div>
-
-        {{-- FILE INPUT --}}
-        <div style="margin:15px 0;">
-            <label>Fotogrāfija</label><br>
+            <label>Fotogrāfijas</label><br>
 
             <label style="
                 display:inline-block;
-                padding:8px 14px;
+                padding:10px 16px;
                 border-radius:10px;
                 border:1px solid #ccc;
                 cursor:pointer;
                 background:#f5f5f5;
             ">
-                Izvēlēties failu
-                <input type="file" name="image_path" id="image-input" required style="display:none;">
+                Izvēlēties failus
+                <input type="file" name="images[]" id="image-input" multiple style="display:none;">
             </label>
 
-            <div id="image-name" style="margin-top:8px; color:#666;">
-                Fails nav izvēlēts
+            <div style="margin-top:8px; color:#666;">
+                Var izvēlēties vairākas fotogrāfijas
             </div>
         </div>
 
-        <div style="display:flex; gap:10px; margin-top:20px;">
-            <button type="submit" style="padding:9px 14px;">Saglabāt</button>
+        <!-- PREVIEW -->
+        <div id="preview" style="
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(120px, 1fr));
+            gap:10px;
+            margin-top:20px;
+        "></div>
+
+        <div style="display:flex; gap:10px; margin-top:25px;">
+            <button type="submit" style="padding:10px 16px;">Saglabāt</button>
 
             <a href="{{ route('admin.gallery.images') }}"
-               style="padding:9px 14px; background:#eee; text-decoration:none; color:#000; display:inline-block;">
+               style="padding:10px 16px; background:#eee; text-decoration:none; color:#000;">
                 Atcelt
             </a>
         </div>
+
     </form>
 
 </div>
 
 <script>
-document.getElementById('image-input')?.addEventListener('change', function() {
-    const fileName = this.files.length > 0
-        ? this.files[0].name
-        : 'Fails nav izvēlēts';
+document.getElementById('image-input').addEventListener('change', function () {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
 
-    document.getElementById('image-name').textContent = fileName;
+    const files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (!file.type.startsWith('image/')) continue;
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const div = document.createElement('div');
+
+            div.innerHTML = `
+                <div style="
+                    border:1px solid #ddd;
+                    border-radius:10px;
+                    overflow:hidden;
+                ">
+                    <img src="${e.target.result}"
+                         style="width:100%; height:100px; object-fit:cover;">
+                </div>
+            `;
+
+            preview.appendChild(div);
+        };
+
+        reader.readAsDataURL(file);
+    }
 });
 </script>
 
