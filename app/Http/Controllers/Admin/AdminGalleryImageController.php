@@ -12,7 +12,6 @@ class AdminGalleryImageController extends Controller
 {
     public function index(Request $request)
     {
-        $q = trim($request->query('q', ''));
         $albumId = $request->query('album_id');
         $from = $request->query('from');
         $to = $request->query('to');
@@ -24,9 +23,6 @@ class AdminGalleryImageController extends Controller
         $albums = GalleryAlbum::orderBy('title')->get();
     
         $images = GalleryImage::with('album')
-            ->when($q !== '', function ($query) use ($q) {
-                $query->where('title', 'like', "%{$q}%");
-            })
             ->when($albumId, function ($query) use ($albumId) {
                 $query->where('album_id', $albumId);
             })
@@ -37,13 +33,12 @@ class AdminGalleryImageController extends Controller
                 $query->whereDate('created_at', '<=', $to);
             })
             ->orderByDesc('created_at')
-            ->paginate(10)
+            ->paginate(12) 
             ->withQueryString();
     
         return view('admin.gallery_images.index', compact(
             'images',
             'albums',
-            'q',
             'albumId',
             'from',
             'to'
