@@ -24,6 +24,21 @@
 
     <h1>{{ $album->title }}</h1>
 
+    @if($album->description)
+        <div style="
+            margin-top:10px;
+            margin-bottom:25px;
+            padding:14px 18px;
+            background:#fff;
+            border:1px solid #e5e5e5;
+            border-radius:12px;
+            color:#444;
+            line-height:1.6;
+        ">
+            {!! nl2br(e($album->description)) !!}
+        </div>
+    @endif
+
     <div style="
         display:grid;
         grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
