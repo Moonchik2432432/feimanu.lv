@@ -38,10 +38,6 @@
 
     <table style="width:100%; border-collapse:collapse;">
         <tr>
-            <td style="border:1px solid #ddd; padding:10px; width:220px;"><b>ID</b></td>
-            <td style="border:1px solid #ddd; padding:10px;">{{ $user->id }}</td>
-        </tr>
-        <tr>
             <td style="border:1px solid #ddd; padding:10px;"><b>Vārds</b></td>
             <td style="border:1px solid #ddd; padding:10px;">{{ $user->name }}</td>
         </tr>
