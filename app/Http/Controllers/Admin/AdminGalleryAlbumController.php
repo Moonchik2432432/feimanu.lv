@@ -75,14 +75,6 @@ class AdminGalleryAlbumController extends Controller
     
             $data['cover_image'] = 'img/gallery/albums/' . $filename;
         }
-
-        else {
-            $latestImage = GalleryImage::latest()->first();
-    
-            if ($latestImage) {
-                $data['cover_image'] = $latestImage->image_path; 
-            }
-        }
     
         GalleryAlbum::create($data);
     
