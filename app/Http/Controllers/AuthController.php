@@ -103,22 +103,23 @@ class AuthController extends Controller
     {
         $data = $request->validate(
             [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'name' => ['required', 'string', 'max:45'],
+                'email' => ['required', 'email', 'max:100', 'unique:users,email'],
                 'password' => ['required', 'confirmed', Password::min(8)],
             ],
             [
                 'name.required' => 'Lūdzu, ievadiet vārdu.',
                 'name.string' => 'Vārdam jābūt tekstam.',
-                'name.max' => 'Vārds nedrīkst būt garāks par 255 simboliem.',
+                'name.max' => 'Vārds nedrīkst būt garāks par 45 simboliem.',
 
                 'email.required' => 'Lūdzu, ievadiet e-pastu.',
                 'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
-                'email.max' => 'E-pasts nedrīkst būt garāks par 255 simboliem.',
+                'email.max' => 'E-pasts nedrīkst būt garāks par 45 simboliem.',
                 'email.unique' => 'Šāds e-pasts jau ir reģistrēts.',
 
                 'password.required' => 'Lūdzu, ievadiet paroli.',
-                'password.confirmed' => 'Paroles nesakrīt.',
+            '    password.confirmed' => 'Paroles nesakrīt.',
+                'password.min' => 'Parolei jābūt vismaz 8 simbolus garai.',
             ]
         );
 
