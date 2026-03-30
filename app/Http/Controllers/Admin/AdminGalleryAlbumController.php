@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GalleryAlbum;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -53,30 +54,38 @@ class AdminGalleryAlbumController extends Controller
                 'title.required' => 'Lūdzu, ievadiet albuma nosaukumu.',
                 'title.string' => 'Nosaukumam jābūt tekstam.',
                 'title.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
-
+    
                 'description.string' => 'Aprakstam jābūt tekstam.',
-
+    
                 'cover_image.image' => 'Failam jābūt attēlam.',
                 'cover_image.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
                 'cover_image.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
             ]
         );
-
+    
         if ($request->hasFile('cover_image')) {
             $dir = base_path('img/gallery/albums');
-
+    
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
-
+    
             $filename = uniqid('album_') . '.' . $request->file('cover_image')->extension();
             $request->file('cover_image')->move($dir, $filename);
-
+    
             $data['cover_image'] = 'img/gallery/albums/' . $filename;
         }
 
+        else {
+            $latestImage = GalleryImage::latest()->first();
+    
+            if ($latestImage) {
+                $data['cover_image'] = $latestImage->image_path; 
+            }
+        }
+    
         GalleryAlbum::create($data);
-
+    
         return redirect()->route('admin.gallery.albums')->with('success', 'Albums izveidots');
     }
 
