@@ -27,9 +27,9 @@ class ContactController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|max:100',
-                'email' => 'required|email|max:150',
-                'subject' => 'required|string|max:150',
-                'message' => 'required|string|max:300',
+                'email' => 'required|email|max:50',
+                'subject' => 'required|string|max:100',
+                'message' => 'required|string|max:600',
             ],
             [
                 'name.required' => 'Lūdzu, ievadiet vārdu.',
@@ -37,13 +37,13 @@ class ContactController extends Controller
 
                 'email.required' => 'Lūdzu, ievadiet e-pastu.',
                 'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
-                'email.max' => 'E-pasts nedrīkst būt garāks par 150 simboliem.',
+                'email.max' => 'E-pasts nedrīkst būt garāks par 50 simboliem.',
 
                 'subject.required' => 'Lūdzu, ievadiet tēmu.',
-                'subject.max' => 'Tēma nedrīkst būt garāka par 150 simboliem.',
+                'subject.max' => 'Tēma nedrīkst būt garāka par 100 simboliem.',
 
                 'message.required' => 'Lūdzu, ievadiet ziņojumu.',
-                'message.max' => 'Ziņojums nedrīkst būt garāks par 300 simboliem.',
+                'message.max' => 'Ziņojums nedrīkst būt garāks par 600 simboliem.',
             ]
         );
 
