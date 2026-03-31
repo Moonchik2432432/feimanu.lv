@@ -55,7 +55,7 @@ class ContactController extends Controller
             $secondsPassed = $lastMessage->created_at->diffInSeconds(now());
 
             if ($secondsPassed < 30) {
-                $wait = 30 - $secondsPassed;
+                $wait = max(0, (int) ceil(30 - $secondsPassed));
 
                 return back()
                     ->withInput()
