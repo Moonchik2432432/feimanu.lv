@@ -52,7 +52,7 @@
             </div>
         
             <div style="margin-top:6px; color:#888; font-size:14px;">
-                Ja attēls netiks izvēlēts, automātiski tiks izmantots jaunākais pievienotais attēls no galerijas.
+                Ja attēls netiks izvēlēts, automātiski tiks izmantots jaunākais pievienotais attēls no albumas.
             </div>
         </div>
 
