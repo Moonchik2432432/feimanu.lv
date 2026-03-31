@@ -19,44 +19,57 @@
         </div>
     @endif
 
-    <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:25px;">
-        <form method="POST" action="{{ route('contacts.store') }}" novalidate>
-            @csrf
+    @auth
+        <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:25px;">
+            <form method="POST" action="{{ route('contacts.store') }}" novalidate>
+                @csrf
 
-            <div style="margin-bottom:15px;">
-                <label>Vārds un uzvārds</label><br>
-                <input type="text"
-                       name="name"
-                       value="{{ old('name') }}"
-                       style="width:100%; padding:10px;">
-            </div>
+                <div style="margin-bottom:15px;">
+                    <label>Vārds un uzvārds</label><br>
+                    <input type="text"
+                           name="name"
+                           value="{{ old('name', auth()->user()->name ?? '') }}"
+                           style="width:100%; padding:10px;">
+                </div>
 
-            <div style="margin-bottom:15px;">
-                <label>E-pasts</label><br>
-                <input type="text"
-                       name="email"
-                       value="{{ old('email', auth()->user()->email ?? '') }}"
-                       style="width:100%; padding:10px;">
-            </div>
+                <div style="margin-bottom:15px;">
+                    <label>E-pasts</label><br>
+                    <input type="text"
+                           name="email"
+                           value="{{ old('email', auth()->user()->email ?? '') }}"
+                           style="width:100%; padding:10px;">
+                </div>
 
-            <div style="margin-bottom:15px;">
-                <label>Tēma</label><br>
-                <input type="text"
-                       name="subject"
-                       value="{{ old('subject') }}"
-                       style="width:100%; padding:10px;">
-            </div>
+                <div style="margin-bottom:15px;">
+                    <label>Tēma</label><br>
+                    <input type="text"
+                           name="subject"
+                           value="{{ old('subject') }}"
+                           style="width:100%; padding:10px;">
+                </div>
 
-            <div style="margin-bottom:15px;">
-                <label>Ziņojums</label><br>
-                <textarea name="message"
-                          rows="6"
-                          style="width:100%; padding:10px; resize:vertical;">{{ old('message') }}</textarea>
-            </div>
+                <div style="margin-bottom:15px;">
+                    <label>Ziņojums</label><br>
+                    <textarea name="message"
+                              rows="6"
+                              style="width:100%; padding:10px; resize:vertical;">{{ old('message') }}</textarea>
+                </div>
 
-            <button type="submit" style="padding:10px 18px;">Nosūtīt</button>
-        </form>
-    </div>
+                <button type="submit" style="padding:10px 18px;">Nosūtīt</button>
+            </form>
+        </div>
+    @endauth
+
+    @guest
+        <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:25px; text-align:center;">
+            <p style="margin:0 0 12px 0;">Lai nosūtītu ziņojumu, lūdzu, piesakieties savā kontā.</p>
+
+            <a href="{{ route('login') }}"
+               style="display:inline-block; padding:10px 18px; background:#093600; color:#fff; text-decoration:none; border-radius:8px;">
+                Pieslēgties
+            </a>
+        </div>
+    @endguest
 
     @auth
         <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px;">
