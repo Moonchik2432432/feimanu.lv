@@ -20,7 +20,7 @@
                 <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nosaukums" style="padding:8px;">
             </div>
 
-            <button type="submit" style="padding:9px 14px;">Meklēt</button>
+            <button type="submit" style="padding:9px 14px;">Filtrēt</button>
 
             <a href="{{ route('admin.category') }}" style="padding:9px 14px; background:#eee; text-decoration:none; color:#000;">
                 Notīrīt
