@@ -13,6 +13,12 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     @if($errors->any())
         <div style="padding:10px; background:#ffecec; border:1px solid #ffbcbc; margin:15px 0;">
             {{ $errors->first() }}
