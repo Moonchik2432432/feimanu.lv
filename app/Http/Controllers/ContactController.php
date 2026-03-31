@@ -47,6 +47,22 @@ class ContactController extends Controller
             ]
         );
 
+        $lastMessage = ContactMessage::where('user_id', auth()->id())
+            ->orderByDesc('created_at')
+            ->first();
+
+        if ($lastMessage) {
+            $secondsPassed = $lastMessage->created_at->diffInSeconds(now());
+
+            if ($secondsPassed < 30) {
+                $wait = 30 - $secondsPassed;
+
+                return back()
+                    ->withInput()
+                    ->with('error', "Tu vari nosūtīt nākamo ziņojumu pēc {$wait} sek.");
+            }
+        }
+
         $contactMessage = ContactMessage::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
@@ -55,7 +71,6 @@ class ContactController extends Controller
             'message' => $request->message,
         ]);
 
-        // 🔥 отправка письма
         $adminEmail = env('ADMIN_CONTACT_EMAIL');
 
         if ($adminEmail) {
