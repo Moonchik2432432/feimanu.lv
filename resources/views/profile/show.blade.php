@@ -147,7 +147,7 @@
     ">
         <h3>Mainīt e-pastu</h3>
 
-        <form method="POST" action="{{ route('profile.email') }}">
+        <form method="POST" action="{{ route('profile.email') }}" novalidate>
             @csrf
 
             <div style="margin-bottom:10px;">
