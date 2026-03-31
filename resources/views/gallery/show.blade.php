@@ -56,10 +56,6 @@
                 </a>
 
                 <div style="margin-top:6px;">
-                    <small style="color:#666; display:block;">
-                        {{ $img->title ?: 'Bez nosaukuma' }}
-                    </small>
-
                     <small style="color:#999;">
                         {{ $img->created_at ? $img->created_at->format('d.m.Y') : '' }}
                     </small>
