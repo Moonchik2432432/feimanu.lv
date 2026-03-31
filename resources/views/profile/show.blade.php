@@ -13,6 +13,18 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div style="padding:12px; background:#ffecec; border:1px solid #ffbcbc; border-radius:10px; margin-bottom:20px;">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div style="padding:12px; background:#ffecec; border:1px solid #ffbcbc; border-radius:10px; margin-bottom:20px;">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     {{-- PROFILE INFO --}}
     <div style="
         background:#fff;
