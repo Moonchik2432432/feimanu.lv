@@ -9,17 +9,65 @@ use App\Mail\ContactQuestionMail;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $messages = [];
+        $messages = collect();
 
         if (auth()->check()) {
+            $q = $request->q;
+            $status = $request->status;
+            $archived = $request->archived;
+            $dateFrom = $request->date_from;
+            $dateTo = $request->date_to;
+
+            if ($dateFrom && $dateTo && $dateFrom > $dateTo) {
+                return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
+            }
+
             $messages = ContactMessage::where('user_id', auth()->id())
-                ->orderByDesc('created_at')
-                ->get();
+                ->whereNull('user_deleted_at');
+
+            if ($q) {
+                $messages->where(function ($query) use ($q) {
+                    $query->where('subject', 'like', "%{$q}%")
+                          ->orWhere('message', 'like', "%{$q}%");
+                });
+            }
+
+            if ($status) {
+                $messages->where('status', $status);
+            }
+
+            if ($archived === '1') {
+                $messages->whereNotNull('user_archived_at');
+            } elseif ($archived === '0') {
+                $messages->whereNull('user_archived_at');
+            }
+
+            if ($dateFrom) {
+                $messages->whereDate('created_at', '>=', $dateFrom);
+            }
+
+            if ($dateTo) {
+                $messages->whereDate('created_at', '<=', $dateTo);
+            }
+
+            $messages = $messages->orderByDesc('created_at')
+                ->paginate(10)
+                ->withQueryString();
         }
 
-        return view('contacts.index', compact('messages'));
+        $statuses = [
+            'new' => 'Jauns',
+            'in_progress' => 'Apstrādē',
+            'answered' => 'Atbildēts',
+            'closed' => 'Aizvērts',
+        ];
+
+        return view('contacts.index', compact(
+            'messages',
+            'statuses'
+        ));
     }
 
     public function store(Request $request)
@@ -69,6 +117,7 @@ class ContactController extends Controller
             'email' => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
+            'status' => 'new',
         ]);
 
         $adminEmail = env('ADMIN_CONTACT_EMAIL');
@@ -78,5 +127,44 @@ class ContactController extends Controller
         }
 
         return back()->with('success', 'Ziņojums veiksmīgi nosūtīts.');
+    }
+
+    public function archive($id)
+    {
+        $message = ContactMessage::where('user_id', auth()->id())
+            ->whereNull('user_deleted_at')
+            ->findOrFail($id);
+
+        $message->update([
+            'user_archived_at' => now(),
+        ]);
+
+        return back()->with('success', 'Ziņojums pārvietots uz arhīvu.');
+    }
+
+    public function unarchive($id)
+    {
+        $message = ContactMessage::where('user_id', auth()->id())
+            ->whereNull('user_deleted_at')
+            ->findOrFail($id);
+
+        $message->update([
+            'user_archived_at' => null,
+        ]);
+
+        return back()->with('success', 'Ziņojums izņemts no arhīva.');
+    }
+
+    public function delete($id)
+    {
+        $message = ContactMessage::where('user_id', auth()->id())
+            ->whereNull('user_deleted_at')
+            ->findOrFail($id);
+
+        $message->update([
+            'user_deleted_at' => now(),
+        ]);
+
+        return back()->with('success', 'Ziņojums dzēsts.');
     }
 }
