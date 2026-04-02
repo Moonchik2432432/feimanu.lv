@@ -35,17 +35,15 @@ class ContactMessage extends Model
     ];
 
     public const STATUS_NEW = 'new';
-    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_OVERDUE = 'overdue';
     public const STATUS_ANSWERED = 'answered';
-    public const STATUS_CLOSED = 'closed';
-
+    
     public static function statuses(): array
     {
         return [
             self::STATUS_NEW => 'Jauns',
-            self::STATUS_IN_PROGRESS => 'Apstrādē',
+            self::STATUS_OVERDUE => 'Novēlots',
             self::STATUS_ANSWERED => 'Atbildēts',
-            self::STATUS_CLOSED => 'Aizvērts',
         ];
     }
 
