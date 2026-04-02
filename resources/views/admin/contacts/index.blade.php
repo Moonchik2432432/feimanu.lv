@@ -105,11 +105,13 @@
                                     border-radius:999px;
                                     font-size:13px;
                                     background:
-                                        @if($item->status === 'new') #e8f0ff
-                                        @elseif($item->status === 'in_progress') #fff4db
-                                        @elseif($item->status === 'answered') #e9ffe9
-                                        @else #f0f0f0
-                                        @endif;
+                                        @if($item->status === 'new')
+                                            background:#e8f0ff;
+                                        @elseif($item->status === 'overdue')
+                                            background:#ffe5e5;
+                                        @elseif($item->status === 'answered')
+                                            background:#e9ffe9;
+                                        @endif
                                     color:#333;
                                 ">
                                     {{ $statuses[$item->status] ?? $item->status }}
