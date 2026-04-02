@@ -106,12 +106,15 @@
                                     font-size:13px;
                                     background:
                                         @if($item->status === 'new')
-                                            background:#e8f0ff;
+                                            #e8f0ff
                                         @elseif($item->status === 'overdue')
-                                            background:#ffe5e5;
+                                            #ffe5e5
                                         @elseif($item->status === 'answered')
-                                            background:#e9ffe9;
+                                            #e9ffe9
+                                        @else
+                                            #f0f0f0
                                         @endif
+                                    ;
                                     color:#333;
                                 ">
                                     {{ $statuses[$item->status] ?? $item->status }}
