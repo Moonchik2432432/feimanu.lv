@@ -147,7 +147,7 @@
                                 <div><strong>Tēma:</strong> {{ $item->subject }}</div>
                                 <div style="color:#666; margin:8px 0;">{{ $item->created_at->format('d.m.Y H:i') }}</div>
 
-                                <div style="margin-bottom:8px;">
+                                <div>
                                     <strong>Statuss:</strong>
                                     <span style="
                                         display:inline-block;
@@ -156,12 +156,15 @@
                                         font-size:13px;
                                         background:
                                             @if($item->status === 'new')
-                                                background:#e8f0ff;
+                                                #e8f0ff
                                             @elseif($item->status === 'overdue')
-                                                background:#ffe5e5;
+                                                #ffe5e5
                                             @elseif($item->status === 'answered')
-                                                background:#e9ffe9;
+                                                #e9ffe9
+                                            @else
+                                                #f0f0f0
                                             @endif
+                                        ;
                                         color:#333;
                                     ">
                                         {{ $statuses[$item->status] ?? $item->status }}
