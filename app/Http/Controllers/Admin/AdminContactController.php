@@ -16,6 +16,8 @@ class AdminContactController extends Controller
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
 
+        ContactMessage::updateOverdue();
+
         if ($dateFrom && $dateTo && $dateFrom > $dateTo) {
             return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
         }
