@@ -76,4 +76,15 @@ class ContactMessage extends Model
     {
         return !is_null($this->admin_deleted_at);
     }
+    
+    public static function updateOverdue()
+    {
+        self::where('status', self::STATUS_NEW)
+            ->whereNull('reply')
+            ->where('created_at', '<=', now()->subDays(2))
+            ->update([
+                'status' => self::STATUS_OVERDUE
+            ]);
+    }
+    
 }
