@@ -8,6 +8,9 @@ use App\Models\Comment;
 use App\Models\UserBlock;
 use App\Models\BlockReason;
 use Illuminate\Http\Request;
+use App\Mail\UserDeletedMail;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
  
 class AdminUserController extends Controller
 {
@@ -162,5 +165,53 @@ class AdminUserController extends Controller
             ->get();
  
         return view('admin.users.history', compact('user', 'blocks'));
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $request->validate([
+            'delete_reason' => ['required', 'string', 'max:1000'],
+        ], [
+            'delete_reason.required' => 'Lūdzu, norādiet dzēšanas iemeslu.',
+            'delete_reason.string' => 'Dzēšanas iemeslam jābūt tekstam.',
+            'delete_reason.max' => 'Dzēšanas iemesls nedrīkst būt garāks par 1000 simboliem.',
+        ]);
+    
+        $user = User::findOrFail($id);
+    
+        if (auth()->id() == $user->id) {
+            return back()->with('error', 'Jūs nevarat dzēst savu kontu.');
+        }
+    
+        try {
+            if (!empty($user->email)) {
+                Mail::to($user->email)->send(new UserDeletedMail($user, $request->delete_reason));
+            }
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Neizdevās nosūtīt e-pastu lietotājam.');
+        }
+    
+        if (!empty($user->avatar) && $user->avatar !== 'default_avatar.jpg') {
+            $avatarPath = public_path('img/usersAvatars/' . $user->avatar);
+            if (File::exists($avatarPath)) {
+                File::delete($avatarPath);
+            }
+        }
+    
+        if (method_exists($user, 'comments')) {
+            $user->comments()->delete();
+        }
+    
+        if (method_exists($user, 'blocks')) {
+            $user->blocks()->delete();
+        }
+    
+        if (method_exists($user, 'contactMessages')) {
+            $user->contactMessages()->delete();
+        }
+    
+        $user->delete();
+    
+        return redirect()->route('admin.users')->with('success', 'Lietotāja konts tika dzēsts un e-pasts nosūtīts.');
     }
 }
