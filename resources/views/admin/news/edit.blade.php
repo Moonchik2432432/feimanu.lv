@@ -45,14 +45,14 @@
             <label>Pašreizējā bilde</label><br>
 
             @if($post->bilde)
-                <img src="{{ asset($post->bilde) }}" style="max-width:200px; margin-top:10px;">
+                <img src="{{ asset($post->bilde) }}" style="max-width:200px; margin-top:10px; border-radius:10px;">
             @else
                 <div style="color:gray;">Nav bildes</div>
             @endif
         </div>
 
         <div style="margin:10px 0;">
-            <label>Jauna bilde</label><br>
+            <label>Jauna bilde no datora</label><br>
 
             <label style="
                 display:inline-block;
@@ -69,6 +69,23 @@
             <div id="bilde-name" style="margin-top:8px; color:#666;">
                 Fails nav izvēlēts
             </div>
+        </div>
+
+        <div style="margin:15px 0;">
+            <label>Vai izvēlēties bildi no galerijas</label><br>
+            <select name="gallery_image" style="width:100%; padding:8px;">
+                <option value="">-- Neizmainīt --</option>
+
+                @foreach($galleryImages as $img)
+                    <option value="{{ $img->image_path }}"
+                        @selected(old('gallery_image', $post->bilde) == $img->image_path)>
+                        {{ $img->title ?: 'Foto #' . $img->id }}
+                    </option>
+                @endforeach
+            </select>
+            <small style="color:#777; display:block; margin-top:6px;">
+                Ja izvēlēsies failu no datora, tas aizvietos galerijas bildi.
+            </small>
         </div>
 
         <button type="submit" style="padding:10px 14px;">Saglabāt</button>
