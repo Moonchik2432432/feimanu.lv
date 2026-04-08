@@ -304,6 +304,15 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+        if (typeof flatpickr !== 'undefined') {
+            flatpickr("#pasakuma_datums", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                time_24hr: true,
+                locale: "lv"
+            });
+        }
+    
     const btnUpload = document.getElementById('btn-upload');
     const btnGallery = document.getElementById('btn-gallery');
     const btnClear = document.getElementById('btn-clear');
