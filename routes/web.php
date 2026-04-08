@@ -105,6 +105,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
     Route::put('/news/{id}', [AdminNewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
+    Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
 
     // COMMENT
     Route::delete('/comments/{id}', [AdminCommentsController::class, 'destroy'])->name('admin.comments.destroy');
