@@ -4,7 +4,7 @@
  
 @section('content')
  
-<div class="container" style="max-width:1100px; margin:40px auto;">
+<div class="container" style="max-width:1200px; margin:40px auto;">
  
     <h1>Lietotāju saraksts</h1>
  
@@ -82,6 +82,16 @@
                 form.style.display = 'none';
             }
         }
+
+        function toggleDeleteForm(userId) {
+            const form = document.getElementById('delete-form-' + userId);
+
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'flex';
+            } else {
+                form.style.display = 'none';
+            }
+        }
     </script>
  
     <table style="width:100%; border-collapse: collapse; margin-top:20px;">
@@ -95,6 +105,7 @@
                 <th style="padding:10px; border:1px solid #ddd;">Info & Komentāriji</th>
                 <th style="padding:10px; border:1px solid #ddd;">Bloķēšana vēsture</th>
                 <th style="padding:10px; border:1px solid #ddd;">Bloķēšana</th>
+                <th style="padding:10px; border:1px solid #ddd;">Dzēst kontu</th>
             </tr>
         </thead>
  
@@ -206,6 +217,59 @@
                             @endif
  
                         </div>
+                    </td>
+
+                    <td style="padding:10px; border:1px solid #ddd; min-width:260px;">
+                        @if(auth()->id() !== $user->id)
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <button
+                                    type="button"
+                                    onclick="toggleDeleteForm({{ $user->id }})"
+                                    style="padding:6px 12px; color:#b00000;"
+                                >
+                                    Dzēst kontu
+                                </button>
+
+                                <form
+                                    id="delete-form-{{ $user->id }}"
+                                    method="POST"
+                                    action="{{ route('admin.users.destroy', $user->id) }}"
+                                    style="display:none; flex-direction:column; gap:8px; margin-top:8px;"
+                                    onsubmit="return confirm('Vai tiešām dzēst šo lietotāja kontu?');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <textarea
+                                        name="delete_reason"
+                                        rows="3"
+                                        required
+                                        placeholder="Dzēšanas iemesls"
+                                        style="padding:6px; resize:vertical;"
+                                    ></textarea>
+
+                                    <small style="display:block; color:#666;">
+                                        Lietotājam tiks nosūtīts e-pasts ar dzēšanas iemeslu.
+                                    </small>
+
+                                    <div style="display:flex; gap:8px;">
+                                        <button type="submit" style="padding:6px 12px; color:#b00000;">
+                                            Apstiprināt dzēšanu
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onclick="toggleDeleteForm({{ $user->id }})"
+                                            style="padding:6px 12px;"
+                                        >
+                                            Aizvērt
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        @else
+                            <span style="color:#777;">Jūs</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach
