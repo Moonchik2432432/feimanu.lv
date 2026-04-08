@@ -42,9 +42,8 @@
             <textarea name="saturs" rows="6" style="width:100%; padding:8px;">{{ old('saturs') }}</textarea>
         </div>
 
-        {{-- FILE INPUT --}}
         <div style="margin:10px 0;">
-            <label>Bilde</label><br>
+            <label>Bilde no datora</label><br>
 
             <label style="
                 display:inline-block;
@@ -63,6 +62,22 @@
             </div>
         </div>
 
+        <div style="margin:15px 0;">
+            <label>Vai izvēlēties bildi no galerijas</label><br>
+            <select name="gallery_image" style="width:100%; padding:8px;">
+                <option value="">-- Neizvēlēties --</option>
+
+                @foreach($galleryImages as $img)
+                    <option value="{{ $img->image_path }}" @selected(old('gallery_image') == $img->image_path)>
+                        {{ $img->title ?: 'Foto #' . $img->id }}
+                    </option>
+                @endforeach
+            </select>
+            <small style="color:#777; display:block; margin-top:6px;">
+                Ja augšupielādēsi failu no datora, tas būs prioritārs.
+            </small>
+        </div>
+
         <button type="submit" style="padding:10px 14px;">Saglabāt</button>
         <a href="{{ route('admin.news') }}" style="margin-left:10px;">Atpakaļ</a>
 
@@ -70,7 +85,6 @@
 
 </div>
 
-{{-- JS --}}
 <script>
 document.getElementById('bilde-input')?.addEventListener('change', function() {
     const fileName = this.files.length > 0
