@@ -43,8 +43,6 @@
         </div>
 
         <div style="margin:20px 0;">
-            <label style="display:block; margin-bottom:10px;"><b>Aktualitātes bilde</b></label>
-
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
                 <button type="button" id="btn-upload" style="
                     padding:10px 14px;
