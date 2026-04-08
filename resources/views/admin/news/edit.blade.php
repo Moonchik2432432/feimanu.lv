@@ -42,8 +42,6 @@
         </div>
 
         <div style="margin:20px 0;">
-            <label style="display:block; margin-bottom:10px;"><b>Aktualitātes bilde</b></label>
-
             <div style="margin-bottom:15px;">
                 @if($post->bilde)
                     <div style="margin-bottom:10px; color:#444;">
