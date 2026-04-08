@@ -53,18 +53,6 @@
             dateFormat: "Y-m-d",
             locale: "lv"
         });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof lightbox !== "undefined") {
-                lightbox.option({
-                    'resizeDuration': 200,
-                    'wrapAround': true,
-                    'fadeDuration': 200,
-                    'imageFadeDuration': 200,
-                    'albumLabel': "Attēls %1 no %2"
-                });
-            }
-        });
     </script>
 
     <div style="display:flex; gap:30px; align-items:flex-start;">
@@ -141,9 +129,7 @@
             <div style="border:1px solid #ddd; border-radius:12px; background:#fff; padding:12px;">
                 <div style="display:flex; flex-direction:column; gap:12px;">
                     @forelse($latestPhotos as $photo)
-                        <a href="{{ asset($photo->image_path) }}"
-                           data-lightbox="latest-photos"
-                           data-title="{{ $photo->title ?? 'Fotogrāfija' }}"
+                        <a href="{{ route('gallery.show', ['album' => $photo->album_id]) }}?photo={{ $photo->id }}"
                            style="display:block; text-decoration:none;">
                             <img src="{{ asset($photo->image_path) }}"
                                  alt="{{ $photo->title ?? 'Foto' }}"
