@@ -238,15 +238,27 @@
         cursor:pointer;
     ">‹</button>
 
-    <img id="viewer-image"
-         src=""
-         alt="Foto"
-         style="
-            max-width:90vw;
-            max-height:80vh;
-            border-radius:12px;
-            display:block;
-         ">
+    <div style="
+        width:min(900px, 90vw);
+        height:min(600px, 80vh);
+        background:#111;
+        border-radius:16px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    ">
+        <img id="viewer-image"
+             src=""
+             alt="Foto"
+             style="
+                width:100%;
+                height:100%;
+                object-fit:contain;
+                display:block;
+             ">
+    </div>
 
     <button type="button" id="viewer-next" style="
         position:absolute;
