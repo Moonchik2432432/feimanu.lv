@@ -47,7 +47,10 @@
     ">
         @forelse($album->images as $img)
             <div>
-                <a href="{{ asset($img->image_path) }}" data-lightbox="gallery">
+                <a href="{{ asset($img->image_path) }}"
+                   data-lightbox="gallery"
+                   data-title="{{ $img->title ?? 'Foto' }}"
+                   id="photo-{{ $img->id }}">
                     <img
                         src="{{ asset($img->image_path) }}"
                         alt="{{ $img->title ?? 'Foto' }}"
@@ -74,6 +77,18 @@ document.addEventListener("DOMContentLoaded", function () {
         lightbox.option({
             albumLabel: "Attēls %1 no %2"
         });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const photoId = params.get("photo");
+
+    if (photoId) {
+        const target = document.getElementById("photo-" + photoId);
+        if (target) {
+            setTimeout(function () {
+                target.click();
+            }, 200);
+        }
     }
 });
 </script>
