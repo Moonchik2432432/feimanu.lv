@@ -129,7 +129,7 @@
             <div style="border:1px solid #ddd; border-radius:12px; background:#fff; padding:12px;">
                 <div style="display:flex; flex-direction:column; gap:12px;">
                     @forelse($latestPhotos as $photo)
-                        <a href="{{ route('gallery.show', ['album' => $photo->album_id]) }}?photo={{ $photo->id }}"
+                        <a href="{{ route('gallery.show', $photo->album_id) }}?photo={{ $photo->id }}"
                            style="display:block; text-decoration:none;">
                             <img src="{{ asset($photo->image_path) }}"
                                  alt="{{ $photo->title ?? 'Foto' }}"
