@@ -59,6 +59,7 @@ class AdminNewsController extends Controller
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery_image' => ['nullable', 'string'],
+            'pasakuma_datums' => ['nullable', 'date'],
         ], [
             'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
@@ -117,6 +118,7 @@ class AdminNewsController extends Controller
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery_image' => ['nullable', 'string'],
+            'pasakuma_datums' => ['nullable', 'date'],
         ], [
             'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
