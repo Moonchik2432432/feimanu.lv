@@ -21,7 +21,7 @@ class AdminUserController extends Controller
         $to = $request->get('to');
 
         if ($from && $to && $from > $to) {
-            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
  
         $usersQuery = User::query()->select(
@@ -79,17 +79,6 @@ class AdminUserController extends Controller
             ->get();
  
         return view('admin.users.show', compact('user', 'comments'));
-    }
- 
-    public function destroy(User $user)
-    {
-        if (auth()->id() === $user->id) {
-            return back()->with('error', 'Tu nevari izdzēst savu profilu');
-        }
- 
-        $user->delete();
- 
-        return redirect()->route('admin.users')->with('success', 'Lietotājs izdzēsts');
     }
  
     public function block(Request $request, User $user)
@@ -198,17 +187,10 @@ class AdminUserController extends Controller
             }
         }
     
-        if (method_exists($user, 'comments')) {
-            $user->comments()->delete();
-        }
-    
-        if (method_exists($user, 'blocks')) {
-            $user->blocks()->delete();
-        }
-    
-        if (method_exists($user, 'contactMessages')) {
-            $user->contactMessages()->delete();
-        }
+        Comment::where('user_id', $user->id)->delete();
+        UserBlock::where('user_id', $user->id)->delete();
+        UserBlock::where('blocked_by', $user->id)->delete();
+        UserBlock::where('unblocked_by', $user->id)->delete();
     
         $user->delete();
     
