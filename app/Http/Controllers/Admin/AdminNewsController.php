@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Models\Category;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -17,7 +18,7 @@ class AdminNewsController extends Controller
         $to = $request->get('to');
 
         if ($from && $to && $from > $to) {
-            return back() -> with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
 
         $query = News::query()->with('category');
@@ -45,8 +46,9 @@ class AdminNewsController extends Controller
     public function create()
     {
         $categories = Category::orderBy('nosaukums')->get();
+        $galleryImages = GalleryImage::orderByDesc('created_at')->get();
 
-        return view('admin.news.create', compact('categories'));
+        return view('admin.news.create', compact('categories', 'galleryImages'));
     }
 
     public function store(Request $request)
@@ -55,7 +57,8 @@ class AdminNewsController extends Controller
             'nosaukums' => ['required', 'string', 'max:55'],
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
-            'bilde' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'gallery_image' => ['nullable', 'string'],
         ], [
             'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
@@ -69,9 +72,11 @@ class AdminNewsController extends Controller
             'saturs' => 'saturs',
             'kategorija_id' => 'kategorija',
             'bilde' => 'attēls',
+            'gallery_image' => 'galerijas attēls',
         ]);
 
         $data['publicets_datums'] = now();
+        $data['bilde'] = null;
 
         if ($request->hasFile('bilde')) {
             $dir = base_path('img/aktualitates');
@@ -84,6 +89,8 @@ class AdminNewsController extends Controller
             $request->file('bilde')->move($dir, $filename);
 
             $data['bilde'] = 'img/aktualitates/' . $filename;
+        } elseif ($request->filled('gallery_image')) {
+            $data['bilde'] = $request->gallery_image;
         }
 
         News::create($data);
@@ -95,8 +102,9 @@ class AdminNewsController extends Controller
     {
         $post = News::findOrFail($id);
         $categories = Category::orderBy('nosaukums')->get();
+        $galleryImages = GalleryImage::orderByDesc('created_at')->get();
 
-        return view('admin.news.edit', compact('post', 'categories'));
+        return view('admin.news.edit', compact('post', 'categories', 'galleryImages'));
     }
 
     public function update(Request $request, $id)
@@ -108,6 +116,7 @@ class AdminNewsController extends Controller
             'saturs' => ['required', 'string'],
             'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
             'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'gallery_image' => ['nullable', 'string'],
         ], [
             'required' => 'Lauks :attribute ir obligāts.',
             'string' => 'Laukam :attribute jābūt tekstam.',
@@ -121,10 +130,11 @@ class AdminNewsController extends Controller
             'saturs' => 'saturs',
             'kategorija_id' => 'kategorija',
             'bilde' => 'attēls',
+            'gallery_image' => 'galerijas attēls',
         ]);
 
         if ($request->hasFile('bilde')) {
-            if (!empty($post->bilde)) {
+            if (!empty($post->bilde) && str_starts_with($post->bilde, 'img/aktualitates/')) {
                 $old = base_path($post->bilde);
                 if (File::exists($old)) {
                     File::delete($old);
@@ -141,6 +151,17 @@ class AdminNewsController extends Controller
             $request->file('bilde')->move($dir, $filename);
 
             $data['bilde'] = 'img/aktualitates/' . $filename;
+        } elseif ($request->filled('gallery_image')) {
+            if (!empty($post->bilde) && str_starts_with($post->bilde, 'img/aktualitates/')) {
+                $old = base_path($post->bilde);
+                if (File::exists($old)) {
+                    File::delete($old);
+                }
+            }
+
+            $data['bilde'] = $request->gallery_image;
+        } else {
+            unset($data['bilde']);
         }
 
         $post->update($data);
@@ -154,7 +175,7 @@ class AdminNewsController extends Controller
 
         $post->comments()->delete();
 
-        if (!empty($post->bilde)) {
+        if (!empty($post->bilde) && str_starts_with($post->bilde, 'img/aktualitates/')) {
             $path = base_path($post->bilde);
             if (File::exists($path)) {
                 File::delete($path);
