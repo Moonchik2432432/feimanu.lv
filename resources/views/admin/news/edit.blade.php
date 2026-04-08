@@ -41,6 +41,19 @@
             <textarea name="saturs" rows="6" style="width:100%; padding:8px; box-sizing:border-box;">{{ old('saturs', $post->saturs) }}</textarea>
         </div>
 
+        <div style="margin:10px 0;">
+            <label>Pasākuma datums</label><br>
+            <input type="text"
+                   name="pasakuma_datums"
+                   id="pasakuma_datums"
+                   value="{{ old('pasakuma_datums', $post->pasakuma_datums ? \Carbon\Carbon::parse($post->pasakuma_datums)->format('Y-m-d H:i') : '') }}"
+                   placeholder="Izvēlēties datumu un laiku"
+                   style="width:100%; padding:8px; box-sizing:border-box;">
+            <small style="color:#777; display:block; margin-top:6px;">
+                Ja datums ir norādīts, aktualitāte tiks attēlota kā ieplānots pasākums.
+            </small>
+        </div>
+            
         <div style="margin:20px 0;">
             <div style="margin-bottom:15px;">
                 @if($post->bilde)
