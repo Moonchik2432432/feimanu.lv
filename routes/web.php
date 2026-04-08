@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
 // GALLERY
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+Route::get('/gallery/{album}', [GalleryController::class, 'show'])->name('gallery.show');
 
 // CONTACT
 Route::middleware('auth')->group(function () {
