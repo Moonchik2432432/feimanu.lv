@@ -22,7 +22,29 @@ class NewsController extends Controller
             return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
         }
 
+        $events = News::with('category')
+            ->whereNotNull('pasakuma_datums')
+            ->where('pasakuma_datums', '>=', now())
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($qq) use ($q) {
+                    $qq->where('nosaukums', 'like', "%{$q}%")
+                       ->orWhere('saturs', 'like', "%{$q}%");
+                });
+            })
+            ->when($from, function ($query) use ($from) {
+                $query->whereDate('pasakuma_datums', '>=', $from);
+            })
+            ->when($to, function ($query) use ($to) {
+                $query->whereDate('pasakuma_datums', '<=', $to);
+            })
+            ->orderBy('pasakuma_datums')
+            ->get();
+
         $news = News::with('category')
+            ->where(function ($query) {
+                $query->whereNull('pasakuma_datums')
+                      ->orWhere('pasakuma_datums', '<', now());
+            })
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('nosaukums', 'like', "%{$q}%")
@@ -43,21 +65,56 @@ class NewsController extends Controller
             ->take(3)
             ->get();
 
-        return view('news.index', compact('categories', 'news', 'q', 'from', 'to', 'latestPhotos'));
+        return view('news.index', compact('categories', 'news', 'events', 'q', 'from', 'to', 'latestPhotos'));
     }
 
     public function category(Request $request, $id)
     {
         $categories = Category::orderBy('nosaukums')->get();
         $q = trim($request->query('q', ''));
+        $from = $request->query('from');
+        $to = $request->query('to');
 
-        $news = News::with('category')
+        if ($from && $to && $from > $to) {
+            return back()->with('error', 'Datums "No" nevar būt lielāks par datumu "Līdz".');
+        }
+
+        $events = News::with('category')
             ->where('kategorija_id', $id)
+            ->whereNotNull('pasakuma_datums')
+            ->where('pasakuma_datums', '>=', now())
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($qq) use ($q) {
                     $qq->where('nosaukums', 'like', "%{$q}%")
                        ->orWhere('saturs', 'like', "%{$q}%");
                 });
+            })
+            ->when($from, function ($query) use ($from) {
+                $query->whereDate('pasakuma_datums', '>=', $from);
+            })
+            ->when($to, function ($query) use ($to) {
+                $query->whereDate('pasakuma_datums', '<=', $to);
+            })
+            ->orderBy('pasakuma_datums')
+            ->get();
+
+        $news = News::with('category')
+            ->where('kategorija_id', $id)
+            ->where(function ($query) {
+                $query->whereNull('pasakuma_datums')
+                      ->orWhere('pasakuma_datums', '<', now());
+            })
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($qq) use ($q) {
+                    $qq->where('nosaukums', 'like', "%{$q}%")
+                       ->orWhere('saturs', 'like', "%{$q}%");
+                });
+            })
+            ->when($from, function ($query) use ($from) {
+                $query->whereDate('publicets_datums', '>=', $from);
+            })
+            ->when($to, function ($query) use ($to) {
+                $query->whereDate('publicets_datums', '<=', $to);
             })
             ->orderByDesc('publicets_datums')
             ->paginate(5)
@@ -67,7 +124,7 @@ class NewsController extends Controller
             ->take(3)
             ->get();
 
-        return view('news.index', compact('categories', 'news', 'q', 'latestPhotos'));
+        return view('news.index', compact('categories', 'news', 'events', 'q', 'from', 'to', 'latestPhotos'));
     }
 
     public function show($id)
@@ -93,6 +150,7 @@ class NewsController extends Controller
                 'saturs' => ['required', 'string'],
                 'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
                 'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+                'pasakuma_datums' => ['nullable', 'date'],
             ],
             [
                 'nosaukums.required' => 'Lūdzu, ievadiet nosaukumu.',
@@ -109,6 +167,8 @@ class NewsController extends Controller
                 'bilde.image' => 'Failam jābūt attēlam.',
                 'bilde.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
                 'bilde.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+
+                'pasakuma_datums.date' => 'Pasākuma datumam jābūt derīgam datumam.',
             ]
         );
 
@@ -140,39 +200,42 @@ class NewsController extends Controller
         return view('news.edit', compact('post', 'categories'));
     }
 
-   public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $post = News::findOrFail($id);
-    
+
         $data = $request->validate(
             [
                 'nosaukums' => ['required', 'string', 'max:255'],
                 'saturs' => ['required', 'string'],
                 'kategorija_id' => ['required', 'integer', 'exists:kategorija,kategorija_id'],
                 'bilde' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+                'pasakuma_datums' => ['nullable', 'date'],
             ],
             [
                 'nosaukums.required' => 'Lūdzu, ievadiet nosaukumu.',
                 'nosaukums.string' => 'Nosaukumam jābūt tekstam.',
                 'nosaukums.max' => 'Nosaukums nedrīkst būt garāks par 255 simboliem.',
-    
+
                 'saturs.required' => 'Lūdzu, ievadiet saturu.',
                 'saturs.string' => 'Saturam jābūt tekstam.',
-    
+
                 'kategorija_id.required' => 'Lūdzu, izvēlieties kategoriju.',
                 'kategorija_id.integer' => 'Kategorija nav derīga.',
                 'kategorija_id.exists' => 'Izvēlētā kategorija nepastāv.',
-    
+
                 'bilde.image' => 'Failam jābūt attēlam.',
                 'bilde.mimes' => 'Attēlam jābūt JPG, JPEG, PNG vai WEBP formātā.',
                 'bilde.max' => 'Attēla izmērs nedrīkst pārsniegt 4 MB.',
+
+                'pasakuma_datums.date' => 'Pasākuma datumam jābūt derīgam datumam.',
             ]
         );
-    
+
         if (!$request->hasFile('bilde')) {
             unset($data['bilde']);
         }
-    
+
         if ($request->hasFile('bilde')) {
             if (!empty($post->bilde)) {
                 $old = base_path($post->bilde);
@@ -180,21 +243,21 @@ class NewsController extends Controller
                     File::delete($old);
                 }
             }
-    
+
             $dir = base_path('img/aktualitates');
-    
+
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
-    
+
             $filename = uniqid('news_') . '.' . $request->file('bilde')->extension();
             $request->file('bilde')->move($dir, $filename);
-    
+
             $data['bilde'] = 'img/aktualitates/' . $filename;
         }
-    
+
         $post->update($data);
-    
+
         return redirect()->route('news.index')->with('success', 'Ziņa atjaunināta');
     }
 
