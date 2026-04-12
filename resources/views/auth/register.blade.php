@@ -15,6 +15,19 @@
 
         <h2 style="margin-top:0; text-align:center;">Reģistrācija</h2>
 
+        @if(session('success'))
+            <div style="
+                padding:10px;
+                background:#e9ffe9;
+                border:1px solid #b7f0b7;
+                border-radius:10px;
+                margin:15px 0;
+                color:#0a5a0a;
+            ">
+                {{ session('success') }}
+            </div>
+        @endif
+        
         @if($errors->any())
             <div style="
                 padding:10px;
