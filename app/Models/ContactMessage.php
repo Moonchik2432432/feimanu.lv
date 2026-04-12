@@ -35,6 +35,7 @@ class ContactMessage extends Model
     ];
 
     public const STATUS_NEW = 'new';
+    public const STATUS_READ = 'read';
     public const STATUS_OVERDUE = 'overdue';
     public const STATUS_ANSWERED = 'answered';
     
@@ -42,6 +43,7 @@ class ContactMessage extends Model
     {
         return [
             self::STATUS_NEW => 'Jauns',
+            self::STATUS_READ => 'Izlasīts',
             self::STATUS_OVERDUE => 'Novēlots',
             self::STATUS_ANSWERED => 'Atbildēts',
         ];
