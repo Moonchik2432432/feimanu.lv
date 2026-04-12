@@ -81,9 +81,9 @@ class ContactMessage extends Model
     
     public static function updateOverdue()
     {
-        self::where('status', self::STATUS_NEW)
+        self::whereIn('status', [self::STATUS_NEW, self::STATUS_READ])
             ->whereNull('reply')
-            ->where('created_at', '<=', now()->subDays(2))
+            ->where('created_at', '<=', now()->subDay())
             ->update([
                 'status' => self::STATUS_OVERDUE
             ]);
