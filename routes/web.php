@@ -72,7 +72,8 @@ Route::get('/gallery/{album}', [GalleryController::class, 'show'])->name('galler
 // CONTACT
 Route::middleware('auth')->group(function () {
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
-    Route::get('/contacts/archive', [ContactController::class, 'archiveList'])->name('contacts.archive');
+    Route::get('/contacts/archive', [ContactController::class, 'archiveList'])
+    ->name('contacts.archive.page');
 
     Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
