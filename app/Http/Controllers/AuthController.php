@@ -159,7 +159,10 @@ class AuthController extends Controller
             }
         );
 
-        return redirect()->route('login')->with('success', 'Reģistrācija veiksmīga. Lūdzu, apstipriniet savu e-pastu.');
+        return redirect()->route('login')->with(
+            'success',
+            'Reģistrācija veiksmīga! Lūdzu, pārbaudiet savu e-pastu un apstipriniet kontu.'
+        );
     }
 
     public function verify($token)
