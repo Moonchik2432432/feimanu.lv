@@ -43,15 +43,6 @@
         </div>
 
         <div>
-            <label>Arhīvs</label><br>
-            <select name="archived" style="padding:8px;">
-                <option value="">Visi</option>
-                <option value="0" {{ ($archived ?? '') === '0' ? 'selected' : '' }}>Aktīvie</option>
-                <option value="1" {{ ($archived ?? '') === '1' ? 'selected' : '' }}>Arhīvā</option>
-            </select>
-        </div>
-
-        <div>
             <label>No datuma</label><br>
             <input type="text"
                    name="date_from"
