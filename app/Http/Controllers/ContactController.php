@@ -16,32 +16,29 @@ class ContactController extends Controller
         if (auth()->check()) {
             $q = $request->q;
             $status = $request->status;
-            $archived = $request->archived;
             $dateFrom = $request->date_from;
             $dateTo = $request->date_to;
+
+            ContactMessage::updateOverdue();
 
             if ($dateFrom && $dateTo && $dateFrom > $dateTo) {
                 return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
             }
 
             $messages = ContactMessage::where('user_id', auth()->id())
-                ->whereNull('user_deleted_at');
+                ->whereNull('user_deleted_at')
+                ->whereNull('user_archived_at');
 
             if ($q) {
                 $messages->where(function ($query) use ($q) {
                     $query->where('subject', 'like', "%{$q}%")
-                          ->orWhere('message', 'like', "%{$q}%");
+                        ->orWhere('message', 'like', "%{$q}%")
+                        ->orWhere('reply', 'like', "%{$q}%");
                 });
             }
 
             if ($status) {
                 $messages->where('status', $status);
-            }
-
-            if ($archived === '1') {
-                $messages->whereNotNull('user_archived_at');
-            } elseif ($archived === '0') {
-                $messages->whereNull('user_archived_at');
             }
 
             if ($dateFrom) {
@@ -57,17 +54,59 @@ class ContactController extends Controller
                 ->withQueryString();
         }
 
-        $statuses = [
-            'new' => 'Jauns',
-            'in_progress' => 'Apstrādē',
-            'answered' => 'Atbildēts',
-            'closed' => 'Aizvērts',
-        ];
+        $statuses = ContactMessage::statuses();
 
-        return view('contacts.index', compact(
-            'messages',
-            'statuses'
-        ));
+        return view('contacts.index', compact('messages', 'statuses'));
+    }
+
+    public function archiveList(Request $request)
+    {
+        $messages = collect();
+
+        if (auth()->check()) {
+            $q = $request->q;
+            $status = $request->status;
+            $dateFrom = $request->date_from;
+            $dateTo = $request->date_to;
+
+            ContactMessage::updateOverdue();
+
+            if ($dateFrom && $dateTo && $dateFrom > $dateTo) {
+                return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
+            }
+
+            $messages = ContactMessage::where('user_id', auth()->id())
+                ->whereNull('user_deleted_at')
+                ->whereNotNull('user_archived_at');
+
+            if ($q) {
+                $messages->where(function ($query) use ($q) {
+                    $query->where('subject', 'like', "%{$q}%")
+                        ->orWhere('message', 'like', "%{$q}%")
+                        ->orWhere('reply', 'like', "%{$q}%");
+                });
+            }
+
+            if ($status) {
+                $messages->where('status', $status);
+            }
+
+            if ($dateFrom) {
+                $messages->whereDate('created_at', '>=', $dateFrom);
+            }
+
+            if ($dateTo) {
+                $messages->whereDate('created_at', '<=', $dateTo);
+            }
+
+            $messages = $messages->orderByDesc('created_at')
+                ->paginate(10)
+                ->withQueryString();
+        }
+
+        $statuses = ContactMessage::statuses();
+
+        return view('contacts.archive', compact('messages', 'statuses'));
     }
 
     public function store(Request $request)
