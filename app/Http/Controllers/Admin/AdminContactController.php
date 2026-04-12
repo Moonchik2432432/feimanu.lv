@@ -12,7 +12,6 @@ class AdminContactController extends Controller
     {
         $q = $request->q;
         $status = $request->status;
-        $archived = $request->archived;
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
 
@@ -22,26 +21,21 @@ class AdminContactController extends Controller
             return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
         }
 
-        $messages = ContactMessage::whereNull('admin_deleted_at');
+        $messages = ContactMessage::whereNull('admin_deleted_at')
+            ->whereNull('admin_archived_at');
 
         if ($q) {
             $messages->where(function ($query) use ($q) {
                 $query->where('name', 'like', "%{$q}%")
-                      ->orWhere('email', 'like', "%{$q}%")
-                      ->orWhere('subject', 'like', "%{$q}%")
-                      ->orWhere('message', 'like', "%{$q}%")
-                      ->orWhere('reply', 'like', "%{$q}%");
+                    ->orWhere('email', 'like', "%{$q}%")
+                    ->orWhere('subject', 'like', "%{$q}%")
+                    ->orWhere('message', 'like', "%{$q}%")
+                    ->orWhere('reply', 'like', "%{$q}%");
             });
         }
 
         if ($status) {
             $messages->where('status', $status);
-        }
-
-        if ($archived === '1') {
-            $messages->whereNotNull('admin_archived_at');
-        } elseif ($archived === '0') {
-            $messages->whereNull('admin_archived_at');
         }
 
         if ($dateFrom) {
@@ -56,19 +50,67 @@ class AdminContactController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        $statuses = [
-            'new' => 'Jauns',
-            'in_progress' => 'Apstrādē',
-            'answered' => 'Atbildēts',
-            'closed' => 'Aizvērts',
-        ];
+        $statuses = ContactMessage::statuses();
 
         return view('admin.contacts.index', compact(
             'messages',
             'statuses',
             'q',
             'status',
-            'archived',
+            'dateFrom',
+            'dateTo'
+        ));
+    }
+
+    public function archiveList(Request $request)
+    {
+        $q = $request->q;
+        $status = $request->status;
+        $dateFrom = $request->date_from;
+        $dateTo = $request->date_to;
+
+        ContactMessage::updateOverdue();
+
+        if ($dateFrom && $dateTo && $dateFrom > $dateTo) {
+            return back()->with('error', 'Datums "No" nedrīkst būt lielāks par datumu "Līdz".');
+        }
+
+        $messages = ContactMessage::whereNull('admin_deleted_at')
+            ->whereNotNull('admin_archived_at');
+
+        if ($q) {
+            $messages->where(function ($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%")
+                    ->orWhere('subject', 'like', "%{$q}%")
+                    ->orWhere('message', 'like', "%{$q}%")
+                    ->orWhere('reply', 'like', "%{$q}%");
+            });
+        }
+
+        if ($status) {
+            $messages->where('status', $status);
+        }
+
+        if ($dateFrom) {
+            $messages->whereDate('created_at', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $messages->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $messages = $messages->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
+
+        $statuses = ContactMessage::statuses();
+
+        return view('admin.contacts.archive', compact(
+            'messages',
+            'statuses',
+            'q',
+            'status',
             'dateFrom',
             'dateTo'
         ));
@@ -78,12 +120,15 @@ class AdminContactController extends Controller
     {
         $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);
 
-        $statuses = [
-            'new' => 'Jauns',
-            'in_progress' => 'Apstrādē',
-            'answered' => 'Atbildēts',
-            'closed' => 'Aizvērts',
-        ];
+        if (in_array($message->status, ['new', 'overdue']) && empty($message->reply)) {
+            $message->update([
+                'status' => 'read',
+            ]);
+
+            $message->refresh();
+        }
+
+        $statuses = ContactMessage::statuses();
 
         return view('admin.contacts.show', compact('message', 'statuses'));
     }
@@ -111,27 +156,6 @@ class AdminContactController extends Controller
         ]);
 
         return back()->with('success', 'Atbilde saglabāta.');
-    }
-
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate(
-            [
-                'status' => 'required|in:new,in_progress,answered,closed',
-            ],
-            [
-                'status.required' => 'Lūdzu, izvēlieties statusu.',
-                'status.in' => 'Nederīgs statuss.',
-            ]
-        );
-
-        $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);
-
-        $message->update([
-            'status' => $request->status,
-        ]);
-
-        return back()->with('success', 'Statuss veiksmīgi atjaunināts.');
     }
 
     public function archive($id)
