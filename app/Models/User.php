@@ -19,11 +19,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'is_blocked',
         'blocked_until',
+        'verify_token',
+        'email_verified_at',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'verify_token',
     ];
 
     protected function casts(): array
