@@ -79,6 +79,64 @@
 
         <main style="flex:1; min-width:0;">
 
+            @if(isset($events) && $events->count())
+                <div style="margin-bottom:30px;">
+                    <h2 style="margin:0 0 15px 0;">Ieplānotie pasākumi</h2>
+
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        @foreach($events as $event)
+                            <a href="{{ route('news.show', $event->ieraksts_id) }}"
+                               style="display:block; text-decoration:none; color:inherit; margin-bottom:0;">
+
+                                <div style="
+                                    border:1px solid #bfd8ff;
+                                    border-left:6px solid #2f6fed;
+                                    border-radius:16px;
+                                    padding:18px;
+                                    background:linear-gradient(135deg, #eef4ff 0%, #f8fbff 100%);
+                                    box-shadow:0 2px 10px rgba(47,111,237,0.08);
+                                ">
+
+                                    @if($event->bilde)
+                                        <img src="{{ asset($event->bilde) }}"
+                                             alt="{{ $event->nosaukums }}"
+                                             style="width:100%; max-height:240px; object-fit:cover; border-radius:10px; margin-bottom:14px; display:block;">
+                                    @endif
+
+                                    <div style="
+                                        display:inline-block;
+                                        padding:6px 10px;
+                                        border-radius:999px;
+                                        background:#2f6fed;
+                                        color:#fff;
+                                        font-size:13px;
+                                        margin-bottom:10px;
+                                    ">
+                                        Pasākums
+                                    </div>
+
+                                    <h3 style="margin:0 0 8px 0; color:#163b7a;">
+                                        {{ $event->nosaukums }}
+                                    </h3>
+
+                                    <small style="color:#4d648d; display:block; margin-bottom:10px;">
+                                        {{ \Carbon\Carbon::parse($event->pasakuma_datums)->format('d.m.Y H:i') }}
+                                        @if($event->category)
+                                            • {{ $event->category->nosaukums }}
+                                        @endif
+                                    </small>
+
+                                    <p style="margin:0; color:#445; line-height:1.5;">
+                                        {{ \Illuminate\Support\Str::limit($event->saturs, 180) }}
+                                    </p>
+
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @foreach($news as $item)
                 <a href="{{ route('news.show', $item->ieraksts_id) }}"
                    style="display:block; text-decoration:none; color:inherit; margin-bottom:20px;">
