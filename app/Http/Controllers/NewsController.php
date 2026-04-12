@@ -129,10 +129,16 @@ class NewsController extends Controller
 
     public function show($id)
     {
-        $post = News::with(['category', 'comments.user'])
+        $post = News::with(['category', 'comments.user', 'likes'])
             ->findOrFail($id);
 
-        return view('news.show', compact('post'));
+        $userLiked = false;
+        
+        if (auth()->check()) {
+            $userLiked = $post->likes->contains('user_id', auth()->id());
+        }
+        
+        return view('news.show', compact('post', 'userLiked'));
     }
 
     public function create()
