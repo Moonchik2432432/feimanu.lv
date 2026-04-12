@@ -55,6 +55,7 @@
             <label>No datuma</label><br>
             <input type="text"
                    name="date_from"
+                   id = "date_from"
                    value="{{ $dateFrom ?? '' }}"
                    class="date-picker"
                    style="padding:8px;">
@@ -64,6 +65,7 @@
             <label>Līdz datumam</label><br>
             <input type="text"
                    name="date_to"
+                   id = "date_to"
                    value="{{ $dateTo ?? '' }}"
                    class="date-picker"
                    style="padding:8px;">
