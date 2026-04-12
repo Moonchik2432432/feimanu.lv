@@ -84,7 +84,7 @@
             <form method="GET" action="{{ route('contacts') }}"
                   style="display:flex; gap:10px; flex-wrap:wrap; align-items:end; margin-bottom:20px;">
                 <div>
-                    <label>Meklēšana</label><br>
+                    <label>Nosaukums</label><br>
                     <input type="text"
                            name="q"
                            value="{{ request('q') }}"
