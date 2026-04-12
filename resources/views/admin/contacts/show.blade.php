@@ -58,7 +58,7 @@
                     ;
                     color:#333;
                 ">
-                    {{ $statuses[$item->status] ?? $item->status }}
+                    {{ $statuses[$message->status] ?? $message->status }}
                 </span>
         </p>
         <p><strong>Datums:</strong> {{ $message->created_at->format('d.m.Y H:i') }}</p>
