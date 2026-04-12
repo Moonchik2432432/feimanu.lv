@@ -55,6 +55,8 @@ Route::delete('/comments/{id}', [CommentController::class, 'destroy'])
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/verify/{token}', [AuthController::class, 'verify'])->name('verify');
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
