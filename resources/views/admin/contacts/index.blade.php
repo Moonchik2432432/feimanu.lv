@@ -22,7 +22,7 @@
     <form method="GET" action="{{ route('admin.contacts') }}"
           style="display:flex; gap:10px; flex-wrap:wrap; align-items:end; margin:20px 0;">
         <div>
-            <label>Meklēšana</label><br>
+            <label>Nosaukums</label><br>
             <input type="text"
                    name="q"
                    value="{{ $q ?? '' }}"
@@ -75,6 +75,19 @@
            style="padding:9px 16px; background:#eee; color:#000; text-decoration:none; border-radius:6px;">
             Notīrīt
         </a>
+
+    <script>
+        flatpickr("#date_from", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        });
+ 
+        flatpickr("#date_to", {
+            dateFormat: "Y-m-d",
+            locale: "lv"
+        });
+    </script>
+        
     </form>
 
     <div style="display:grid; gap:15px;">
