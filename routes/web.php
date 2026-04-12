@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RulesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsLikeController;
 
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminCategoryController;
@@ -35,6 +36,11 @@ Route::get('/rules', [RulesController::class, 'index'])->name('rules.index');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/category/{id}', [NewsController::class, 'category'])->name('news.category');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+
+// PUBLIC LIKE
+Route::post('/news/{id}/like', [NewsLikeController::class, 'toggle'])
+    ->middleware('auth')
+    ->name('news.like');
 
 // COMMENTS
 Route::post('/news/{id}/comments', [CommentController::class, 'store'])
