@@ -100,6 +100,7 @@ class NewsController extends Controller
 
         $events = News::with('category')
             ->where('kategorija_id', $id)
+            ->withCount('likes')
             ->whereNotNull('pasakuma_datums')
             ->where('pasakuma_datums', '>=', now())
             ->when($q !== '', function ($query) use ($q) {
@@ -118,6 +119,7 @@ class NewsController extends Controller
             ->get();
 
         $news = News::with('category')
+            ->withCount('likes')
             ->where('kategorija_id', $id)
             ->where(function ($query) {
                 $query->whereNull('pasakuma_datums')
@@ -143,7 +145,24 @@ class NewsController extends Controller
             ->take(3)
             ->get();
 
-        return view('news.index', compact('categories', 'news', 'events', 'q', 'from', 'to', 'latestPhotos'));
+        $userLikes = [];
+
+        if (auth()->check()) {
+            $userLikes = \App\Models\NewsLike::where('user_id', auth()->id())
+                ->pluck('ieraksts_id')
+                ->toArray();
+        }
+        
+        return view('news.index', compact(
+            'categories',
+            'news',
+            'events',
+            'q',
+            'from',
+            'to',
+            'latestPhotos',
+            'userLikes'
+        ));
     }
 
     public function show($id)
