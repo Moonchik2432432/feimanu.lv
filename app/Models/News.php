@@ -17,6 +17,7 @@ class News extends Model
         'kategorija_id',
         'status',
         'publicets_datums',
+        'pasakuma_datums',
         'bilde'
     ];
 
