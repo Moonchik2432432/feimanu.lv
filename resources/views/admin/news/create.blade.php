@@ -47,7 +47,7 @@
             <input type="text"
                    name="pasakuma_datums"
                    id="pasakuma_datums"
-                   value="{{ old('pasakuma_datums', $post->pasakuma_datums ? \Carbon\Carbon::parse($post->pasakuma_datums)->format('Y-m-d H:i') : '') }}"
+                   value="{{ old('pasakuma_datums') }}"
                    placeholder="Izvēlēties datumu un laiku"
                    style="width:100%; padding:8px; box-sizing:border-box;">
             <small style="color:#777; display:block; margin-top:6px;">
