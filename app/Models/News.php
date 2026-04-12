@@ -30,4 +30,9 @@ class News extends Model
     {
         return $this->hasMany(Comment::class, 'ieraksts_id', 'ieraksts_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(\App\Models\NewsLike::class, 'ieraksts_id', 'ieraksts_id');
+    }
 }
