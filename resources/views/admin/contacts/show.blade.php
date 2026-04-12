@@ -66,26 +66,6 @@
     </div>
 
     <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:20px;">
-        <h3 style="margin-top:0;">Mainīt statusu</h3>
-
-        <form method="POST" action="{{ route('admin.contacts.status', $message->id) }}">
-            @csrf
-
-            <select name="status" style="padding:10px; min-width:220px;">
-                @foreach($statuses as $key => $label)
-                    <option value="{{ $key }}" {{ $message->status === $key ? 'selected' : '' }}>
-                        {{ $label }}
-                    </option>
-                @endforeach
-            </select>
-
-            <button type="submit" style="padding:10px 18px; margin-left:10px;">
-                Saglabāt statusu
-            </button>
-        </form>
-    </div>
-
-    <div style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:20px;">
         <form method="POST" action="{{ route('admin.contacts.reply', $message->id) }}">
             @csrf
 
