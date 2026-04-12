@@ -117,6 +117,7 @@
                     <label>No datuma</label><br>
                     <input type="text"
                            name="date_from"
+                           id = "date_from"
                            value="{{ request('date_from') }}"
                            class="date-picker"
                            style="padding:8px;">
@@ -126,6 +127,7 @@
                     <label>Līdz datumam</label><br>
                     <input type="text"
                            name="date_to"
+                           id = "date_to"
                            value="{{ request('date_to') }}"
                            class="date-picker"
                            style="padding:8px;">
@@ -137,6 +139,18 @@
                    style="padding:9px 16px; background:#eee; color:#000; text-decoration:none; border-radius:6px;">
                     Notīrīt
                 </a>
+            <script>
+                flatpickr("#date_from", {
+                    dateFormat: "Y-m-d",
+                    locale: "lv"
+                });
+         
+                flatpickr("#date_to", {
+                    dateFormat: "Y-m-d",
+                    locale: "lv"
+                });
+            </script>
+                
             </form>
 
             @if($messages instanceof \Illuminate\Pagination\AbstractPaginator)
