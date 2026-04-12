@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -29,6 +31,20 @@ class AuthController extends Controller
                 'password.required' => 'Lūdzu, ievadiet paroli.',
             ]
         );
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Nepareizs e-pasts vai parole',
+            ])->onlyInput('email');
+        }
+
+        if (empty($user->email_verified_at)) {
+            return back()->withErrors([
+                'email' => 'Lūdzu, vispirms apstipriniet savu e-pastu.',
+            ])->onlyInput('email');
+        }
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
@@ -114,25 +130,51 @@ class AuthController extends Controller
 
                 'email.required' => 'Lūdzu, ievadiet e-pastu.',
                 'email.email' => 'Lūdzu, ievadiet derīgu e-pasta adresi.',
-                'email.max' => 'E-pasts nedrīkst būt garāks par 45 simboliem.',
+                'email.max' => 'E-pasts nedrīkst būt garāks par 100 simboliem.',
                 'email.unique' => 'Šāds e-pasts jau ir reģistrēts.',
 
                 'password.required' => 'Lūdzu, ievadiet paroli.',
-            '    password.confirmed' => 'Paroles nesakrīt.',
-                'password.min' => 'Parolei jābūt vismaz 8 simbolus garai.',
                 'password.confirmed' => 'Paroles nesakrīt.',
+                'password.min' => 'Parolei jābūt vismaz 8 simbolus garai.',
             ]
         );
+
+        $verifyToken = Str::random(64);
 
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'verify_token' => $verifyToken,
+            'email_verified_at' => null,
         ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
+        $verifyUrl = route('verify', $verifyToken);
 
-        return redirect('/');
+        Mail::raw(
+            "Sveiki, {$user->name}!\n\nLai apstiprinātu savu e-pastu, atveriet šo saiti:\n{$verifyUrl}\n\nJa šo reģistrāciju neveicāt jūs, ignorējiet šo ziņojumu.",
+            function ($message) use ($user) {
+                $message->to($user->email)
+                    ->subject('E-pasta apstiprināšana');
+            }
+        );
+
+        return redirect()->route('login')->with('success', 'Reģistrācija veiksmīga. Lūdzu, apstipriniet savu e-pastu.');
+    }
+
+    public function verify($token)
+    {
+        $user = User::where('verify_token', $token)->first();
+
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Nederīga vai novecojusi apstiprināšanas saite.');
+        }
+
+        $user->update([
+            'email_verified_at' => now(),
+            'verify_token' => null,
+        ]);
+
+        return redirect()->route('login')->with('success', 'E-pasts veiksmīgi apstiprināts. Tagad varat pieslēgties.');
     }
 }
