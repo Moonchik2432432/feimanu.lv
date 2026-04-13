@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     const slides = document.querySelectorAll('.slide');
     const nextBtn = document.querySelector('.next');
     const prevBtn = document.querySelector('.prev');
@@ -9,13 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let current = 0;
     let interval;
+    let startX = 0;
 
-    // показать слайд
     function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.style.opacity = (i === index) ? '1' : '0';
-            slide.style.zIndex = (i === index) ? '2' : '1';
-        });
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
     }
 
     function nextSlide() {
@@ -28,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showSlide(current);
     }
 
-    // автопрокрутка
     function startAuto() {
         interval = setInterval(nextSlide, 5000);
     }
@@ -37,25 +33,18 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(interval);
     }
 
-    // кнопки
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-    // пауза при наведении
     if (slider) {
         slider.addEventListener('mouseenter', stopAuto);
         slider.addEventListener('mouseleave', startAuto);
-    }
 
-    // свайп (телефон)
-    let startX = 0;
-
-    if (slider) {
-        slider.addEventListener('touchstart', e => {
+        slider.addEventListener('touchstart', function (e) {
             startX = e.touches[0].clientX;
         });
 
-        slider.addEventListener('touchend', e => {
+        slider.addEventListener('touchend', function (e) {
             let endX = e.changedTouches[0].clientX;
 
             if (startX - endX > 50) {
@@ -65,16 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-    // старт
-    slides.forEach(slide => {
-        slide.style.position = 'absolute';
-        slide.style.top = '0';
-        slide.style.left = '0';
-        slide.style.width = '100%';
-        slide.style.height = '100%';
-        slide.style.transition = 'opacity 0.6s ease';
-    });
 
     showSlide(current);
     startAuto();
