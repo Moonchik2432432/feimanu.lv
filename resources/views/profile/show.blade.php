@@ -6,7 +6,6 @@
 
 <div class="container" style="max-width:800px; margin:40px auto;">
 
-```
 <h1 style="margin-bottom:20px;">Mans profils</h1>
 
 @if(session('success'))
@@ -169,7 +168,6 @@
         </button>
     </form>
 </div>
-```
 
 </div>
 

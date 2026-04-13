@@ -6,7 +6,6 @@
 
 <div class="container" style="max-width:1050px; margin:40px auto;">
 
-```
 <h1>Kontakti</h1>
 
 @if(session('success'))
@@ -128,7 +127,6 @@
         @endif
     </div>
 @endauth
-```
 
 </div>
 @endsection

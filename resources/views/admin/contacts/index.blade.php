@@ -6,7 +6,6 @@
 
 <div class="container" style="max-width:1100px; margin:40px auto;">
 
-```
 <h1>Lietotāju jautājumi</h1>
 
 @if(session('success'))
@@ -194,7 +193,6 @@
 <div style="margin-top:20px;">
     {{ $messages->links('pagination.default') }}
 </div>
-```
 
 </div>
 @endsection
