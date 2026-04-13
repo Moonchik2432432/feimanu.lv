@@ -55,29 +55,25 @@
         });
     </script>
 
-    <div style="display:flex; gap:30px; align-items:flex-start;">
-
-        <aside style="width:250px; flex:0 0 250px;">
-            <div style="position:sticky; top:20px;">
-                <h3 style="margin-bottom:12px;">Kategorijas</h3>
-
-                <div style="border:1px solid #ddd; border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-
-                    <a href="{{ route('news.index') }}"
-                       style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
-                        Visas aktualitātes
-                    </a>
-
-                    @foreach($categories as $cat)
-                        <a href="{{ route('news.category', $cat->kategorija_id) }}"
-                           style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
-                            {{ $cat->nosaukums }}
-                        </a>
-                    @endforeach
-
-                </div>
-            </div>
-        </aside>
+    <aside style="width:250px; flex:0 0 250px; align-self:flex-start; position:sticky; top:20px;">
+        <h3 style="margin-bottom:12px;">Kategorijas</h3>
+    
+        <div style="border:1px solid #ddd; border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+    
+            <a href="{{ route('news.index') }}"
+               style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
+                Visas aktualitātes
+            </a>
+    
+            @foreach($categories as $cat)
+                <a href="{{ route('news.category', $cat->kategorija_id) }}"
+                   style="display:block; padding:12px 14px; border-bottom:1px solid #eee; text-decoration:none; color:#222;">
+                    {{ $cat->nosaukums }}
+                </a>
+            @endforeach
+    
+        </div>
+    </aside>
 
         <main style="flex:1; min-width:0;">
 
