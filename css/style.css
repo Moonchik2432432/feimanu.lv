@@ -7,9 +7,9 @@ body {
 
 /* CONTAINER */
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 95%;
+    max-width: 1400px;
+    margin-left: 20px;
 }
 
 /* HEADER */
