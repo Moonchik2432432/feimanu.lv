@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -118,10 +120,55 @@ class ProfileController extends Controller
             ]);
         }
 
-        $user->email = $request->email;
-        $user->email_verified_at = null;
+        if ($request->email === $user->email) {
+            return back()->with('error', 'Tu ievadīji savu pašreizējo e-pastu.');
+        }
+
+        $token = Str::random(64);
+
+        $user->pending_email = $request->email;
+        $user->email_change_token = $token;
         $user->save();
 
-        return back()->with('success', 'E-pasts veiksmīgi nomainīts!');
+        $confirmUrl = url('/profile/email/confirm/' . $token);
+
+        Mail::raw(
+            "Sveiki!\n\nLai apstiprinātu e-pasta maiņu, atver šo saiti:\n\n{$confirmUrl}\n\nJa tu neveici šo pieprasījumu, ignorē šo ziņu.",
+            function ($message) use ($request) {
+                $message->to($request->email)
+                        ->subject('Apstiprini e-pasta maiņu');
+            }
+        );
+
+        return back()->with('success', 'Uz jauno e-pastu tika nosūtīta apstiprinājuma saite.');
+    }
+
+    public function confirmEmailChange($token)
+    {
+        $user = User::where('email_change_token', $token)->first();
+
+        if (!$user || !$user->pending_email) {
+            return redirect()->route('profile.show')->with('error', 'Nederīga vai novecojusi e-pasta apstiprināšanas saite.');
+        }
+
+        $existingUser = User::where('email', $user->pending_email)
+            ->where('id', '!=', $user->id)
+            ->first();
+
+        if ($existingUser) {
+            $user->pending_email = null;
+            $user->email_change_token = null;
+            $user->save();
+
+            return redirect()->route('profile.show')->with('error', 'Šis e-pasts jau tiek izmantots.');
+        }
+
+        $user->email = $user->pending_email;
+        $user->pending_email = null;
+        $user->email_change_token = null;
+        $user->email_verified_at = now();
+        $user->save();
+
+        return redirect()->route('profile.show')->with('success', 'E-pasts veiksmīgi apstiprināts un nomainīts!');
     }
 }
