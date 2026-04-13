@@ -70,8 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/profile/email', [ProfileController::class, 'updateEmail'])->name('profile.email');
-    Route::get('/profile/email/confirm/{token}', [ProfileController::class, 'confirmEmailChange'])->name('profile.email.confirm');
 });
+
+Route::get('/profile/email/confirm/{token}', [ProfileController::class, 'confirmEmailChange'])
+    ->name('profile.email.confirm');
 
 // GALLERY
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
