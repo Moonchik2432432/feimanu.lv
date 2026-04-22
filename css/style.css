@@ -9,7 +9,7 @@ body {
 .container {
     width: 95%;
     max-width: 1400px;
-    margin-left: 20px;
+    margin: 0 auto;
 }
 
 /* HEADER */
