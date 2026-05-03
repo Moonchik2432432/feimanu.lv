@@ -13,11 +13,13 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    // Parāda lietotājam pieslēgšanās (login) formu
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    // Apstrādā lietotāja pieslēgšanos, pārbauda datus un veic autorizāciju
     public function login(Request $request)
     {
         $credentials = $request->validate(
@@ -52,6 +54,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->isBlockedNow()) {
+
                 $block = UserBlock::with('reason')
                     ->where('user_id', $user->id)
                     ->whereNull('unblocked_at')
@@ -101,6 +104,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    // Izraksta lietotāju no sistēmas un iznīcina sesiju
     public function logout(Request $request)
     {
         Auth::logout();
@@ -110,11 +114,13 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    // Parāda lietotājam reģistrācijas formu
     public function showRegister()
     {
         return view('auth.register');
     }
 
+    // Apstrādā jauna lietotāja reģistrāciju un nosūta e-pasta apstiprinājumu
     public function register(Request $request)
     {
         $data = $request->validate(
@@ -152,7 +158,7 @@ class AuthController extends Controller
         $verifyUrl = route('verify', $verifyToken);
 
         Mail::raw(
-            "Sveiki, {$user->name}!\n\nLai apstiprinātu savu e-pastu, atveriet šo saiti:\n{$verifyUrl}\n\nJa šo reģistrāciju neveicāt jūs, ignorējiet šo ziņojumu.",
+            "Sveiki, {$user->name}!\n\nLai apstiprinātu savu e-pastu, atveriet šo saiti:\n{$verifyUrl}",
             function ($message) use ($user) {
                 $message->to($user->email)
                     ->subject('E-pasta apstiprināšana');
@@ -161,10 +167,11 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with(
             'success',
-            'Reģistrācija veiksmīga! Lūdzu, pārbaudiet savu e-pastu un apstipriniet kontu.'
+            'Reģistrācija veiksmīga! Lūdzu, pārbaudiet e-pastu.'
         );
     }
 
+    // Apstiprina lietotāja e-pastu, izmantojot unikālu tokenu
     public function verify($token)
     {
         $user = User::where('verify_token', $token)->first();
@@ -178,6 +185,6 @@ class AuthController extends Controller
             'verify_token' => null,
         ]);
 
-        return redirect()->route('login')->with('success', 'E-pasts veiksmīgi apstiprināts. Tagad varat pieslēgties.');
+        return redirect()->route('login')->with('success', 'E-pasts veiksmīgi apstiprināts.');
     }
 }
