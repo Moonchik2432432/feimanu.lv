@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminContactController extends Controller
 {
+    // Attēlo administratoram saņemto kontaktu ziņojumu sarakstu ar filtrēšanu un meklēšanu
     public function index(Request $request)
     {
         $q = $request->q;
@@ -62,6 +63,7 @@ class AdminContactController extends Controller
         ));
     }
 
+    // Attēlo administratoram arhivēto kontaktu ziņojumu sarakstu
     public function archiveList(Request $request)
     {
         $q = $request->q;
@@ -116,6 +118,7 @@ class AdminContactController extends Controller
         ));
     }
 
+    // Attēlo konkrētu ziņojumu un maina tā statusu uz “lasīts”, ja ziņojums vēl nav apstrādāts
     public function show($id)
     {
         $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);
@@ -133,6 +136,7 @@ class AdminContactController extends Controller
         return view('admin.contacts.show', compact('message', 'statuses'));
     }
 
+    // Saglabā administratora atbildi uz lietotāja ziņojumu un maina statusu uz “atbildēts”
     public function reply(Request $request, $id)
     {
         $request->validate(
@@ -158,6 +162,7 @@ class AdminContactController extends Controller
         return back()->with('success', 'Atbilde saglabāta.');
     }
 
+    // Pārvieto ziņojumu uz administratora arhīvu
     public function archive($id)
     {
         $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);
@@ -169,6 +174,7 @@ class AdminContactController extends Controller
         return back()->with('success', 'Ziņojums pārvietots uz arhīvu.');
     }
 
+    // Atjauno ziņojumu no administratora arhīva
     public function unarchive($id)
     {
         $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);
@@ -180,6 +186,7 @@ class AdminContactController extends Controller
         return back()->with('success', 'Ziņojums izņemts no arhīva.');
     }
 
+    // Atzīmē ziņojumu kā dzēstu administratora pusē
     public function delete($id)
     {
         $message = ContactMessage::whereNull('admin_deleted_at')->findOrFail($id);

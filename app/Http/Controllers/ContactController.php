@@ -9,6 +9,7 @@ use App\Mail\ContactQuestionMail;
 
 class ContactController extends Controller
 {
+    // Attēlo lietotāja kontaktu ziņojumus ar meklēšanu, filtrēšanu un statusiem
     public function index(Request $request)
     {
         $messages = collect();
@@ -59,6 +60,7 @@ class ContactController extends Controller
         return view('contacts.index', compact('messages', 'statuses'));
     }
 
+    // Attēlo lietotāja arhivētos kontaktu ziņojumus
     public function archiveList(Request $request)
     {
         $messages = collect();
@@ -109,6 +111,7 @@ class ContactController extends Controller
         return view('contacts.archive', compact('messages', 'statuses'));
     }
 
+    // Saglabā lietotāja nosūtīto kontaktu ziņojumu un nosūta paziņojumu administratoram
     public function store(Request $request)
     {
         $request->validate(
@@ -168,6 +171,7 @@ class ContactController extends Controller
         return back()->with('success', 'Ziņojums veiksmīgi nosūtīts.');
     }
 
+    // Pārvieto lietotāja ziņojumu uz arhīvu
     public function archive($id)
     {
         $message = ContactMessage::where('user_id', auth()->id())
@@ -181,6 +185,7 @@ class ContactController extends Controller
         return back()->with('success', 'Ziņojums pārvietots uz arhīvu.');
     }
 
+    // Atjauno lietotāja ziņojumu no arhīva
     public function unarchive($id)
     {
         $message = ContactMessage::where('user_id', auth()->id())
@@ -194,6 +199,7 @@ class ContactController extends Controller
         return back()->with('success', 'Ziņojums izņemts no arhīva.');
     }
 
+    // Atzīmē lietotāja ziņojumu kā dzēstu
     public function delete($id)
     {
         $message = ContactMessage::where('user_id', auth()->id())
