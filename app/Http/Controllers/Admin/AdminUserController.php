@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
  
 class AdminUserController extends Controller
 {
+    // Attēlo lietotāju sarakstu administrācijas panelī ar meklēšanu, filtrēšanu un bloķēšanas iemesliem
     public function index(Request $request)
     {
         $q = trim((string) $request->get('q', ''));
@@ -63,6 +64,7 @@ class AdminUserController extends Controller
         return view('admin.users.index', compact('users', 'q', 'from', 'to', 'reasons'));
     }
  
+    // Attēlo konkrēta lietotāja profilu un viņa pievienotos komentārus
     public function show(User $user)
     {
         $comments = Comment::query()
@@ -81,6 +83,7 @@ class AdminUserController extends Controller
         return view('admin.users.show', compact('user', 'comments'));
     }
  
+    // Bloķē izvēlēto lietotāju, saglabājot bloķēšanas iemeslu un termiņu
     public function block(Request $request, User $user)
     {
         if (auth()->id() === $user->id) {
@@ -124,6 +127,7 @@ class AdminUserController extends Controller
         return redirect()->route('admin.users')->with('success', 'Lietotājs bloķēts');
     }
  
+    // Atbloķē lietotāju un atjaunina aktīvās bloķēšanas vēstures ierakstu
     public function unblock(User $user)
     {
         $activeBlock = UserBlock::where('user_id', $user->id)
@@ -146,6 +150,7 @@ class AdminUserController extends Controller
         return redirect()->route('admin.users')->with('success', 'Lietotājs atbloķēts');
     }
  
+    // Attēlo lietotāja bloķēšanas vēsturi
     public function history(User $user)
     {
         $blocks = UserBlock::with(['reason', 'blocker', 'unblockedBy'])
@@ -156,6 +161,7 @@ class AdminUserController extends Controller
         return view('admin.users.history', compact('user', 'blocks'));
     }
 
+    // Dzēš lietotāja kontu, nosūta paziņojumu uz e-pastu un noņem saistītos datus
     public function destroy(Request $request, $id)
     {
         $request->validate([
