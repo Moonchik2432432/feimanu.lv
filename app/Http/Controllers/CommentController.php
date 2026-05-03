@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    // Saglabā lietotāja komentāru pie konkrētas ziņas un pārbauda komentēšanas laika ierobežojumu
     public function store(Request $request, $id)
     {
         $request->validate(
@@ -44,6 +45,7 @@ class CommentController extends Controller
         return back()->with('success', 'Komentārs pievienots');
     }
 
+    // Dzēš komentāru, ja tas pieder pašreiz autorizētajam lietotājam
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
