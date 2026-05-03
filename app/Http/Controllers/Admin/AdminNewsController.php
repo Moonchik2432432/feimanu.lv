@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 
 class AdminNewsController extends Controller
 {
+    // Attēlo ziņu sarakstu administrācijas panelī ar meklēšanu, filtrēšanu un lapošanu
     public function index(Request $request)
     {
         $q = trim((string) $request->get('q', ''));
@@ -43,6 +44,7 @@ class AdminNewsController extends Controller
         return view('admin.news.index', compact('news', 'q', 'from', 'to'));
     }
 
+    // Atver jaunas ziņas pievienošanas formu un sagatavo kategoriju un galerijas attēlu sarakstu
     public function create()
     {
         $categories = Category::orderBy('nosaukums')->get();
@@ -51,6 +53,7 @@ class AdminNewsController extends Controller
         return view('admin.news.create', compact('categories', 'galleryImages'));
     }
 
+    // Saglabā jaunu ziņu datubāzē un apstrādā attēla augšupielādi vai izvēli no galerijas
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -99,6 +102,7 @@ class AdminNewsController extends Controller
         return redirect()->route('admin.news')->with('success', 'Ziņa izveidota');
     }
 
+    // Atver esošas ziņas rediģēšanas formu
     public function edit($id)
     {
         $post = News::findOrFail($id);
@@ -108,6 +112,7 @@ class AdminNewsController extends Controller
         return view('admin.news.edit', compact('post', 'categories', 'galleryImages'));
     }
 
+    // Atjaunina ziņas datus un nepieciešamības gadījumā nomaina attēlu
     public function update(Request $request, $id)
     {
         $post = News::findOrFail($id);
@@ -171,6 +176,7 @@ class AdminNewsController extends Controller
         return redirect()->route('admin.news')->with('success', 'Ziņa atjaunināta');
     }
 
+    // Dzēš ziņu, tās komentārus un ar ziņu saistīto augšupielādēto attēlu
     public function destroy($id)
     {
         $post = News::with('comments')->findOrFail($id);
