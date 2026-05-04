@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckIfBlocked
 {
+    // Pārbauda, vai lietotāja konts ir bloķēts, un nepieciešamības gadījumā liedz piekļuvi sistēmai
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
