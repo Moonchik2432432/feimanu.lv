@@ -193,12 +193,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/block-reasons/{id}', [AdminBlockReasonController::class, 'destroy'])->name('admin.block_reasons.destroy');
 
 
+    // ===== GALERIJAS ATTĒLI =====
+    Route::get('/gallery-images', [AdminGalleryImageController::class, 'index'])
+    ->name('admin.gallery.images');
+
     // ===== GALERIJA =====
     Route::get('/gallery-albums', [AdminGalleryAlbumController::class, 'index'])->name('admin.gallery.albums');
     Route::post('/gallery-albums/store', [AdminGalleryAlbumController::class, 'store'])->name('admin.gallery.albums.store');
     Route::put('/gallery-albums/{id}/update', [AdminGalleryAlbumController::class, 'update'])->name('admin.gallery.albums.update');
     Route::delete('/gallery-albums/{id}/delete', [AdminGalleryAlbumController::class, 'destroy'])->name('admin.gallery.albums.delete');
-
 
     // ===== KONTAKTI =====
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
