@@ -174,24 +174,22 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/category/{id}', [AdminCategoryController::class, 'update'])->name('admin.category.update');
     Route::delete('/category/{id}', [AdminCategoryController::class, 'destroy'])->name('admin.category.destroy');
 
-
     // ===== ZIŅAS =====
     Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news');
+    Route::get('/news/create', [AdminNewsController::class, 'create'])->name('admin.news.create');
     Route::post('/news', [AdminNewsController::class, 'store'])->name('admin.news.store');
+    Route::get('/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin.news.edit');
     Route::put('/news/{id}', [AdminNewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin.news.destroy');
 
-
     // ===== KOMENTĀRI =====
     Route::delete('/comments/{id}', [AdminCommentsController::class, 'destroy'])->name('admin.comments.destroy');
-
 
     // ===== BLOĶĒŠANAS IEMESLI =====
     Route::get('/block-reasons', [AdminBlockReasonController::class, 'index'])->name('admin.block_reasons');
     Route::post('/block-reasons', [AdminBlockReasonController::class, 'store'])->name('admin.block_reasons.store');
     Route::put('/block-reasons/{id}', [AdminBlockReasonController::class, 'update'])->name('admin.block_reasons.update');
     Route::delete('/block-reasons/{id}', [AdminBlockReasonController::class, 'destroy'])->name('admin.block_reasons.destroy');
-
 
     // ===== GALERIJAS FOTO =====
     Route::get('/gallery-images', [AdminGalleryImageController::class, 'index'])->name('admin.gallery.images');
