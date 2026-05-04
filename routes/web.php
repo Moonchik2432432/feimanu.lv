@@ -186,5 +186,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // ===== KONTAKTI =====
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
+    Route::get('/contacts/archive', [AdminContactController::class, 'archive'])->name('admin.contacts.archive');
     Route::post('/contacts/{id}/reply', [AdminContactController::class, 'reply'])->name('admin.contacts.reply');
+    Route::post('/contacts/{id}/archive', [AdminContactController::class, 'archiveMessage'])->name('admin.contacts.archive.store');
+    Route::post('/contacts/{id}/unarchive', [AdminContactController::class, 'unarchive'])->name('admin.contacts.unarchive');
+    Route::delete('/contacts/{id}/delete', [AdminContactController::class, 'delete'])->name('admin.contacts.delete');
 });
