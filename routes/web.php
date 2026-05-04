@@ -183,12 +183,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/gallery-images/{id}/update', [AdminGalleryImageController::class, 'update'])->name('admin.gallery.images.update');
     Route::delete('/gallery-images/{id}/delete', [AdminGalleryImageController::class, 'destroy'])->name('admin.gallery.images.delete');
 
-
     // ===== KONTAKTI =====
-    Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts');
-    Route::get('/contacts/archive', [AdminContactController::class, 'archive'])->name('admin.contacts.archive');
-    Route::post('/contacts/{id}/reply', [AdminContactController::class, 'reply'])->name('admin.contacts.reply');
-    Route::post('/contacts/{id}/archive', [AdminContactController::class, 'archiveMessage'])->name('admin.contacts.archive.store');
-    Route::post('/contacts/{id}/unarchive', [AdminContactController::class, 'unarchive'])->name('admin.contacts.unarchive');
-    Route::delete('/contacts/{id}/delete', [AdminContactController::class, 'delete'])->name('admin.contacts.delete');
+    Route::get('/contacts', [AdminContactController::class, 'index'])
+        ->name('admin.contacts');
+    Route::get('/contacts/archive', [AdminContactController::class, 'archiveList'])
+        ->name('admin.contacts.archive');
+    Route::get('/contacts/{id}', [AdminContactController::class, 'show'])
+        ->name('admin.contacts.show');
+    Route::post('/contacts/{id}/reply', [AdminContactController::class, 'reply'])
+        ->name('admin.contacts.reply');
+    Route::post('/contacts/{id}/archive', [AdminContactController::class, 'archive'])
+        ->name('admin.contacts.archive.store');
+    Route::post('/contacts/{id}/unarchive', [AdminContactController::class, 'unarchive'])
+        ->name('admin.contacts.unarchive');
+    Route::delete('/contacts/{id}/delete', [AdminContactController::class, 'delete'])
+        ->name('admin.contacts.delete');
 });
